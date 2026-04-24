@@ -7,6 +7,7 @@ import ContactUs from './pages/ContactUs';
 import Sellers from './pages/Sellers';
 import AllCategoriesPage from './pages/AllCategoriesPage';
 import AllBrandsPage from './pages/AllBrandsPage';
+import Blogs from './pages/Blogs';
 import FAQPage from './pages/FAQPage';
 import AuthModal from './components/common/AuthModal';
 import './App.css';
@@ -38,6 +39,7 @@ function App() {
           <Route path="/categories" element={<AllCategoriesPage />} />
           <Route path="/brands" element={<AllBrandsPage />} />
           <Route path="/faqs" element={<FAQPage />} />
+          <Route path="/blogs" element={<Blogs />} />
         </Routes>
 
         <Footer />
