@@ -1,0 +1,150 @@
+.promo-section {
+  padding: 60px 0;
+}
+
+.promo-banner {
+  background: var(--bg-white);
+  border-radius: var(--border-radius-lg);
+  display: flex;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  min-height: 400px;
+  transition: var(--transition);
+}
+
+.promo-banner:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+.promo-content {
+  flex: 1;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.promo-tag {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.promo-tag::before {
+  content: '';
+  width: 30px;
+  height: 2px;
+  background: var(--primary-color);
+}
+
+.promo-title {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  color: var(--text-dark);
+}
+
+.promo-url {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-bottom: 30px;
+  font-family: monospace;
+}
+
+.promo-dots {
+  display: flex;
+  gap: 10px;
+}
+
+.promo-dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid var(--text-dark);
+  transition: var(--transition);
+}
+
+.promo-dots span:first-child {
+  background: var(--text-dark);
+  transform: scale(1.2);
+}
+
+.promo-image-container {
+  flex: 1;
+  position: relative;
+  background: #fdf2f2;
+  overflow: hidden;
+}
+
+.promo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s ease;
+}
+
+.promo-banner:hover .promo-img {
+  transform: scale(1.1);
+}
+
+.promo-overlay-text {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  color: var(--text-dark);
+  z-index: 2;
+}
+
+.promo-overlay-text .number {
+  font-size: 64px;
+  font-weight: 800;
+  opacity: 0.1;
+  line-height: 1;
+}
+
+.promo-overlay-text .label {
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 992px) {
+  .promo-banner {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  .promo-content {
+    padding: 40px;
+    order: 2;
+  }
+  
+  .promo-image-container {
+    height: 300px;
+    order: 1;
+  }
+
+  .promo-title {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 576px) {
+  .promo-content {
+    padding: 30px;
+  }
+  
+  .promo-title {
+    font-size: 28px;
+  }
+}

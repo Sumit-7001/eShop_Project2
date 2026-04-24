@@ -1,0 +1,125 @@
+.app-download-section {
+  padding: 100px 0;
+  background: var(--bg-white);
+}
+
+.app-container {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+}
+
+.app-left {
+  flex: 1;
+}
+
+.app-mobile-img {
+  width: 100%;
+  max-width: 500px;
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.1));
+}
+
+.app-right {
+  flex: 1;
+}
+
+.app-title {
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 10px;
+}
+
+.app-subtitle {
+  font-size: 20px;
+  color: var(--primary-color);
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+.app-description {
+  font-size: 18px;
+  color: var(--text-gray);
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+.app-buttons {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.download-btn {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: #111;
+  color: white;
+  padding: 12px 28px;
+  border-radius: 18px;
+  transition: var(--transition);
+  min-width: 200px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.download-btn:hover {
+  transform: translateY(-5px);
+  background: #000;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  border-color: rgba(255,255,255,0.2);
+}
+
+.btn-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.apple-logo {
+  filter: brightness(0) invert(1); /* Make black SVG white */
+}
+
+.android-logo {
+  /* Green Android logo is default for the wikimedia SVG usually, but let's ensure */
+}
+
+.btn-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.btn-text .small {
+  font-size: 10px;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.btn-text .large {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+@media (max-width: 992px) {
+  .app-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 50px;
+  }
+  
+  .app-buttons {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .app-title {
+    font-size: 32px;
+  }
+  
+  .download-btn {
+    width: 100%;
+  }
+}
