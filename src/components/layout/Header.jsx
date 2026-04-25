@@ -54,10 +54,10 @@ const Header = ({ cartCount, openLogin, openSignup }) => {
 
           <div className="nav-actions">
             <button className="nav-icon-btn"><Search size={20} /></button>
-            <button className="nav-icon-btn cart-btn">
+            <Link to="/cart" className="nav-icon-btn cart-btn">
               <ShoppingCart size={20} />
               <span className="cart-count" key={cartCount}>{cartCount}</span>
-            </button>
+            </Link>
             <button 
               className="menu-toggle" 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

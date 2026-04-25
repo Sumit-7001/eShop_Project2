@@ -11,16 +11,48 @@ import Blogs from './pages/Blogs';
 import FAQPage from './pages/FAQPage';
 import CategoryProducts from './pages/CategoryProducts';
 import ProductDetails from './pages/ProductDetails';
+import Cart from './pages/Cart';
 import AuthModal from './components/common/AuthModal';
+import { CheckCircle } from 'lucide-react';
 import './App.css';
 
 function App() {
-  const [cartCount, setCartCount] = useState(0);
+  const [cartItems, setCartItems] = useState([]);
+  const [notification, setNotification] = useState({ show: false, message: '' });
   const [authModal, setAuthModal] = useState({ isOpen: false, mode: 'login' });
 
-  const addToCart = () => {
-    setCartCount(prev => prev + 1);
+  const addToCart = (product, quantity = 1) => {
+    setCartItems(prev => {
+      const existingItem = prev.find(item => item.id === product.id);
+      if (existingItem) {
+        return prev.map(item => 
+          item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
+        );
+      }
+      return [...prev, { ...product, quantity }];
+    });
+
+    // Show alert
+    setNotification({ show: true, message: 'product added' });
+    setTimeout(() => setNotification({ show: false, message: '' }), 3000);
   };
+
+  const removeFromCart = (id) => {
+    setCartItems(prev => prev.filter(item => item.id !== id));
+  };
+
+  const updateQuantity = (id, newQuantity) => {
+    if (newQuantity < 1) return;
+    setCartItems(prev => prev.map(item => 
+      item.id === id ? { ...item, quantity: newQuantity } : item
+    ));
+  };
+
+  const clearCart = () => {
+    setCartItems([]);
+  };
+
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   const openAuthModal = (mode) => setAuthModal({ isOpen: true, mode });
   const closeAuthModal = () => setAuthModal({ ...authModal, isOpen: false });
@@ -44,7 +76,25 @@ function App() {
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/category/:slug" element={<CategoryProducts addToCart={addToCart} />} />
           <Route path="/product/:id" element={<ProductDetails addToCart={addToCart} />} />
+          <Route path="/cart" element={
+            <Cart 
+              cartItems={cartItems} 
+              removeFromCart={removeFromCart} 
+              updateQuantity={updateQuantity} 
+              clearCart={clearCart} 
+            />
+          } />
         </Routes>
+
+        {/* Global Notification */}
+        {notification.show && (
+          <div className="global-notification">
+            <div className="notification-content">
+              <CheckCircle size={20} color="#28a745" />
+              <span>{notification.message}</span>
+            </div>
+          </div>
+        )}
 
         <Footer />
 

@@ -12,7 +12,7 @@ const BannerVR = ({ onAddToCart }) => {
             <p className="vr-description">
               Experience the extraordinary with our exclusive VR offer. Immerse yourself in limitless adventures today.
             </p>
-            <button className="vr-cta-btn" onClick={onAddToCart}>Order Now Via Online Store</button>
+            <button className="vr-cta-btn" onClick={() => onAddToCart({ id: 999, title: 'Virtual Reality Headset', price: 299, image: vrImage })}>Order Now Via Online Store</button>
           </div>
           <div className="vr-image-container">
             <img src={vrImage} alt="VR Headset" className="vr-img" />

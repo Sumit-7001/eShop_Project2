@@ -129,7 +129,7 @@ const ProductDetails = ({ addToCart }) => {
                 <div className="qty-input">{quantity}</div>
                 <button className="qty-btn" onClick={() => handleQuantity('plus')}><Plus size={16} /></button>
               </div>
-              <button className="add-cart-large" onClick={addToCart}>
+              <button className="add-cart-large" onClick={() => addToCart(product, quantity)}>
                 <ShoppingCart size={20} /> Add to Cart
               </button>
               <button className="icon-btn-outline"><GitCompare size={20} /></button>

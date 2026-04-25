@@ -9,6 +9,7 @@ const slides = [
     highlight: 'Fresh Designs',
     description: 'Must-Have Pieces That Define The Season\'s Biggest Fashion Trends. Shop the latest collection now.',
     image: heroImage,
+    price: 120,
     category: 'Fashion'
   },
   {
@@ -17,6 +18,7 @@ const slides = [
     highlight: 'Smartphones',
     description: 'Upgrade your tech with our latest collection of premium smartphones. Powerful, sleek, and smart.',
     image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&h=800&fit=crop',
+    price: 899,
     category: 'Phones'
   },
   {
@@ -25,6 +27,7 @@ const slides = [
     highlight: 'Luxury Watches',
     description: 'Discover our curated collection of luxury and smart watches. Perfect for every occasion.',
     image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&h=800&fit=crop',
+    price: 350,
     category: 'Watches'
   },
   {
@@ -33,6 +36,7 @@ const slides = [
     highlight: 'Modern Living',
     description: 'Effortless living with our range of high-efficiency home and kitchen appliances. Quality you can trust.',
     image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=800&h=800&fit=crop',
+    price: 499,
     category: 'Appliances'
   }
 ];
@@ -69,7 +73,7 @@ const HeroSection = ({ onAddToCart }) => {
           <p className="hero-description fade-in-right delay-1">
             {description}
           </p>
-          <button className="shop-now-btn" onClick={onAddToCart}>Shop Now</button>
+          <button className="shop-now-btn" onClick={() => onAddToCart(slides[currentSlide])}>Shop Now</button>
           
           <div className="slider-dots">
             {slides.map((_, index) => (

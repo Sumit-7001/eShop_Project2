@@ -34,7 +34,7 @@ const ProductCard = ({ product, onAddToCart }) => {
           </div>
           <button className="add-to-cart-btn" onClick={(e) => {
             e.preventDefault();
-            onAddToCart();
+            onAddToCart(product);
           }}>
             <ShoppingCart size={18} />
           </button>
