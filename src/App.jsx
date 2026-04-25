@@ -8,12 +8,13 @@ import Sellers from './pages/Sellers';
 import AllCategoriesPage from './pages/AllCategoriesPage';
 import AllBrandsPage from './pages/AllBrandsPage';
 import Blogs from './pages/Blogs';
+import BlogDetails from './pages/BlogDetails';
 import FAQPage from './pages/FAQPage';
 import CategoryProducts from './pages/CategoryProducts';
 import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
 import AuthModal from './components/common/AuthModal';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, ShoppingCart } from 'lucide-react';
 import './App.css';
 
 function App() {
@@ -74,6 +75,7 @@ function App() {
           <Route path="/brands" element={<AllBrandsPage />} />
           <Route path="/faqs" element={<FAQPage />} />
           <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blogs/view_detail/:slug" element={<BlogDetails />} />
           <Route path="/category/:slug" element={<CategoryProducts addToCart={addToCart} />} />
           <Route path="/product/:id" element={<ProductDetails addToCart={addToCart} />} />
           <Route path="/cart" element={
@@ -103,6 +105,11 @@ function App() {
           onClose={closeAuthModal} 
           initialMode={authModal.mode} 
         />
+        
+        {/* Floating Buy Now Button */}
+        <a href="https://codecanyon.net/item/eshop-web-multi-vendor-ecommerce-marketplace-cms/34380052" target="_blank" rel="noreferrer" className="floating-buy-now">
+          <ShoppingCart size={16} /> Buy Now
+        </a>
       </div>
     </Router>
   );

@@ -55,3 +55,29 @@
   from { transform: translateX(100%); opacity: 0; }
   to { transform: translateX(0); opacity: 1; }
 }
+
+/* Floating Buy Now Button */
+.floating-buy-now {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  background-color: #f27a69;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(242, 122, 105, 0.4);
+  z-index: 9999;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.floating-buy-now:hover {
+  transform: translateY(-2px);
+  background-color: #e06a58;
+  color: white;
+}

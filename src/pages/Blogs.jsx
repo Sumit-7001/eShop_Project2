@@ -1,7 +1,12 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { Calendar } from 'lucide-react';
 import { blogsData } from '../data/blogsData';
 import '../styles/Blogs.css';
+
+const createSlug = (title, id) => {
+  return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') + '-' + id;
+};
 
 const Blogs = () => {
   const [category, setCategory] = useState('');
@@ -74,16 +79,14 @@ const Blogs = () => {
               <div className="blog-card" key={blog.id}>
                 <div className="blog-image-wrapper">
                   <img src={blog.image} alt={blog.title} className="blog-image" />
+                  <Link to={`/blogs/view_detail/${createSlug(blog.title, blog.id)}`} className="blog-read-more">Read More</Link>
                 </div>
                 <div className="blog-content">
                   <h3 className="blog-title">{blog.title}</h3>
                   <p className="blog-description">{blog.description}</p>
                   <div className="blog-footer">
-                    <span className="blog-footer-icon"></span>
+                    <span className="blog-footer-icon"><Calendar size={14} /></span>
                     <span>{blog.date}</span>
-                  </div>
-                  <div>
-                    <Link to={`/blogs/${blog.id}`} className="blog-read-more">Read More</Link>
                   </div>
                 </div>
               </div>
