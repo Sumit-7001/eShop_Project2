@@ -14,7 +14,7 @@ import CategoryProducts from './pages/CategoryProducts';
 import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
 import AuthModal from './components/common/AuthModal';
-import { CheckCircle, ShoppingCart } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import './App.css';
 
 function App() {
@@ -105,11 +105,6 @@ function App() {
           onClose={closeAuthModal} 
           initialMode={authModal.mode} 
         />
-        
-        {/* Floating Buy Now Button */}
-        <a href="https://codecanyon.net/item/eshop-web-multi-vendor-ecommerce-marketplace-cms/34380052" target="_blank" rel="noreferrer" className="floating-buy-now">
-          <ShoppingCart size={16} /> Buy Now
-        </a>
       </div>
     </Router>
   );
