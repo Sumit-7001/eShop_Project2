@@ -73,10 +73,10 @@ export const brands = [
 ];
 
 export const smartphones = [
-  { id: 1, title: 'Samsung Galaxy S24 Ultra', price: 1199, oldPrice: 1399, rating: 5, image: phone1, sale: true },
-  { id: 2, title: 'iPhone 15 Pro Max', price: 1099, oldPrice: 1299, rating: 4.8, image: phone2, sale: true },
-  { id: 3, title: 'Google Pixel 8 Pro', price: 899, oldPrice: 999, rating: 4.7, image: phone3, sale: false },
-  { id: 4, title: 'OnePlus 12', price: 799, oldPrice: 899, rating: 4.6, image: phone4, sale: true },
+  { id: 1, title: 'Samsung Galaxy S24 Ultra', price: 1199, oldPrice: 1399, rating: 5, image: phone1, sale: true, description: 'Experience the next level of mobile technology with the Samsung Galaxy S24 Ultra. Featuring an advanced AI-driven camera system, a stunning 120Hz display, and unparalleled performance with the latest processor.' },
+  { id: 2, title: 'iPhone 15 Pro Max', price: 1099, oldPrice: 1299, rating: 4.8, image: phone2, sale: true, description: 'The iPhone 15 Pro Max features a strong and light aerospace-grade titanium design. It also comes with the A17 Pro chip for next-level performance and a professional-grade camera system with 5x optical zoom.' },
+  { id: 3, title: 'Google Pixel 8 Pro', price: 899, oldPrice: 999, rating: 4.7, image: phone3, sale: false, description: 'The Google Pixel 8 Pro is the all-pro phone engineered by Google. It’s sleek, sophisticated, and has a battery that can last over 24 hours. The camera system is powered by Google AI for incredible photos and videos.' },
+  { id: 4, title: 'OnePlus 12', price: 799, oldPrice: 899, rating: 4.6, image: phone4, sale: true, description: 'OnePlus 12 delivers flagship performance with its Snapdragon 8 Gen 3 processor, a stunning 2K ProXDR display, and the 4th Gen Hasselblad Camera for Mobile for breathtaking photography.' },
   { id: 17, title: 'Xiaomi 14 Ultra', price: 999, oldPrice: 1199, rating: 4.5, image: 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&auto=format&fit=crop', sale: true },
   { id: 18, title: 'Nothing Phone (2)', price: 599, oldPrice: 699, rating: 4.4, image: 'https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=400&auto=format&fit=crop', sale: false },
   { id: 19, title: 'Sony Xperia 1 V', price: 1299, oldPrice: 1399, rating: 4.6, image: 'https://images.unsplash.com/photo-1523206489230-c012c64b2b48?w=400&auto=format&fit=crop', sale: true },
@@ -96,10 +96,10 @@ export const smartphones = [
 ];
 
 export const watches = [
-  { id: 5, title: 'Apple Watch Series 9', price: 399, oldPrice: 449, rating: 4.9, image: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=400&auto=format&fit=crop', sale: true },
-  { id: 6, title: 'Samsung Galaxy Watch 6', price: 299, oldPrice: 349, rating: 4.7, image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&auto=format&fit=crop', sale: false },
-  { id: 7, title: 'Garmin Venu 3', price: 449, oldPrice: 499, rating: 4.8, image: 'https://images.unsplash.com/photo-1508685096489-7aac291ba597?w=400&auto=format&fit=crop', sale: true },
-  { id: 8, title: 'Luxury Chronograph', price: 599, oldPrice: 799, rating: 4.3, image: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400&auto=format&fit=crop', sale: true },
+  { id: 5, title: 'Apple Watch Series 9', price: 399, oldPrice: 449, rating: 4.9, image: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=400&auto=format&fit=crop', sale: true, description: 'Apple Watch Series 9 is more capable, easier to use, and faster than ever. It features a bright Retina display, advanced health sensors, and the powerful S9 SiP for a seamless experience.' },
+  { id: 6, title: 'Samsung Galaxy Watch 6', price: 299, oldPrice: 349, rating: 4.7, image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&auto=format&fit=crop', sale: false, description: 'Monitor your health and stay connected with the Samsung Galaxy Watch 6. It features a sleek design, improved sleep tracking, and personalized heart rate zones to help you reach your fitness goals.' },
+  { id: 7, title: 'Garmin Venu 3', price: 449, oldPrice: 499, rating: 4.8, image: 'https://images.unsplash.com/photo-1508685096489-7aac291ba597?w=400&auto=format&fit=crop', sale: true, description: 'Know the real you with the Garmin Venu 3 smartwatch. It offers advanced fitness features, a vibrant AMOLED display, and a long battery life to keep up with your active lifestyle.' },
+  { id: 8, title: 'Luxury Chronograph', price: 599, oldPrice: 799, rating: 4.3, image: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400&auto=format&fit=crop', sale: true, description: 'Elevate your style with this Luxury Chronograph. Featuring a premium leather strap and a precision-engineered movement, this watch is perfect for both formal and casual occasions.' },
   { id: 31, title: 'Fitbit Sense 2', price: 249, oldPrice: 299, rating: 4.5, image: 'https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=400&auto=format&fit=crop', sale: true },
   { id: 32, title: 'Fossil Gen 6', price: 229, oldPrice: 279, rating: 4.2, image: 'https://images.unsplash.com/photo-1522312346375-d1ad52429b9e?w=400&auto=format&fit=crop', sale: false },
   { id: 33, title: 'Huawei Watch GT 4', price: 249, oldPrice: 299, rating: 4.6, image: 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=400&auto=format&fit=crop', sale: true },
@@ -119,10 +119,10 @@ export const watches = [
 ];
 
 export const furniture = [
-  { id: 9, title: 'Modern Velvet Sofa', price: 899, oldPrice: 1199, rating: 4.9, image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&auto=format&fit=crop', sale: true },
-  { id: 10, title: 'Oak Wood Dining Table', price: 549, oldPrice: 699, rating: 4.7, image: 'https://images.unsplash.com/photo-1530018607912-eff2df114f11?w=400&auto=format&fit=crop', sale: false },
-  { id: 11, title: 'Ergonomic Office Chair', price: 299, oldPrice: 399, rating: 4.8, image: 'https://images.unsplash.com/photo-1505797149-43b0ad01f994?w=400&auto=format&fit=crop', sale: true },
-  { id: 12, title: 'Minimalist Coffee Table', price: 149, oldPrice: 199, rating: 4.5, image: 'https://images.unsplash.com/photo-1532372320572-cda25653a26d?w=400&auto=format&fit=crop', sale: false },
+  { id: 9, title: 'Modern Velvet Sofa', price: 899, oldPrice: 1199, rating: 4.9, image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&auto=format&fit=crop', sale: true, description: 'Transform your living room with this Modern Velvet Sofa. Its plush upholstery and elegant design provide both comfort and style, making it the perfect centerpiece for your home.' },
+  { id: 10, title: 'Oak Wood Dining Table', price: 549, oldPrice: 699, rating: 4.7, image: 'https://images.unsplash.com/photo-1530018607912-eff2df114f11?w=400&auto=format&fit=crop', sale: false, description: 'Crafted from solid oak, this dining table is built to last. Its natural finish and minimalist design complement any dining area, providing a warm and inviting space for family meals.' },
+  { id: 11, title: 'Ergonomic Office Chair', price: 299, oldPrice: 399, rating: 4.8, image: 'https://images.unsplash.com/photo-1505797149-43b0ad01f994?w=400&auto=format&fit=crop', sale: true, description: 'Stay comfortable and productive with this Ergonomic Office Chair. Featuring adjustable lumbar support and a breathable mesh back, it’s designed to support you through long work hours.' },
+  { id: 12, title: 'Minimalist Coffee Table', price: 149, oldPrice: 199, rating: 4.5, image: 'https://images.unsplash.com/photo-1532372320572-cda25653a26d?w=400&auto=format&fit=crop', sale: false, description: 'This Minimalist Coffee Table is a perfect blend of form and function. Its sleek lines and compact design make it ideal for modern living spaces while providing a stylish surface for your coffee and books.' },
   { id: 57, title: 'King Size Bed Frame', price: 799, oldPrice: 999, rating: 4.9, image: 'https://images.unsplash.com/photo-1505693415957-285a9f477000?w=400&auto=format&fit=crop', sale: true },
   { id: 58, title: 'Bookshelf with Glass Doors', price: 349, oldPrice: 449, rating: 4.6, image: 'https://images.unsplash.com/photo-1594620302200-9a762244a156?w=400&auto=format&fit=crop', sale: false },
   { id: 59, title: 'L-Shaped Sectional Sofa', price: 1299, oldPrice: 1599, rating: 4.8, image: 'https://images.unsplash.com/photo-1550254478-ead40cc54513?w=400&auto=format&fit=crop', sale: true },
@@ -214,3 +214,5 @@ export const sellers = [
     products: []
   }
 ];
+
+export const allProducts = [...smartphones, ...watches, ...furniture, ...kids];
