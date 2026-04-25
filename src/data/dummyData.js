@@ -77,6 +77,12 @@ export const smartphones = [
   { id: 2, title: 'iPhone 15 Pro Max', price: 1099, oldPrice: 1299, rating: 4.8, image: phone2, sale: true },
   { id: 3, title: 'Google Pixel 8 Pro', price: 899, oldPrice: 999, rating: 4.7, image: phone3, sale: false },
   { id: 4, title: 'OnePlus 12', price: 799, oldPrice: 899, rating: 4.6, image: phone4, sale: true },
+  { id: 17, title: 'Xiaomi 14 Ultra', price: 999, oldPrice: 1199, rating: 4.5, image: 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&auto=format&fit=crop', sale: true },
+  { id: 18, title: 'Nothing Phone (2)', price: 599, oldPrice: 699, rating: 4.4, image: 'https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=400&auto=format&fit=crop', sale: false },
+  { id: 19, title: 'Sony Xperia 1 V', price: 1299, oldPrice: 1399, rating: 4.6, image: 'https://images.unsplash.com/photo-1523206489230-c012c64b2b48?w=400&auto=format&fit=crop', sale: true },
+  { id: 20, title: 'Asus Zenfone 10', price: 699, oldPrice: 799, rating: 4.3, image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&auto=format&fit=crop', sale: false },
+  { id: 21, title: 'Motorola Edge 40 Pro', price: 799, oldPrice: 899, rating: 4.2, image: 'https://images.unsplash.com/photo-1533310266094-8898a03807dd?w=400&auto=format&fit=crop', sale: true },
+  { id: 22, title: 'Realme GT 5', price: 499, oldPrice: 599, rating: 4.1, image: 'https://images.unsplash.com/photo-1556656793-062ff9878258?w=400&auto=format&fit=crop', sale: false },
 ];
 
 export const watches = [

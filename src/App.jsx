@@ -9,6 +9,7 @@ import AllCategoriesPage from './pages/AllCategoriesPage';
 import AllBrandsPage from './pages/AllBrandsPage';
 import Blogs from './pages/Blogs';
 import FAQPage from './pages/FAQPage';
+import CategoryProducts from './pages/CategoryProducts';
 import AuthModal from './components/common/AuthModal';
 import './App.css';
 
@@ -40,6 +41,7 @@ function App() {
           <Route path="/brands" element={<AllBrandsPage />} />
           <Route path="/faqs" element={<FAQPage />} />
           <Route path="/blogs" element={<Blogs />} />
+          <Route path="/category/:slug" element={<CategoryProducts addToCart={addToCart} />} />
         </Routes>
 
         <Footer />

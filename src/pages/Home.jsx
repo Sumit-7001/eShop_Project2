@@ -22,9 +22,9 @@ const Home = ({ addToCart }) => {
 
       <section className="products-grid-section">
         <div className="container">
-          <SectionTitle title="Smartphones & Basic Mobiles" />
+          <SectionTitle title="Smartphones & Basic Mobiles" viewMoreLink="/category/smartphones" />
           <div className="products-grid">
-            {smartphones.map(product => (
+            {smartphones.slice(0, 4).map(product => (
               <ProductCard key={product.id} product={product} onAddToCart={addToCart} />
             ))}
           </div>
@@ -37,7 +37,7 @@ const Home = ({ addToCart }) => {
         <div className="container">
           <SectionTitle title="Top Rated Watches" />
           <div className="products-grid">
-            {watches.map(product => (
+            {watches.slice(0, 4).map(product => (
               <ProductCard key={product.id} product={product} onAddToCart={addToCart} />
             ))}
           </div>
@@ -48,7 +48,7 @@ const Home = ({ addToCart }) => {
         <div className="container">
           <SectionTitle title="Top Rated Furniture Products" />
           <div className="products-grid">
-            {furniture.map(product => (
+            {furniture.slice(0, 4).map(product => (
               <ProductCard key={product.id} product={product} onAddToCart={addToCart} />
             ))}
           </div>
@@ -59,7 +59,7 @@ const Home = ({ addToCart }) => {
         <div className="container">
           <SectionTitle title="Kid's Section" />
           <div className="products-grid">
-            {kids.map(product => (
+            {kids.slice(0, 4).map(product => (
               <ProductCard key={product.id} product={product} onAddToCart={addToCart} />
             ))}
           </div>
