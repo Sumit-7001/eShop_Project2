@@ -22,6 +22,11 @@ import barStools from '../assets/images/bar_stools.png';
 import armchair from '../assets/images/armchair.png';
 import standingDesk from '../assets/images/standing_desk.png';
 import dresserWithMirror from '../assets/images/dresser_with_mirror.png';
+import outdoorTrampoline from '../assets/images/outdoor_trampoline.png';
+import smartphone from '../assets/images/smartphone.png';
+import nubiaPhone from '../assets/images/nubia_redmagic_9_pro.png';
+import sportsIcon from '../assets/images/sports.png';
+
 
 export const categories = [
   { id: 1, name: 'Furniture', image: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?w=200&h=200&fit=crop' },
@@ -33,7 +38,7 @@ export const categories = [
   { id: 7, name: 'Decor', image: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=200&h=200&fit=crop' },
   { id: 8, name: 'Books', image: 'https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=200&h=200&fit=crop' },
   { id: 9, name: 'Beauty', image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=200&h=200&fit=crop' },
-  { id: 10, name: 'Sports', image: '/src/assets/images/sports.png' },
+  { id: 10, name: 'Sports', image: sportsIcon },
   { id: 11, name: 'Toys', image: 'https://images.unsplash.com/photo-1533906966484-a9c978a3f090?w=200&h=200&fit=crop' },
   { id: 12, name: 'Grocery', image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=200&h=200&fit=crop' },
   { id: 13, name: 'Automotive', image: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=200&h=200&fit=crop' },
@@ -103,13 +108,13 @@ export const smartphones = [
   { id: 47, title: 'Vivo X100 Pro', price: 899, oldPrice: 999, rating: 4.6, image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&auto=format&fit=crop', sale: true },
   { id: 48, title: 'Oppo Find X7 Ultra', price: 949, oldPrice: 1049, rating: 4.5, image: 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=400&auto=format&fit=crop', sale: false },
   { id: 49, title: 'Honor Magic 6 Pro', price: 899, oldPrice: 999, rating: 4.4, image: 'https://images.unsplash.com/photo-1567581935884-3349723552ca?w=400&auto=format&fit=crop', sale: true },
-  { id: 50, title: 'Poco F6 Pro', price: 449, oldPrice: 499, rating: 4.3, image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&auto=format&fit=crop', sale: false },
-  { id: 51, title: 'Redmi Note 13 Pro+', price: 399, oldPrice: 449, rating: 4.2, image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&auto=format&fit=crop', sale: true },
-  { id: 52, title: 'Infinix GT 20 Pro', price: 299, oldPrice: 349, rating: 4.1, image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&auto=format&fit=crop', sale: false },
-  { id: 53, title: 'Tecno Camon 30 Premier', price: 349, oldPrice: 399, rating: 4.0, image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&auto=format&fit=crop', sale: true },
-  { id: 54, title: 'Meizu 21 Pro', price: 699, oldPrice: 799, rating: 4.3, image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&auto=format&fit=crop', sale: false },
-  { id: 55, title: 'ZTE Axon 60 Ultra', price: 749, oldPrice: 849, rating: 4.4, image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&auto=format&fit=crop', sale: true },
-  { id: 56, title: 'Nubia RedMagic 9 Pro', price: 649, oldPrice: 749, rating: 4.7, image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&auto=format&fit=crop', sale: true },
+  { id: 50, title: 'Poco F6 Pro', price: 449, oldPrice: 499, rating: 4.3, image: 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400&auto=format&fit=crop', sale: false },
+  { id: 51, title: 'Redmi Note 13 Pro+', price: 399, oldPrice: 449, rating: 4.2, image: 'https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=400&auto=format&fit=crop', sale: true },
+  { id: 52, title: 'Infinix GT 20 Pro', price: 299, oldPrice: 349, rating: 4.1, image: 'https://images.unsplash.com/photo-1523206489230-c012c64b2b48?w=400&auto=format&fit=crop', sale: false },
+  { id: 53, title: 'Tecno Camon 30 Premier', price: 349, oldPrice: 399, rating: 4.0, image: 'https://images.unsplash.com/photo-1533310266094-8898a03807dd?w=400&auto=format&fit=crop', sale: true },
+  { id: 54, title: 'Meizu 21 Pro', price: 699, oldPrice: 799, rating: 4.3, image: 'https://images.unsplash.com/photo-1605236453806-6ff36851218e?w=400&auto=format&fit=crop', sale: false },
+  { id: 55, title: 'ZTE Axon 60 Ultra', price: 749, oldPrice: 849, rating: 4.4, image: smartphone, sale: true },
+  { id: 56, title: 'Nubia RedMagic 9 Pro', price: 649, oldPrice: 749, rating: 4.7, image: nubiaPhone, sale: true },
 ];
 
 export const watches = [
@@ -170,7 +175,7 @@ export const kids = [
   { id: 77, title: 'Digital Kids Camera', price: 39, oldPrice: 49, rating: 4.4, image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=800&auto=format&fit=crop', sale: true },
   { id: 78, title: 'Drawing Tablet for Kids', price: 29, oldPrice: 39, rating: 4.5, image: 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=400&auto=format&fit=crop', sale: false },
   { id: 79, title: 'Musical Keyboard', price: 69, oldPrice: 89, rating: 4.6, image: 'https://images.unsplash.com/photo-1552422535-c45813c61732?q=80&w=800&auto=format&fit=crop', sale: true },
-  { id: 80, title: 'Outdoor Trampoline', price: 249, oldPrice: 299, rating: 4.8, image: 'https://images.unsplash.com/photo-1561571592-38600d89260d?w=400&auto=format&fit=crop', sale: false },
+  { id: 80, title: 'Outdoor Trampoline', price: 249, oldPrice: 299, rating: 4.8, image: outdoorTrampoline, sale: false },
   { id: 81, title: 'Storybook Collection', price: 35, oldPrice: 45, rating: 4.9, image: 'https://images.unsplash.com/photo-1474932430478-367dbb6832c1?q=80&w=800&auto=format&fit=crop', sale: true },
   { id: 82, title: 'Kids Play Tent', price: 49, oldPrice: 69, rating: 4.7, image: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=800&auto=format&fit=crop', sale: false },
   { id: 83, title: 'Alphabet Puzzle Mat', price: 25, oldPrice: 35, rating: 4.6, image: 'https://images.unsplash.com/photo-1587654780291-39c9404d746b?q=80&w=800&auto=format&fit=crop', sale: true },
