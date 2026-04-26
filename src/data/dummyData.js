@@ -5,6 +5,23 @@ import phone4 from '../assets/images/phone4.png';
 import watchRep from '../assets/images/watch.png';
 import furnitureRep from '../assets/images/furniture.png';
 import kidsRep from '../assets/images/kids.png';
+import diningTable from '../assets/images/dining_table.png';
+import officeChair from '../assets/images/office_chair.png';
+import buildingBlocks from '../assets/images/building_blocks.png';
+import garminWatch from '../assets/images/garmin_watch.png';
+import realmePhone from '../assets/images/realme_phone.png';
+import bedFrame from '../assets/images/bed_frame.png';
+import bookshelf from '../assets/images/bookshelf.png';
+import sectionalSofa from '../assets/images/sectional_sofa.png';
+import tvStand from '../assets/images/tv_stand.png';
+import teddyBear from '../assets/images/teddy_bear.png';
+import rideOnCar from '../assets/images/ride_on_car.png';
+import artSet from '../assets/images/art_set.png';
+import rcCar from '../assets/images/rc_car.png';
+import barStools from '../assets/images/bar_stools.png';
+import armchair from '../assets/images/armchair.png';
+import standingDesk from '../assets/images/standing_desk.png';
+import dresserWithMirror from '../assets/images/dresser_with_mirror.png';
 
 export const categories = [
   { id: 1, name: 'Furniture', image: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?w=200&h=200&fit=crop' },
@@ -82,7 +99,7 @@ export const smartphones = [
   { id: 19, title: 'Sony Xperia 1 V', price: 1299, oldPrice: 1399, rating: 4.6, image: 'https://images.unsplash.com/photo-1523206489230-c012c64b2b48?w=400&auto=format&fit=crop', sale: true },
   { id: 20, title: 'Asus Zenfone 10', price: 699, oldPrice: 799, rating: 4.3, image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&auto=format&fit=crop', sale: false },
   { id: 21, title: 'Motorola Edge 40 Pro', price: 799, oldPrice: 899, rating: 4.2, image: 'https://images.unsplash.com/photo-1533310266094-8898a03807dd?w=400&auto=format&fit=crop', sale: true },
-  { id: 22, title: 'Realme GT 5', price: 499, oldPrice: 599, rating: 4.1, image: 'https://images.unsplash.com/photo-1556656793-062ff9878258?w=400&auto=format&fit=crop', sale: false },
+  { id: 22, title: 'Realme GT 5', price: 499, oldPrice: 599, rating: 4.1, image: realmePhone, sale: false },
   { id: 47, title: 'Vivo X100 Pro', price: 899, oldPrice: 999, rating: 4.6, image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&auto=format&fit=crop', sale: true },
   { id: 48, title: 'Oppo Find X7 Ultra', price: 949, oldPrice: 1049, rating: 4.5, image: 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?w=400&auto=format&fit=crop', sale: false },
   { id: 49, title: 'Honor Magic 6 Pro', price: 899, oldPrice: 999, rating: 4.4, image: 'https://images.unsplash.com/photo-1567581935884-3349723552ca?w=400&auto=format&fit=crop', sale: true },
@@ -98,70 +115,70 @@ export const smartphones = [
 export const watches = [
   { id: 5, title: 'Apple Watch Series 9', price: 399, oldPrice: 449, rating: 4.9, image: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=400&auto=format&fit=crop', sale: true, description: 'Apple Watch Series 9 is more capable, easier to use, and faster than ever. It features a bright Retina display, advanced health sensors, and the powerful S9 SiP for a seamless experience.' },
   { id: 6, title: 'Samsung Galaxy Watch 6', price: 299, oldPrice: 349, rating: 4.7, image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&auto=format&fit=crop', sale: false, description: 'Monitor your health and stay connected with the Samsung Galaxy Watch 6. It features a sleek design, improved sleep tracking, and personalized heart rate zones to help you reach your fitness goals.' },
-  { id: 7, title: 'Garmin Venu 3', price: 449, oldPrice: 499, rating: 4.8, image: 'https://images.unsplash.com/photo-1508685096489-7aac291ba597?w=400&auto=format&fit=crop', sale: true, description: 'Know the real you with the Garmin Venu 3 smartwatch. It offers advanced fitness features, a vibrant AMOLED display, and a long battery life to keep up with your active lifestyle.' },
+  { id: 7, title: 'Garmin Venu 3', price: 449, oldPrice: 499, rating: 4.8, image: garminWatch, sale: true, description: 'Know the real you with the Garmin Venu 3 smartwatch. It offers advanced fitness features, a vibrant AMOLED display, and a long battery life to keep up with your active lifestyle.' },
   { id: 8, title: 'Luxury Chronograph', price: 599, oldPrice: 799, rating: 4.3, image: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400&auto=format&fit=crop', sale: true, description: 'Elevate your style with this Luxury Chronograph. Featuring a premium leather strap and a precision-engineered movement, this watch is perfect for both formal and casual occasions.' },
   { id: 31, title: 'Fitbit Sense 2', price: 249, oldPrice: 299, rating: 4.5, image: 'https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=400&auto=format&fit=crop', sale: true },
-  { id: 32, title: 'Fossil Gen 6', price: 229, oldPrice: 279, rating: 4.2, image: 'https://images.unsplash.com/photo-1522312346375-d1ad52429b9e?w=400&auto=format&fit=crop', sale: false },
+  { id: 32, title: 'Fossil Gen 6', price: 229, oldPrice: 279, rating: 4.2, image: 'https://images.unsplash.com/photo-1551816230-ef5deaed4a26?w=400&auto=format&fit=crop', sale: false },
   { id: 33, title: 'Huawei Watch GT 4', price: 249, oldPrice: 299, rating: 4.6, image: 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=400&auto=format&fit=crop', sale: true },
   { id: 34, title: 'TicWatch Pro 5', price: 349, oldPrice: 399, rating: 4.4, image: 'https://images.unsplash.com/photo-1509112756314-34a0badb29d4?w=400&auto=format&fit=crop', sale: false },
   { id: 35, title: 'Amazfit GTR 4', price: 199, oldPrice: 249, rating: 4.3, image: 'https://images.unsplash.com/photo-1617043786394-f977fa12eddf?w=400&auto=format&fit=crop', sale: true },
-  { id: 36, title: 'Suunto 9 Peak', price: 499, oldPrice: 599, rating: 4.7, image: 'https://images.unsplash.com/photo-1434493907317-a46b5bc78a88?w=400&auto=format&fit=crop', sale: false },
-  { id: 37, title: 'Withings ScanWatch', price: 299, oldPrice: 349, rating: 4.5, image: 'https://images.unsplash.com/photo-1517438476312-10d79c67750d?w=400&auto=format&fit=crop', sale: true },
+  { id: 36, title: 'Suunto 9 Peak', price: 499, oldPrice: 599, rating: 4.7, image: 'https://images.unsplash.com/photo-1544117519-31a4b719223d?w=400&auto=format&fit=crop', sale: false },
+  { id: 37, title: 'Withings ScanWatch', price: 299, oldPrice: 349, rating: 4.5, image: 'https://images.unsplash.com/photo-1508057198894-247b23fe5ade?w=400&auto=format&fit=crop', sale: true },
   { id: 38, title: 'TAG Heuer Connected', price: 1800, oldPrice: 2000, rating: 4.9, image: 'https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=400&auto=format&fit=crop', sale: false },
-  { id: 39, title: 'Tissot T-Touch Connect', price: 1050, oldPrice: 1200, rating: 4.6, image: 'https://images.unsplash.com/photo-1547996160-81dfa63595dd?w=400&auto=format&fit=crop', sale: true },
-  { id: 40, title: 'Seiko Prospex', price: 450, oldPrice: 550, rating: 4.8, image: 'https://images.unsplash.com/photo-1639037687665-9856db641973?w=400&auto=format&fit=crop', sale: false },
-  { id: 41, title: 'Citizen Eco-Drive', price: 250, oldPrice: 350, rating: 4.4, image: 'https://images.unsplash.com/photo-1526045431048-f857369aba09?w=400&auto=format&fit=crop', sale: true },
-  { id: 42, title: 'Casio G-Shock', price: 120, oldPrice: 150, rating: 4.7, image: 'https://images.unsplash.com/photo-1522312346375-d1ad52429b9e?w=400&auto=format&fit=crop', sale: false },
+  { id: 39, title: 'Tissot T-Touch Connect', price: 1050, oldPrice: 1200, rating: 4.6, image: 'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=400&auto=format&fit=crop', sale: true },
+  { id: 40, title: 'Seiko Prospex', price: 450, oldPrice: 550, rating: 4.8, image: watchRep, sale: false },
+  { id: 41, title: 'Citizen Eco-Drive', price: 250, oldPrice: 350, rating: 4.4, image: 'https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=400&auto=format&fit=crop', sale: true },
+  { id: 42, title: 'Casio G-Shock', price: 120, oldPrice: 150, rating: 4.7, image: 'https://images.unsplash.com/photo-1622434641406-a158123450f9?w=400&auto=format&fit=crop', sale: false },
   { id: 43, title: 'Timex Weekender', price: 50, oldPrice: 65, rating: 4.3, image: 'https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=400&auto=format&fit=crop', sale: true },
   { id: 44, title: 'Bulova Marine Star', price: 350, oldPrice: 450, rating: 4.5, image: 'https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=400&auto=format&fit=crop', sale: false },
   { id: 45, title: 'Orient Bambino', price: 180, oldPrice: 220, rating: 4.8, image: 'https://images.unsplash.com/photo-1585123334904-845d60e97b29?w=400&auto=format&fit=crop', sale: true },
-  { id: 46, title: 'Hamilton Khaki Field', price: 550, oldPrice: 650, rating: 4.7, image: 'https://images.unsplash.com/photo-1539533397341-a09961d0a52a?w=400&auto=format&fit=crop', sale: false },
+  { id: 46, title: 'Hamilton Khaki Field', price: 550, oldPrice: 650, rating: 4.7, image: 'https://images.unsplash.com/photo-1509112756314-34a0badb29d4?w=400&auto=format&fit=crop', sale: false },
 ];
 
 export const furniture = [
   { id: 9, title: 'Modern Velvet Sofa', price: 899, oldPrice: 1199, rating: 4.9, image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&auto=format&fit=crop', sale: true, description: 'Transform your living room with this Modern Velvet Sofa. Its plush upholstery and elegant design provide both comfort and style, making it the perfect centerpiece for your home.' },
-  { id: 10, title: 'Oak Wood Dining Table', price: 549, oldPrice: 699, rating: 4.7, image: 'https://images.unsplash.com/photo-1530018607912-eff2df114f11?w=400&auto=format&fit=crop', sale: false, description: 'Crafted from solid oak, this dining table is built to last. Its natural finish and minimalist design complement any dining area, providing a warm and inviting space for family meals.' },
-  { id: 11, title: 'Ergonomic Office Chair', price: 299, oldPrice: 399, rating: 4.8, image: 'https://images.unsplash.com/photo-1505797149-43b0ad01f994?w=400&auto=format&fit=crop', sale: true, description: 'Stay comfortable and productive with this Ergonomic Office Chair. Featuring adjustable lumbar support and a breathable mesh back, it’s designed to support you through long work hours.' },
+  { id: 10, title: 'Oak Wood Dining Table', price: 549, oldPrice: 699, rating: 4.7, image: diningTable, sale: false, description: 'Crafted from solid oak, this dining table is built to last. Its natural finish and minimalist design complement any dining area, providing a warm and inviting space for family meals.' },
+  { id: 11, title: 'Ergonomic Office Chair', price: 299, oldPrice: 399, rating: 4.8, image: officeChair, sale: true, description: 'Stay comfortable and productive with this Ergonomic Office Chair. Featuring adjustable lumbar support and a breathable mesh back, it’s designed to support you through long work hours.' },
   { id: 12, title: 'Minimalist Coffee Table', price: 149, oldPrice: 199, rating: 4.5, image: 'https://images.unsplash.com/photo-1532372320572-cda25653a26d?w=400&auto=format&fit=crop', sale: false, description: 'This Minimalist Coffee Table is a perfect blend of form and function. Its sleek lines and compact design make it ideal for modern living spaces while providing a stylish surface for your coffee and books.' },
-  { id: 57, title: 'King Size Bed Frame', price: 799, oldPrice: 999, rating: 4.9, image: 'https://images.unsplash.com/photo-1505693415957-285a9f477000?w=400&auto=format&fit=crop', sale: true },
-  { id: 58, title: 'Bookshelf with Glass Doors', price: 349, oldPrice: 449, rating: 4.6, image: 'https://images.unsplash.com/photo-1594620302200-9a762244a156?w=400&auto=format&fit=crop', sale: false },
-  { id: 59, title: 'L-Shaped Sectional Sofa', price: 1299, oldPrice: 1599, rating: 4.8, image: 'https://images.unsplash.com/photo-1550254478-ead40cc54513?w=400&auto=format&fit=crop', sale: true },
-  { id: 60, title: 'Industrial Bar Stools', price: 199, oldPrice: 249, rating: 4.4, image: 'https://images.unsplash.com/photo-1503602642458-232111445657?w=400&auto=format&fit=crop', sale: false },
-  { id: 61, title: 'Modern TV Stand', price: 249, oldPrice: 349, rating: 4.5, image: 'https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=400&auto=format&fit=crop', sale: true },
-  { id: 62, title: 'Mid-Century Armchair', price: 399, oldPrice: 499, rating: 4.7, image: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=400&auto=format&fit=crop', sale: false },
-  { id: 63, title: 'Standing Desk', price: 449, oldPrice: 549, rating: 4.8, image: 'https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?w=400&auto=format&fit=crop', sale: true },
-  { id: 64, title: 'Outdoor Patio Set', price: 699, oldPrice: 899, rating: 4.3, image: 'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=400&auto=format&fit=crop', sale: false },
-  { id: 65, title: 'Dresser with Mirror', price: 549, oldPrice: 649, rating: 4.6, image: 'https://images.unsplash.com/photo-1509660155171-0d0313ab4ae7?w=400&auto=format&fit=crop', sale: true },
-  { id: 66, title: 'Ottoman with Storage', price: 99, oldPrice: 149, rating: 4.4, image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&auto=format&fit=crop', sale: false },
-  { id: 67, title: 'Nightstand with Drawers', price: 129, oldPrice: 179, rating: 4.5, image: 'https://images.unsplash.com/photo-1532323544230-7191fd51bc1b?w=400&auto=format&fit=crop', sale: true },
-  { id: 68, title: 'Kitchen Island Cart', price: 299, oldPrice: 399, rating: 4.2, image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=400&auto=format&fit=crop', sale: false },
-  { id: 69, title: 'Recliner Chair', price: 499, oldPrice: 599, rating: 4.8, image: 'https://images.unsplash.com/photo-1586158291800-2665f07bba79?w=400&auto=format&fit=crop', sale: true },
-  { id: 70, title: 'Floating Wall Shelves', price: 49, oldPrice: 79, rating: 4.4, image: 'https://images.unsplash.com/photo-1594620302200-9a762244a156?w=400&auto=format&fit=crop', sale: false },
-  { id: 71, title: 'Gaming Desk', price: 199, oldPrice: 299, rating: 4.7, image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&auto=format&fit=crop', sale: true },
-  { id: 72, title: 'Floor Lamp', price: 79, oldPrice: 119, rating: 4.3, image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&auto=format&fit=crop', sale: false },
+  { id: 57, title: 'King Size Bed Frame', price: 799, oldPrice: 999, rating: 4.9, image: bedFrame, sale: true },
+  { id: 58, title: 'Bookshelf with Glass Doors', price: 349, oldPrice: 449, rating: 4.6, image: bookshelf, sale: false },
+  { id: 59, title: 'L-Shaped Sectional Sofa', price: 1299, oldPrice: 1599, rating: 4.8, image: sectionalSofa, sale: true },
+  { id: 60, title: 'Industrial Bar Stools', price: 199, oldPrice: 249, rating: 4.4, image: barStools, sale: false },
+  { id: 61, title: 'Modern TV Stand', price: 249, oldPrice: 349, rating: 4.5, image: tvStand, sale: true },
+  { id: 62, title: 'Mid-Century Armchair', price: 399, oldPrice: 499, rating: 4.7, image: armchair, sale: false },
+  { id: 63, title: 'Standing Desk', price: 449, oldPrice: 549, rating: 4.8, image: standingDesk, sale: true },
+  { id: 64, title: 'Outdoor Patio Set', price: 699, oldPrice: 899, rating: 4.3, image: 'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?q=80&w=800&auto=format&fit=crop', sale: false },
+  { id: 65, title: 'Dresser with Mirror', price: 549, oldPrice: 649, rating: 4.6, image: dresserWithMirror, sale: true },
+  { id: 66, title: 'Ottoman with Storage', price: 99, oldPrice: 149, rating: 4.4, image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=800&auto=format&fit=crop', sale: false },
+  { id: 67, title: 'Nightstand with Drawers', price: 129, oldPrice: 179, rating: 4.5, image: 'https://images.unsplash.com/photo-1532323544230-7191fd51bc1b?q=80&w=800&auto=format&fit=crop', sale: true },
+  { id: 68, title: 'Kitchen Island Cart', price: 299, oldPrice: 399, rating: 4.2, image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=800&auto=format&fit=crop', sale: false },
+  { id: 69, title: 'Recliner Chair', price: 499, oldPrice: 599, rating: 4.8, image: 'https://images.unsplash.com/photo-1586158291800-2665f07bba79?q=80&w=800&auto=format&fit=crop', sale: true },
+  { id: 70, title: 'Floating Wall Shelves', price: 49, oldPrice: 79, rating: 4.4, image: 'https://images.unsplash.com/photo-1594620302200-9a762244a156?q=80&w=800&auto=format&fit=crop', sale: false },
+  { id: 71, title: 'Gaming Desk', price: 199, oldPrice: 299, rating: 4.7, image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=800&auto=format&fit=crop', sale: true },
+  { id: 72, title: 'Floor Lamp', price: 79, oldPrice: 119, rating: 4.3, image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=800&auto=format&fit=crop', sale: false },
 ];
 
 export const kids = [
-  { id: 13, title: 'Wooden Building Blocks', price: 49, oldPrice: 69, rating: 5, image: 'https://images.unsplash.com/photo-1515488484532-43d792739f9b?w=400&auto=format&fit=crop', sale: true },
-  { id: 14, title: 'Plush Teddy Bear', price: 29, oldPrice: 39, rating: 4.9, image: 'https://images.unsplash.com/photo-1559454403-b8fb88521f11?w=400&auto=format&fit=crop', sale: false },
-  { id: 15, title: 'Electric Ride-on Car', price: 199, oldPrice: 249, rating: 4.8, image: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?w=400&auto=format&fit=crop', sale: true },
-  { id: 16, title: 'Art & Craft Set', price: 35, oldPrice: 45, rating: 4.7, image: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&auto=format&fit=crop', sale: false },
-  { id: 73, title: 'Remote Control Car', price: 59, oldPrice: 79, rating: 4.8, image: 'https://images.unsplash.com/photo-1594787318286-3d835c1d207f?w=400&auto=format&fit=crop', sale: true },
-  { id: 74, title: 'Dollhouse with Furniture', price: 129, oldPrice: 159, rating: 4.9, image: 'https://images.unsplash.com/photo-1560343060-c142ba367396?w=400&auto=format&fit=crop', sale: false },
-  { id: 75, title: 'Science Experiment Kit', price: 45, oldPrice: 55, rating: 4.7, image: 'https://images.unsplash.com/photo-1530210124550-912dc1381cb8?w=400&auto=format&fit=crop', sale: true },
-  { id: 76, title: 'Lego Star Wars Set', price: 89, oldPrice: 109, rating: 4.9, image: 'https://images.unsplash.com/photo-1585366119957-e9730b6d0f60?w=400&auto=format&fit=crop', sale: false },
-  { id: 77, title: 'Digital Kids Camera', price: 39, oldPrice: 49, rating: 4.4, image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&auto=format&fit=crop', sale: true },
-  { id: 78, title: 'Drawing Tablet for Kids', price: 29, oldPrice: 39, rating: 4.5, image: 'https://images.unsplash.com/photo-1544652478-6653e09f18a2?w=400&auto=format&fit=crop', sale: false },
-  { id: 79, title: 'Musical Keyboard', price: 69, oldPrice: 89, rating: 4.6, image: 'https://images.unsplash.com/photo-1520529011870-5c6b44c0b8c2?w=400&auto=format&fit=crop', sale: true },
-  { id: 80, title: 'Outdoor Trampoline', price: 249, oldPrice: 299, rating: 4.8, image: 'https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?w=400&auto=format&fit=crop', sale: false },
-  { id: 81, title: 'Storybook Collection', price: 35, oldPrice: 45, rating: 4.9, image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&auto=format&fit=crop', sale: true },
-  { id: 82, title: 'Kids Play Tent', price: 49, oldPrice: 69, rating: 4.7, image: 'https://images.unsplash.com/photo-1560343060-c142ba367396?w=400&auto=format&fit=crop', sale: false },
-  { id: 83, title: 'Alphabet Puzzle Mat', price: 25, oldPrice: 35, rating: 4.6, image: 'https://images.unsplash.com/photo-1515488484532-43d792739f9b?w=400&auto=format&fit=crop', sale: true },
-  { id: 84, title: 'Kitchen Play Set', price: 79, oldPrice: 99, rating: 4.8, image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=400&auto=format&fit=crop', sale: false },
-  { id: 85, title: 'Magnetic Tiles', price: 49, oldPrice: 69, rating: 4.9, image: 'https://images.unsplash.com/photo-1515488484532-43d792739f9b?w=400&auto=format&fit=crop', sale: true },
-  { id: 86, title: 'Dinosaur Toy Set', price: 39, oldPrice: 49, rating: 4.5, image: 'https://images.unsplash.com/photo-1516339901600-2e1a62986307?w=400&auto=format&fit=crop', sale: false },
-  { id: 87, title: 'Inflatable Pool', price: 89, oldPrice: 119, rating: 4.4, image: 'https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=400&auto=format&fit=crop', sale: true },
-  { id: 88, title: 'Kids Microscope', price: 59, oldPrice: 79, rating: 4.6, image: 'https://images.unsplash.com/photo-1530210124550-912dc1381cb8?w=400&auto=format&fit=crop', sale: false },
+  { id: 13, title: 'Wooden Building Blocks', price: 49, oldPrice: 69, rating: 5, image: buildingBlocks, sale: true },
+  { id: 14, title: 'Plush Teddy Bear', price: 29, oldPrice: 39, rating: 4.9, image: teddyBear, sale: false },
+  { id: 15, title: 'Electric Ride-on Car', price: 199, oldPrice: 249, rating: 4.8, image: rideOnCar, sale: true },
+  { id: 16, title: 'Art & Craft Set', price: 35, oldPrice: 45, rating: 4.7, image: artSet, sale: false },
+  { id: 73, title: 'Remote Control Car', price: 59, oldPrice: 79, rating: 4.8, image: rcCar, sale: true },
+  { id: 74, title: 'Dollhouse with Furniture', price: 129, oldPrice: 159, rating: 4.9, image: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=800&auto=format&fit=crop', sale: false },
+  { id: 75, title: 'Science Experiment Kit', price: 45, oldPrice: 55, rating: 4.7, image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=400&auto=format&fit=crop', sale: true },
+  { id: 76, title: 'Lego Star Wars Set', price: 89, oldPrice: 109, rating: 4.9, image: 'https://images.unsplash.com/photo-1585366119957-e9730b6d0f60?q=80&w=800&auto=format&fit=crop', sale: false },
+  { id: 77, title: 'Digital Kids Camera', price: 39, oldPrice: 49, rating: 4.4, image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=800&auto=format&fit=crop', sale: true },
+  { id: 78, title: 'Drawing Tablet for Kids', price: 29, oldPrice: 39, rating: 4.5, image: 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=400&auto=format&fit=crop', sale: false },
+  { id: 79, title: 'Musical Keyboard', price: 69, oldPrice: 89, rating: 4.6, image: 'https://images.unsplash.com/photo-1552422535-c45813c61732?q=80&w=800&auto=format&fit=crop', sale: true },
+  { id: 80, title: 'Outdoor Trampoline', price: 249, oldPrice: 299, rating: 4.8, image: 'https://images.unsplash.com/photo-1561571592-38600d89260d?w=400&auto=format&fit=crop', sale: false },
+  { id: 81, title: 'Storybook Collection', price: 35, oldPrice: 45, rating: 4.9, image: 'https://images.unsplash.com/photo-1474932430478-367dbb6832c1?q=80&w=800&auto=format&fit=crop', sale: true },
+  { id: 82, title: 'Kids Play Tent', price: 49, oldPrice: 69, rating: 4.7, image: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=800&auto=format&fit=crop', sale: false },
+  { id: 83, title: 'Alphabet Puzzle Mat', price: 25, oldPrice: 35, rating: 4.6, image: 'https://images.unsplash.com/photo-1587654780291-39c9404d746b?q=80&w=800&auto=format&fit=crop', sale: true },
+  { id: 84, title: 'Kitchen Play Set', price: 79, oldPrice: 99, rating: 4.8, image: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?w=400&auto=format&fit=crop', sale: false },
+  { id: 85, title: 'Magnetic Tiles', price: 49, oldPrice: 69, rating: 4.9, image: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=800&auto=format&fit=crop', sale: true },
+  { id: 86, title: 'Dinosaur Toy Set', price: 39, oldPrice: 49, rating: 4.5, image: 'https://images.unsplash.com/photo-1552084117-56a987666449?q=80&w=800&auto=format&fit=crop', sale: false },
+  { id: 87, title: 'Inflatable Pool', price: 89, oldPrice: 119, rating: 4.4, image: 'https://images.unsplash.com/photo-1530210124550-912dc1381cb8?q=80&w=800&auto=format&fit=crop', sale: true },
+  { id: 88, title: 'Kids Microscope', price: 59, oldPrice: 79, rating: 4.6, image: 'https://images.unsplash.com/photo-1618354691792-d1d42acfd860?w=400&auto=format&fit=crop', sale: false },
 ];
 
 export const sellers = [
