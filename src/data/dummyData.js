@@ -39,6 +39,8 @@ import espressoMachine from '../assets/images/espresso_machine.png';
 import standMixer from '../assets/images/stand_mixer.png';
 import slowJuicer from '../assets/images/slow_juicer.png';
 import smartKettle from '../assets/images/smart_kettle.png';
+import pythonBook from '../assets/images/python_book.png';
+import meaningBook from '../assets/images/meaning_book.png';
 
 
 export const categories = [
@@ -75,36 +77,36 @@ export const categories = [
 ];
 
 export const brands = [
-  { id: 1, name: 'Adidas', logo: 'https://www.google.com/s2/favicons?domain=adidas.com&sz=128' },
-  { id: 2, name: 'Nike', logo: 'https://www.google.com/s2/favicons?domain=nike.com&sz=128' },
-  { id: 3, name: 'Aldo', logo: 'https://www.google.com/s2/favicons?domain=aldoshoes.com&sz=128' },
-  { id: 4, name: 'Zara', logo: 'https://www.google.com/s2/favicons?domain=zara.com&sz=128' },
-  { id: 5, name: 'Puma', logo: 'https://www.google.com/s2/favicons?domain=puma.com&sz=128' },
-  { id: 6, name: 'Levi\'s', logo: 'https://www.google.com/s2/favicons?domain=levi.com&sz=128' },
-  { id: 7, name: 'Gucci', logo: 'https://www.google.com/s2/favicons?domain=gucci.com&sz=128' },
-  { id: 8, name: 'Asics', logo: 'https://www.google.com/s2/favicons?domain=asics.com&sz=128' },
-  { id: 9, name: 'H&M', logo: 'https://www.google.com/s2/favicons?domain=hm.com&sz=128' },
-  { id: 10, name: 'Apple', logo: 'https://www.google.com/s2/favicons?domain=apple.com&sz=128' },
-  { id: 11, name: 'Samsung', logo: 'https://www.google.com/s2/favicons?domain=samsung.com&sz=128' },
-  { id: 12, name: 'Sony', logo: 'https://www.google.com/s2/favicons?domain=sony.com&sz=128' },
-  { id: 13, name: 'Microsoft', logo: 'https://www.google.com/s2/favicons?domain=microsoft.com&sz=128' },
-  { id: 14, name: 'Amazon', logo: 'https://www.google.com/s2/favicons?domain=amazon.com&sz=128' },
-  { id: 15, name: 'Dell', logo: 'https://www.google.com/s2/favicons?domain=dell.com&sz=128' },
-  { id: 16, name: 'HP', logo: 'https://www.google.com/s2/favicons?domain=hp.com&sz=128' },
-  { id: 17, name: 'Lenovo', logo: 'https://www.google.com/s2/favicons?domain=lenovo.com&sz=128' },
-  { id: 18, name: 'Asus', logo: 'https://www.google.com/s2/favicons?domain=asus.com&sz=128' },
-  { id: 19, name: 'Acer', logo: 'https://www.google.com/s2/favicons?domain=acer.com&sz=128' },
-  { id: 20, name: 'Logitech', logo: 'https://www.google.com/s2/favicons?domain=logitech.com&sz=128' },
-  { id: 21, name: 'Razer', logo: 'https://www.google.com/s2/favicons?domain=razer.com&sz=128' },
-  { id: 22, name: 'Corsair', logo: 'https://www.google.com/s2/favicons?domain=corsair.com&sz=128' },
-  { id: 23, name: 'MSI', logo: 'https://www.google.com/s2/favicons?domain=msi.com&sz=128' },
-  { id: 24, name: 'Intel', logo: 'https://www.google.com/s2/favicons?domain=intel.com&sz=128' },
-  { id: 25, name: 'AMD', logo: 'https://www.google.com/s2/favicons?domain=amd.com&sz=128' },
-  { id: 26, name: 'Nvidia', logo: 'https://www.google.com/s2/favicons?domain=nvidia.com&sz=128' },
-  { id: 27, name: 'Gigabyte', logo: 'https://www.google.com/s2/favicons?domain=gigabyte.com&sz=128' },
-  { id: 28, name: 'Western Digital', logo: 'https://www.google.com/s2/favicons?domain=wd.com&sz=128' },
-  { id: 29, name: 'Seagate', logo: 'https://www.google.com/s2/favicons?domain=seagate.com&sz=128' },
-  { id: 30, name: 'Crucial', logo: 'https://www.google.com/s2/favicons?domain=crucial.com&sz=128' },
+  { id: 1, name: 'Adidas', slug: 'adidas', logo: 'https://www.google.com/s2/favicons?domain=adidas.com&sz=128' },
+  { id: 2, name: 'Nike', slug: 'nike', logo: 'https://www.google.com/s2/favicons?domain=nike.com&sz=128' },
+  { id: 3, name: 'Aldo', slug: 'aldo', logo: 'https://www.google.com/s2/favicons?domain=aldoshoes.com&sz=128' },
+  { id: 4, name: 'Zara', slug: 'zara', logo: 'https://www.google.com/s2/favicons?domain=zara.com&sz=128' },
+  { id: 5, name: 'Puma', slug: 'puma', logo: 'https://www.google.com/s2/favicons?domain=puma.com&sz=128' },
+  { id: 6, name: 'Levi\'s', slug: 'levis', logo: 'https://www.google.com/s2/favicons?domain=levi.com&sz=128' },
+  { id: 7, name: 'Gucci', slug: 'gucci', logo: 'https://www.google.com/s2/favicons?domain=gucci.com&sz=128' },
+  { id: 8, name: 'Asics', slug: 'asics', logo: 'https://www.google.com/s2/favicons?domain=asics.com&sz=128' },
+  { id: 9, name: 'H&M', slug: 'hm', logo: 'https://www.google.com/s2/favicons?domain=hm.com&sz=128' },
+  { id: 10, name: 'Apple', slug: 'apple', logo: 'https://www.google.com/s2/favicons?domain=apple.com&sz=128' },
+  { id: 11, name: 'Samsung', slug: 'samsung', logo: 'https://www.google.com/s2/favicons?domain=samsung.com&sz=128' },
+  { id: 12, name: 'Sony', slug: 'sony', logo: 'https://www.google.com/s2/favicons?domain=sony.com&sz=128' },
+  { id: 13, name: 'Microsoft', slug: 'microsoft', logo: 'https://www.google.com/s2/favicons?domain=microsoft.com&sz=128' },
+  { id: 14, name: 'Amazon', slug: 'amazon', logo: 'https://www.google.com/s2/favicons?domain=amazon.com&sz=128' },
+  { id: 15, name: 'Dell', slug: 'dell', logo: 'https://www.google.com/s2/favicons?domain=dell.com&sz=128' },
+  { id: 16, name: 'HP', slug: 'hp', logo: 'https://www.google.com/s2/favicons?domain=hp.com&sz=128' },
+  { id: 17, name: 'Lenovo', slug: 'lenovo', logo: 'https://www.google.com/s2/favicons?domain=lenovo.com&sz=128' },
+  { id: 18, name: 'Asus', slug: 'asus', logo: 'https://www.google.com/s2/favicons?domain=asus.com&sz=128' },
+  { id: 19, name: 'Acer', slug: 'acer', logo: 'https://www.google.com/s2/favicons?domain=acer.com&sz=128' },
+  { id: 20, name: 'Logitech', slug: 'logitech', logo: 'https://www.google.com/s2/favicons?domain=logitech.com&sz=128' },
+  { id: 21, name: 'Razer', slug: 'razer', logo: 'https://www.google.com/s2/favicons?domain=razer.com&sz=128' },
+  { id: 22, name: 'Corsair', slug: 'corsair', logo: 'https://www.google.com/s2/favicons?domain=corsair.com&sz=128' },
+  { id: 23, name: 'MSI', slug: 'msi', logo: 'https://www.google.com/s2/favicons?domain=msi.com&sz=128' },
+  { id: 24, name: 'Intel', slug: 'intel', logo: 'https://www.google.com/s2/favicons?domain=intel.com&sz=128' },
+  { id: 25, name: 'AMD', slug: 'amd', logo: 'https://www.google.com/s2/favicons?domain=amd.com&sz=128' },
+  { id: 26, name: 'Nvidia', slug: 'nvidia', logo: 'https://www.google.com/s2/favicons?domain=nvidia.com&sz=128' },
+  { id: 27, name: 'Gigabyte', slug: 'gigabyte', logo: 'https://www.google.com/s2/favicons?domain=gigabyte.com&sz=128' },
+  { id: 28, name: 'Western Digital', slug: 'western-digital', logo: 'https://www.google.com/s2/favicons?domain=wd.com&sz=128' },
+  { id: 29, name: 'Seagate', slug: 'seagate', logo: 'https://www.google.com/s2/favicons?domain=seagate.com&sz=128' },
+  { id: 30, name: 'Crucial', slug: 'crucial', logo: 'https://www.google.com/s2/favicons?domain=crucial.com&sz=128' },
 ];
 
 export const smartphones = [
@@ -330,30 +332,24 @@ export const decor = [
 export const books = [
   { id: 103, title: 'The Great Gatsby', price: 15, oldPrice: 20, rating: 4.9, image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&fit=crop', sale: true },
   { id: 104, title: 'Coding 101', price: 25, oldPrice: 35, rating: 4.8, image: 'https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=400&fit=crop', sale: false },
-  { id: 125, title: 'World History Atlas', price: 40, oldPrice: 55, rating: 4.7, image: 'https://upload.wikimedia.org/wikipedia/commons/8/87/Atlas_Van_der_Hagen-KW1049B11_013-TITLE_PAGE_D._van_den_Burg%2C_Naauwkeurige_Aanwijzing.jpeg', sale: true },
+  { id: 125, title: 'World History Atlas', price: 40, oldPrice: 55, rating: 4.7, image: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=400&fit=crop', sale: true },
   { id: 126, title: 'Space Exploration', price: 30, oldPrice: 40, rating: 4.8, image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&fit=crop', sale: false },
-  { id: 127, title: 'Mystery at Midnight', price: 18, oldPrice: 25, rating: 4.6, image: 'https://upload.wikimedia.org/wikipedia/commons/3/30/The_Mystery_of_the_Yellow_Room.jpg', sale: true },
-  { id: 160, title: 'The Art of War', price: 12, oldPrice: 18, rating: 4.9, image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&fit=crop', sale: false },
-  { id: 161, title: 'Python for Beginners', price: 35, oldPrice: 45, rating: 4.7, image: 'https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=400&fit=crop', sale: true },
+  { id: 127, title: 'Mystery at Midnight', price: 18, oldPrice: 25, rating: 4.6, image: 'https://images.unsplash.com/photo-1476275466078-4007374efbbe?w=400&fit=crop', sale: true },
+  { id: 160, title: 'The Art of War', price: 12, oldPrice: 18, rating: 4.9, image: 'https://images.unsplash.com/photo-1589998059171-988d887df646?w=400&fit=crop', sale: false },
+  { id: 161, title: 'Python for Beginners', price: 35, oldPrice: 45, rating: 4.7, image: pythonBook, sale: true },
   { id: 162, title: 'Mindset: Success', price: 22, oldPrice: 30, rating: 4.8, image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&fit=crop', sale: false },
   { id: 163, title: 'Recipe for Adventure', price: 28, oldPrice: 38, rating: 4.6, image: 'https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?w=400&fit=crop', sale: true },
-  { id: 189, title: 'The Silent Patient', price: 16, oldPrice: 22, rating: 4.9, image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&fit=crop', sale: false },
-  { id: 190, title: 'Becoming by Michelle Obama', price: 20, oldPrice: 30, rating: 4.8, image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&fit=crop', sale: true },
-  { id: 191, title: 'Educated: A Memoir', price: 18, oldPrice: 25, rating: 4.7, image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&fit=crop', sale: false },
-  { id: 192, title: 'The Power of Habit', price: 15, oldPrice: 20, rating: 4.6, image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&fit=crop', sale: true },
-  { id: 193, title: 'Where the Crawdads Sing', price: 17, oldPrice: 24, rating: 4.9, image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&fit=crop', sale: false },
-  { id: 219, title: 'Atomic Habits', price: 14, oldPrice: 20, rating: 4.9, image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&fit=crop', sale: true },
-  { id: 220, title: 'The Alchemist', price: 12, oldPrice: 18, rating: 4.8, image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&fit=crop', sale: false },
-  { id: 221, title: 'Deep Work', price: 16, oldPrice: 22, rating: 4.7, image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&fit=crop', sale: true },
-  { id: 222, title: 'Start with Why', price: 15, oldPrice: 21, rating: 4.6, image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&fit=crop', sale: false },
-  { id: 223, title: 'Think and Grow Rich', price: 10, oldPrice: 15, rating: 4.8, image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&fit=crop', sale: true },
-  { id: 224, title: 'Man\'s Search for Meaning', price: 13, oldPrice: 19, rating: 4.9, image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&fit=crop', sale: false },
-];
-
-export const fashion = [
-  { id: 89, title: 'Men\'s Slim Fit Shirt', price: 45, oldPrice: 65, rating: 4.5, image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&auto=format&fit=crop', sale: true },
-  { id: 90, title: 'Women\'s Floral Dress', price: 55, oldPrice: 75, rating: 4.7, image: 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&auto=format&fit=crop', sale: false },
-  { id: 91, title: 'Classic Denim Jacket', price: 85, oldPrice: 110, rating: 4.8, image: 'https://images.unsplash.com/photo-1544441893-675973e31985?w=400&auto=format&fit=crop', sale: true },
+  { id: 189, title: 'The Silent Patient', price: 16, oldPrice: 22, rating: 4.9, image: 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=400&fit=crop', sale: false },
+  { id: 190, title: 'Becoming by Michelle Obama', price: 20, oldPrice: 30, rating: 4.8, image: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=400&fit=crop', sale: true },
+  { id: 191, title: 'Educated: A Memoir', price: 18, oldPrice: 25, rating: 4.7, image: 'https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=400&fit=crop', sale: false },
+  { id: 192, title: 'The Power of Habit', price: 15, oldPrice: 20, rating: 4.6, image: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=400&fit=crop', sale: true },
+  { id: 193, title: 'Where the Crawdads Sing', price: 17, oldPrice: 24, rating: 4.9, image: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=400&fit=crop', sale: false },
+  { id: 219, title: 'Atomic Habits', price: 14, oldPrice: 20, rating: 4.9, image: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400&fit=crop', sale: true },
+  { id: 220, title: 'The Alchemist', price: 12, oldPrice: 18, rating: 4.8, image: 'https://images.unsplash.com/photo-1519682337058-a94d519337bc?w=400&fit=crop', sale: false },
+  { id: 221, title: 'Deep Work', price: 16, oldPrice: 22, rating: 4.7, image: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=400&fit=crop', sale: true },
+  { id: 222, title: 'Start with Why', price: 15, oldPrice: 21, rating: 4.6, image: 'https://images.unsplash.com/photo-1550399105-c4db5fb85c18?w=400&fit=crop', sale: false },
+  { id: 223, title: 'Think and Grow Rich', price: 10, oldPrice: 15, rating: 4.8, image: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=400&fit=crop', sale: true },
+  { id: 224, title: 'Man\'s Search for Meaning', price: 13, oldPrice: 19, rating: 4.9, image: meaningBook, sale: false },
 ];
 
 export const digital = [
@@ -414,3 +410,81 @@ export const sellers = [
 ];
 
 export const allProducts = [...smartphones, ...watches, ...furniture, ...kids, ...fashion, ...electronics, ...digitalProduct, ...homeAppliances, ...vegetables, ...decor, ...books];
+
+export const brandProducts = {
+  adidas: [
+    { id: 'ad1', title: 'Adidas Ultraboost 22', price: 180, oldPrice: 220, rating: 4.8, image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&fit=crop', sale: true },
+    { id: 'ad2', title: 'Adidas Originals T-Shirt', price: 35, oldPrice: 50, rating: 4.5, image: 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=400&fit=crop', sale: false },
+    { id: 'ad3', title: 'Adidas Track Pants', price: 55, oldPrice: 70, rating: 4.6, image: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=400&fit=crop', sale: true },
+    { id: 'ad4', title: 'Adidas Sports Backpack', price: 65, oldPrice: 85, rating: 4.7, image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&fit=crop', sale: false },
+    { id: 'ad5', title: 'Adidas Running Shorts', price: 30, oldPrice: 45, rating: 4.4, image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&fit=crop', sale: true },
+    { id: 'ad6', title: 'Adidas Stan Smith', price: 110, oldPrice: 130, rating: 4.9, image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&fit=crop', sale: false },
+  ],
+  nike: [
+    { id: 'nk1', title: 'Nike Air Max 270', price: 150, oldPrice: 190, rating: 4.9, image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&fit=crop', sale: true },
+    { id: 'nk2', title: 'Nike Dri-FIT T-Shirt', price: 40, oldPrice: 55, rating: 4.6, image: 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=400&fit=crop', sale: false },
+    { id: 'nk3', title: 'Nike Jogger Pants', price: 60, oldPrice: 80, rating: 4.7, image: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=400&fit=crop', sale: true },
+    { id: 'nk4', title: 'Nike Air Force 1', price: 120, oldPrice: 150, rating: 4.8, image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&fit=crop', sale: false },
+    { id: 'nk5', title: 'Nike Sports Bra', price: 35, oldPrice: 50, rating: 4.5, image: 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&fit=crop', sale: true },
+    { id: 'nk6', title: 'Nike Heritage Backpack', price: 45, oldPrice: 60, rating: 4.4, image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&fit=crop', sale: false },
+  ],
+  aldo: [
+    { id: 'al1', title: 'Aldo Leather Loafers', price: 120, oldPrice: 160, rating: 4.7, image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&fit=crop', sale: true },
+    { id: 'al2', title: 'Aldo Crossbody Bag', price: 85, oldPrice: 110, rating: 4.6, image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&fit=crop', sale: false },
+    { id: 'al3', title: 'Aldo Chelsea Boots', price: 140, oldPrice: 180, rating: 4.8, image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&fit=crop', sale: true },
+  ],
+  zara: [
+    { id: 'zr1', title: 'Zara Floral Dress', price: 70, oldPrice: 95, rating: 4.7, image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=400&fit=crop', sale: true },
+    { id: 'zr2', title: 'Zara Slim Fit Blazer', price: 120, oldPrice: 160, rating: 4.8, image: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400&fit=crop', sale: false },
+    { id: 'zr3', title: 'Zara Linen Shirt', price: 45, oldPrice: 65, rating: 4.5, image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&fit=crop', sale: true },
+    { id: 'zr4', title: 'Zara Pleated Skirt', price: 50, oldPrice: 70, rating: 4.6, image: 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&fit=crop', sale: false },
+  ],
+  puma: [
+    { id: 'pm1', title: 'Puma RS-X Sneakers', price: 110, oldPrice: 140, rating: 4.7, image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&fit=crop', sale: true },
+    { id: 'pm2', title: 'Puma Essentials Hoodie', price: 55, oldPrice: 75, rating: 4.5, image: 'https://images.unsplash.com/photo-1556906781-9a412961c28c?w=400&fit=crop', sale: false },
+    { id: 'pm3', title: 'Puma Training Shorts', price: 30, oldPrice: 45, rating: 4.4, image: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=400&fit=crop', sale: true },
+  ],
+  levis: [
+    { id: 'lv1', title: "Levi's 501 Original Jeans", price: 80, oldPrice: 110, rating: 4.9, image: 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=400&fit=crop', sale: true },
+    { id: 'lv2', title: "Levi's Denim Jacket", price: 95, oldPrice: 130, rating: 4.8, image: 'https://images.unsplash.com/photo-1544441893-675973e31985?w=400&fit=crop', sale: false },
+    { id: 'lv3', title: "Levi's Graphic T-Shirt", price: 30, oldPrice: 45, rating: 4.5, image: 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=400&fit=crop', sale: true },
+  ],
+  gucci: [
+    { id: 'gc1', title: 'Gucci Leather Belt', price: 350, oldPrice: 450, rating: 4.9, image: 'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?w=400&fit=crop', sale: true },
+    { id: 'gc2', title: 'Gucci Designer Sunglasses', price: 280, oldPrice: 350, rating: 4.8, image: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=400&fit=crop', sale: false },
+    { id: 'gc3', title: 'Gucci Canvas Bag', price: 1200, oldPrice: 1500, rating: 4.9, image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&fit=crop', sale: true },
+  ],
+  apple: [
+    { id: 'ap1', title: 'iPhone 15 Pro Max', price: 1099, oldPrice: 1299, rating: 4.8, image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&fit=crop', sale: true },
+    { id: 'ap2', title: 'Apple Watch Series 9', price: 399, oldPrice: 449, rating: 4.9, image: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=400&fit=crop', sale: false },
+    { id: 'ap3', title: 'AirPods Pro 2nd Gen', price: 249, oldPrice: 299, rating: 4.7, image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&fit=crop', sale: true },
+    { id: 'ap4', title: 'MacBook Air M3', price: 1099, oldPrice: 1299, rating: 4.9, image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&fit=crop', sale: false },
+    { id: 'ap5', title: 'iPad Pro 12.9"', price: 999, oldPrice: 1199, rating: 4.8, image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&fit=crop', sale: true },
+  ],
+  samsung: [
+    { id: 'sm1', title: 'Samsung Galaxy S24 Ultra', price: 1199, oldPrice: 1399, rating: 5, image: 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400&fit=crop', sale: true },
+    { id: 'sm2', title: 'Samsung Galaxy Watch 6', price: 299, oldPrice: 349, rating: 4.7, image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&fit=crop', sale: false },
+    { id: 'sm3', title: 'Samsung Galaxy Buds FE', price: 99, oldPrice: 130, rating: 4.5, image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&fit=crop', sale: true },
+    { id: 'sm4', title: 'Samsung 55" OLED TV', price: 1299, oldPrice: 1599, rating: 4.9, image: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&fit=crop', sale: false },
+  ],
+  sony: [
+    { id: 'sn1', title: 'Sony WH-1000XM5', price: 349, oldPrice: 399, rating: 4.9, image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&fit=crop', sale: true },
+    { id: 'sn2', title: 'Sony PlayStation 5', price: 499, oldPrice: 549, rating: 4.8, image: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400&fit=crop', sale: false },
+    { id: 'sn3', title: 'Sony Xperia 1 V', price: 1299, oldPrice: 1399, rating: 4.6, image: 'https://images.unsplash.com/photo-1523206489230-c012c64b2b48?w=400&fit=crop', sale: true },
+  ],
+  microsoft: [
+    { id: 'ms1', title: 'Microsoft Surface Pro 9', price: 999, oldPrice: 1199, rating: 4.7, image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&fit=crop', sale: true },
+    { id: 'ms2', title: 'Xbox Series X', price: 499, oldPrice: 549, rating: 4.8, image: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400&fit=crop', sale: false },
+    { id: 'ms3', title: 'Microsoft Office 365', price: 99, oldPrice: 120, rating: 4.9, image: 'https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=400&fit=crop', sale: true },
+  ],
+  logitech: [
+    { id: 'lg1', title: 'Logitech MX Master 3S', price: 99, oldPrice: 120, rating: 4.8, image: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&fit=crop', sale: true },
+    { id: 'lg2', title: 'Logitech G Pro Keyboard', price: 129, oldPrice: 159, rating: 4.7, image: 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=400&fit=crop', sale: false },
+    { id: 'lg3', title: 'Logitech C920 Webcam', price: 79, oldPrice: 99, rating: 4.6, image: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&fit=crop', sale: true },
+  ],
+  razer: [
+    { id: 'rz1', title: 'Razer DeathAdder V3', price: 89, oldPrice: 110, rating: 4.8, image: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&fit=crop', sale: true },
+    { id: 'rz2', title: 'Razer BlackWidow V4', price: 169, oldPrice: 199, rating: 4.7, image: 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=400&fit=crop', sale: false },
+    { id: 'rz3', title: 'Razer Kraken V3', price: 99, oldPrice: 130, rating: 4.6, image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&fit=crop', sale: true },
+  ],
+};

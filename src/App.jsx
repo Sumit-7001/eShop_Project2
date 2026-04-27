@@ -15,6 +15,7 @@ import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
 import Compare from './pages/Compare';
 import SellerProducts from './pages/SellerProducts';
+import BrandProducts from './pages/BrandProducts';
 import AuthModal from './components/common/AuthModal';
 import { CheckCircle } from 'lucide-react';
 import './App.css';
@@ -90,6 +91,7 @@ function App() {
             />
           } />
           <Route path="/seller/:id" element={<SellerProducts addToCart={addToCart} />} />
+          <Route path="/brand/:slug" element={<BrandProducts addToCart={addToCart} />} />
         </Routes>
 
         {/* Global Notification */}
