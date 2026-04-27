@@ -357,7 +357,6 @@ export const digital = [
   { id: 93, title: 'Smart Home Speaker', price: 89, oldPrice: 119, rating: 4.6, image: 'https://images.unsplash.com/photo-1589492477829-5e65395b66cc?w=400&auto=format&fit=crop', sale: false },
   { id: 94, title: 'Portable Power Bank', price: 49, oldPrice: 69, rating: 4.4, image: 'https://images.unsplash.com/photo-1609091839311-d53681962025?w=400&auto=format&fit=crop', sale: true },
 ];
-
 export const sellers = [
   {
     id: 1,
