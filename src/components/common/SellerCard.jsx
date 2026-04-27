@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Star } from 'lucide-react';
 import '../../styles/SellerCard.css';
 
@@ -21,7 +22,7 @@ const SellerCard = ({ seller }) => {
         </div>
         <h3 className="seller-name">{seller.name}</h3>
         <p className="seller-description">{seller.description}</p>
-        <button className="view-products-btn">View Products</button>
+        <Link to={`/seller/${seller.id}`} className="view-products-btn">View Products</Link>
       </div>
     </div>
   );

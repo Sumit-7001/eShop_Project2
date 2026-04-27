@@ -186,6 +186,18 @@ export const kids = [
   { id: 88, title: 'Kids Microscope', price: 59, oldPrice: 79, rating: 4.6, image: 'https://images.unsplash.com/photo-1618354691792-d1d42acfd860?w=400&auto=format&fit=crop', sale: false },
 ];
 
+export const fashion = [
+  { id: 89, title: 'Men\'s Slim Fit Shirt', price: 45, oldPrice: 65, rating: 4.5, image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&auto=format&fit=crop', sale: true },
+  { id: 90, title: 'Women\'s Floral Dress', price: 55, oldPrice: 75, rating: 4.7, image: 'https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&auto=format&fit=crop', sale: false },
+  { id: 91, title: 'Classic Denim Jacket', price: 85, oldPrice: 110, rating: 4.8, image: 'https://images.unsplash.com/photo-1544441893-675973e31985?w=400&auto=format&fit=crop', sale: true },
+];
+
+export const digital = [
+  { id: 92, title: 'Wireless Earbuds Pro', price: 129, oldPrice: 159, rating: 4.9, image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&auto=format&fit=crop', sale: true },
+  { id: 93, title: 'Smart Home Speaker', price: 89, oldPrice: 119, rating: 4.6, image: 'https://images.unsplash.com/photo-1589492477829-5e65395b66cc?w=400&auto=format&fit=crop', sale: false },
+  { id: 94, title: 'Portable Power Bank', price: 49, oldPrice: 69, rating: 4.4, image: 'https://images.unsplash.com/photo-1609091839311-d53681962025?w=400&auto=format&fit=crop', sale: true },
+];
+
 export const sellers = [
   {
     id: 1,
@@ -225,7 +237,7 @@ export const sellers = [
     description: 'Latest Trends & Apparel',
     logo: 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=300&h=300&fit=crop',
     rating: 4.8,
-    products: []
+    products: fashion
   },
   {
     id: 6,
@@ -233,8 +245,8 @@ export const sellers = [
     description: 'Tech & Innovation Store',
     logo: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=300&h=300&fit=crop',
     rating: 4.7,
-    products: []
+    products: digital
   }
 ];
 
-export const allProducts = [...smartphones, ...watches, ...furniture, ...kids];
+export const allProducts = [...smartphones, ...watches, ...furniture, ...kids, ...fashion, ...digital];
