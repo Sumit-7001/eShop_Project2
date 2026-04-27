@@ -26,39 +26,52 @@ import outdoorTrampoline from '../assets/images/outdoor_trampoline.png';
 import smartphone from '../assets/images/smartphone.png';
 import nubiaPhone from '../assets/images/nubia_redmagic_9_pro.png';
 import sportsIcon from '../assets/images/sports.png';
+import summerDress from '../assets/images/summer_dress.png';
+import sunglasses from '../assets/images/sunglasses.png';
+import formalSuit from '../assets/images/formal_suit.png';
+import leatherBelt from '../assets/images/leather_belt.png';
+import bluetoothSpeaker from '../assets/images/bluetooth_speaker.png';
+import softwareSubscription from '../assets/images/software_subscription.png';
+import dataScienceBootcamp from '../assets/images/data_science_bootcamp.png';
+import seoGuide from '../assets/images/seo_guide.png';
+import airPurifier from '../assets/images/air_purifier.png';
+import espressoMachine from '../assets/images/espresso_machine.png';
+import standMixer from '../assets/images/stand_mixer.png';
+import slowJuicer from '../assets/images/slow_juicer.png';
+import smartKettle from '../assets/images/smart_kettle.png';
 
 
 export const categories = [
-  { id: 1, name: 'Furniture', image: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?w=200&h=200&fit=crop' },
-  { id: 2, name: 'Fashion', image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=200&h=200&fit=crop' },
-  { id: 3, name: 'Electronics', image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=200&h=200&fit=crop' },
-  { id: 4, name: 'Digital product', image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=200&h=200&fit=crop' },
-  { id: 5, name: 'Home appliances', image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=200&h=200&fit=crop' },
-  { id: 6, name: 'Vegetable', image: 'https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?w=200&h=200&fit=crop' },
-  { id: 7, name: 'Decor', image: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=200&h=200&fit=crop' },
-  { id: 8, name: 'Books', image: 'https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=200&h=200&fit=crop' },
-  { id: 9, name: 'Beauty', image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=200&h=200&fit=crop' },
-  { id: 10, name: 'Sports', image: sportsIcon },
-  { id: 11, name: 'Toys', image: 'https://images.unsplash.com/photo-1533906966484-a9c978a3f090?w=200&h=200&fit=crop' },
-  { id: 12, name: 'Grocery', image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=200&h=200&fit=crop' },
-  { id: 13, name: 'Automotive', image: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=200&h=200&fit=crop' },
-  { id: 14, name: 'Health', image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=200&h=200&fit=crop' },
-  { id: 15, name: 'Pet Supplies', image: 'https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=200&h=200&fit=crop' },
-  { id: 16, name: 'Jewelry', image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=200&h=200&fit=crop' },
-  { id: 17, name: 'Art', image: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=200&h=200&fit=crop' },
-  { id: 18, name: 'Garden', image: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=200&h=200&fit=crop' },
-  { id: 19, name: 'Travel', image: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=200&h=200&fit=crop' },
-  { id: 20, name: 'Music', image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=200&h=200&fit=crop' },
-  { id: 21, name: 'Cooking', image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=200&h=200&fit=crop' },
-  { id: 22, name: 'Fitness', image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=200&h=200&fit=crop' },
-  { id: 23, name: 'Gaming', image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=200&h=200&fit=crop' },
-  { id: 24, name: 'Photography', image: 'https://images.unsplash.com/photo-1452784444945-3f422708fe5e?w=200&h=200&fit=crop' },
-  { id: 25, name: 'Stationary', image: 'https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?w=200&h=200&fit=crop' },
-  { id: 26, name: 'Industrial', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=200&h=200&fit=crop' },
-  { id: 27, name: 'Smart Home', image: 'https://images.unsplash.com/photo-1558002038-1055907df827?w=200&h=200&fit=crop' },
-  { id: 28, name: 'Security', image: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=200&h=200&fit=crop' },
-  { id: 29, name: 'Software', image: 'https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=200&h=200&fit=crop' },
-  { id: 30, name: 'Movies', image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=200&h=200&fit=crop' },
+  { id: 1, name: 'Furniture', slug: 'furniture', image: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?w=200&h=200&fit=crop' },
+  { id: 2, name: 'Fashion', slug: 'fashion', image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=200&h=200&fit=crop' },
+  { id: 3, name: 'Electronics', slug: 'electronics', image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=200&h=200&fit=crop' },
+  { id: 4, name: 'Digital product', slug: 'digital-product', image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=200&h=200&fit=crop' },
+  { id: 5, name: 'Home appliances', slug: 'home-appliances', image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=200&h=200&fit=crop' },
+  { id: 6, name: 'Vegetable', slug: 'vegetable', image: 'https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?w=200&h=200&fit=crop' },
+  { id: 7, name: 'Decor', slug: 'decor', image: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=200&h=200&fit=crop' },
+  { id: 8, name: 'Books', slug: 'books', image: 'https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=200&h=200&fit=crop' },
+  { id: 9, name: 'Beauty', slug: 'beauty', image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=200&h=200&fit=crop' },
+  { id: 10, name: 'Sports', slug: 'sports', image: sportsIcon },
+  { id: 11, name: 'Toys', slug: 'toys', image: 'https://images.unsplash.com/photo-1533906966484-a9c978a3f090?w=200&h=200&fit=crop' },
+  { id: 12, name: 'Grocery', slug: 'grocery', image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=200&h=200&fit=crop' },
+  { id: 13, name: 'Automotive', slug: 'automotive', image: 'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=200&h=200&fit=crop' },
+  { id: 14, name: 'Health', slug: 'health', image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=200&h=200&fit=crop' },
+  { id: 15, name: 'Pet Supplies', slug: 'pet-supplies', image: 'https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=200&h=200&fit=crop' },
+  { id: 16, name: 'Jewelry', slug: 'jewelry', image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=200&h=200&fit=crop' },
+  { id: 17, name: 'Art', slug: 'art', image: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=200&h=200&fit=crop' },
+  { id: 18, name: 'Garden', slug: 'garden', image: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=200&h=200&fit=crop' },
+  { id: 19, name: 'Travel', slug: 'travel', image: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=200&h=200&fit=crop' },
+  { id: 20, name: 'Music', slug: 'music', image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=200&h=200&fit=crop' },
+  { id: 21, name: 'Cooking', slug: 'cooking', image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=200&h=200&fit=crop' },
+  { id: 22, name: 'Fitness', slug: 'fitness', image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=200&h=200&fit=crop' },
+  { id: 23, name: 'Gaming', slug: 'gaming', image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=200&h=200&fit=crop' },
+  { id: 24, name: 'Photography', slug: 'photography', image: 'https://images.unsplash.com/photo-1452784444945-3f422708fe5e?w=200&h=200&fit=crop' },
+  { id: 25, name: 'Stationary', slug: 'stationary', image: 'https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?w=200&h=200&fit=crop' },
+  { id: 26, name: 'Industrial', slug: 'industrial', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=200&h=200&fit=crop' },
+  { id: 27, name: 'Smart Home', slug: 'smart-home', image: 'https://images.unsplash.com/photo-1558002038-1055907df827?w=200&h=200&fit=crop' },
+  { id: 28, name: 'Security', slug: 'security', image: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=200&h=200&fit=crop' },
+  { id: 29, name: 'Software', slug: 'software', image: 'https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=200&h=200&fit=crop' },
+  { id: 30, name: 'Movies', slug: 'movies', image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=200&h=200&fit=crop' },
 ];
 
 export const brands = [
@@ -161,6 +174,11 @@ export const furniture = [
   { id: 70, title: 'Floating Wall Shelves', price: 49, oldPrice: 79, rating: 4.4, image: 'https://images.unsplash.com/photo-1594620302200-9a762244a156?q=80&w=800&auto=format&fit=crop', sale: false },
   { id: 71, title: 'Gaming Desk', price: 199, oldPrice: 299, rating: 4.7, image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=800&auto=format&fit=crop', sale: true },
   { id: 72, title: 'Floor Lamp', price: 79, oldPrice: 119, rating: 4.3, image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=800&auto=format&fit=crop', sale: false },
+  { id: 128, title: 'Swivel Lounge Chair', price: 299, oldPrice: 399, rating: 4.7, image: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=400&fit=crop', sale: true },
+  { id: 129, title: 'Marble Top Side Table', price: 179, oldPrice: 229, rating: 4.6, image: 'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=400&fit=crop', sale: false },
+  { id: 130, title: 'Rustic Wine Rack', price: 89, oldPrice: 129, rating: 4.5, image: 'https://images.unsplash.com/photo-1523755231516-e43fd2e8dca5?w=400&fit=crop', sale: true },
+  { id: 134, title: 'Velvet Ottoman', price: 65, oldPrice: 85, rating: 4.6, image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&fit=crop', sale: false },
+  { id: 135, title: 'Modern Bookshelf', price: 150, oldPrice: 200, rating: 4.8, image: 'https://images.unsplash.com/photo-1594620302200-9a762244a156?w=400&fit=crop', sale: true },
 ];
 
 export const kids = [
@@ -184,6 +202,152 @@ export const kids = [
   { id: 86, title: 'Dinosaur Toy Set', price: 39, oldPrice: 49, rating: 4.5, image: 'https://images.unsplash.com/photo-1552084117-56a987666449?q=80&w=800&auto=format&fit=crop', sale: false },
   { id: 87, title: 'Inflatable Pool', price: 89, oldPrice: 119, rating: 4.4, image: 'https://images.unsplash.com/photo-1530210124550-912dc1381cb8?q=80&w=800&auto=format&fit=crop', sale: true },
   { id: 88, title: 'Kids Microscope', price: 59, oldPrice: 79, rating: 4.6, image: 'https://images.unsplash.com/photo-1618354691792-d1d42acfd860?w=400&auto=format&fit=crop', sale: false },
+  { id: 131, title: 'Interactive Learning Pad', price: 45, oldPrice: 60, rating: 4.7, image: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?w=400&fit=crop', sale: true },
+  { id: 132, title: 'Colorful Shape Sorter', price: 15, oldPrice: 25, rating: 4.9, image: 'https://upload.wikimedia.org/wikipedia/commons/7/73/2015-Ostsee-Baellebad.jpg', sale: false },
+  { id: 133, title: 'Toddler Play Gym', price: 55, oldPrice: 75, rating: 4.8, image: 'https://images.unsplash.com/photo-1533906966484-a9c978a3f090?w=400&fit=crop', sale: true },
+  { id: 136, title: 'Educational Puzzle Set', price: 20, oldPrice: 30, rating: 4.7, image: 'https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=400&fit=crop', sale: false },
+  { id: 137, title: 'Plush Dinosaur Toy', price: 25, oldPrice: 35, rating: 4.9, image: 'https://images.unsplash.com/photo-1552084117-56a987666449?w=400&fit=crop', sale: true },
+];
+
+export const fashion = [
+  { id: 89, title: 'Men\'s Casual Shirt', price: 45, oldPrice: 65, rating: 4.5, image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400&fit=crop', sale: true },
+  { id: 90, title: 'Women\'s Summer Dress', price: 75, oldPrice: 95, rating: 4.8, image: summerDress, sale: false },
+  { id: 91, title: 'Classic Denim Jacket', price: 120, oldPrice: 150, rating: 4.7, image: 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=400&fit=crop', sale: true },
+  { id: 92, title: 'Running Sneakers', price: 85, oldPrice: 110, rating: 4.6, image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&fit=crop', sale: false },
+  { id: 105, title: 'Leather Crossbody Bag', price: 55, oldPrice: 75, rating: 4.9, image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&fit=crop', sale: true },
+  { id: 106, title: 'Unisex Sunglasses', price: 25, oldPrice: 40, rating: 4.4, image: sunglasses, sale: false },
+  { id: 107, title: 'Woolen Winter Coat', price: 180, oldPrice: 220, rating: 4.8, image: 'https://images.unsplash.com/photo-1539533113208-f6df8cc8b543?w=400&fit=crop', sale: true },
+  { id: 108, title: 'Cotton Chinos', price: 50, oldPrice: 70, rating: 4.5, image: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=400&fit=crop', sale: false },
+  { id: 109, title: 'Silk Scarf', price: 30, oldPrice: 45, rating: 4.7, image: 'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?w=400&fit=crop', sale: true },
+  { id: 110, title: 'Canvas Backpack', price: 65, oldPrice: 85, rating: 4.6, image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&fit=crop', sale: false },
+  { id: 138, title: 'Formal Suit Set', price: 299, oldPrice: 399, rating: 4.9, image: formalSuit, sale: true },
+  { id: 139, title: 'Floral Maxi Dress', price: 85, oldPrice: 110, rating: 4.7, image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=400&fit=crop', sale: false },
+  { id: 140, title: 'Leather Biker Jacket', price: 150, oldPrice: 200, rating: 4.8, image: 'https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?w=400&fit=crop', sale: true },
+  { id: 141, title: 'Suede Ankle Boots', price: 95, oldPrice: 130, rating: 4.6, image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&fit=crop', sale: false },
+  { id: 142, title: 'Plaid Scarf', price: 20, oldPrice: 30, rating: 4.5, image: 'https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?w=400&fit=crop', sale: true },
+  { id: 164, title: 'Knit Beanie Cap', price: 15, oldPrice: 25, rating: 4.4, image: 'https://images.unsplash.com/photo-1521369909029-2afed882baee?w=400&fit=crop', sale: false },
+  { id: 165, title: 'Slim Fit Blazer', price: 120, oldPrice: 160, rating: 4.8, image: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400&fit=crop', sale: true },
+  { id: 166, title: 'Striped Polo Shirt', price: 35, oldPrice: 50, rating: 4.6, image: 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=400&fit=crop', sale: false },
+  { id: 167, title: 'V-Neck Wool Sweater', price: 70, oldPrice: 90, rating: 4.7, image: 'https://images.unsplash.com/photo-1556906781-9a412961c28c?w=400&fit=crop', sale: true },
+  { id: 168, title: 'Leather Belt', price: 25, oldPrice: 35, rating: 4.5, image: leatherBelt, sale: false },
+];
+
+export const electronics = [
+  ...smartphones,
+  { id: 93, title: 'Wireless Headphones', price: 199, oldPrice: 249, rating: 4.8, image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&fit=crop', sale: true },
+  { id: 94, title: 'Bluetooth Speaker', price: 79, oldPrice: 99, rating: 4.5, image: bluetoothSpeaker, sale: false },
+  { id: 111, title: 'Noise Cancelling Earbuds', price: 159, oldPrice: 199, rating: 4.7, image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&fit=crop', sale: true },
+  { id: 112, title: 'Mechanical Keyboard', price: 129, oldPrice: 159, rating: 4.8, image: 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=400&fit=crop', sale: false },
+  { id: 113, title: 'Curved Gaming Monitor', price: 349, oldPrice: 449, rating: 4.9, image: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&fit=crop', sale: true },
+  { id: 114, title: 'High-Speed External SSD', price: 89, oldPrice: 119, rating: 4.6, image: 'https://images.unsplash.com/photo-1597740985671-2a8a3b80502e?w=400&fit=crop', sale: false },
+];
+
+export const digitalProduct = [
+  { id: 95, title: 'E-Book Reader', price: 129, oldPrice: 159, rating: 4.7, image: 'https://images.unsplash.com/photo-1589998059171-988d887df646?w=400&fit=crop', sale: true },
+  { id: 96, title: 'Software Subscription', price: 99, oldPrice: 120, rating: 4.9, image: softwareSubscription, sale: false },
+  { id: 115, title: 'Cloud Storage Plan', price: 49, oldPrice: 60, rating: 4.5, image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=400&fit=crop', sale: true },
+  { id: 116, title: 'Online Coding Course', price: 199, oldPrice: 299, rating: 4.8, image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&fit=crop', sale: false },
+  { id: 143, title: 'Video Editing Suite', price: 299, oldPrice: 399, rating: 4.9, image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=400&fit=crop', sale: true },
+  { id: 144, title: 'Graphic Design Asset Pack', price: 45, oldPrice: 65, rating: 4.6, image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=400&fit=crop', sale: false },
+  { id: 145, title: 'Music Production Software', price: 199, oldPrice: 250, rating: 4.7, image: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=400&fit=crop', sale: true },
+  { id: 146, title: 'Virtual Reality Experience', price: 30, oldPrice: 50, rating: 4.5, image: 'https://images.unsplash.com/photo-1478416272538-5f7e51dc5400?w=400&fit=crop', sale: false },
+  { id: 147, title: 'Mobile App Source Code', price: 499, oldPrice: 699, rating: 4.8, image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&fit=crop', sale: true },
+  { id: 169, title: 'VPN Subscription', price: 59, oldPrice: 79, rating: 4.6, image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=400&fit=crop', sale: false },
+  { id: 170, title: 'Game Development Course', price: 249, oldPrice: 349, rating: 4.9, image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&fit=crop', sale: true },
+  { id: 171, title: 'Digital Art Brushes', price: 15, oldPrice: 25, rating: 4.7, image: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=400&fit=crop', sale: false },
+  { id: 172, title: 'Stock Photo Pack', price: 80, oldPrice: 120, rating: 4.5, image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&fit=crop', sale: true },
+  { id: 173, title: 'Data Science Bootcamp', price: 399, oldPrice: 599, rating: 4.8, image: dataScienceBootcamp, sale: false },
+  { id: 194, title: 'Web Design Masterclass', price: 150, oldPrice: 250, rating: 4.9, image: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=400&fit=crop', sale: true },
+  { id: 195, title: 'SEO Strategy Guide', price: 25, oldPrice: 45, rating: 4.6, image: seoGuide, sale: false },
+  { id: 196, title: '3D Model Collection', price: 120, oldPrice: 180, rating: 4.7, image: 'https://images.unsplash.com/photo-1614850523296-d8c1af93d400?w=400&fit=crop', sale: true },
+  { id: 197, title: 'Cyber Security Suite', price: 299, oldPrice: 449, rating: 4.8, image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&fit=crop', sale: false },
+  { id: 198, title: 'Digital Marketing Bundle', price: 85, oldPrice: 135, rating: 4.5, image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&fit=crop', sale: true },
+  { id: 199, title: 'Podcast Starter Kit', price: 50, oldPrice: 80, rating: 4.7, image: 'https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=400&fit=crop', sale: false },
+];
+
+export const homeAppliances = [
+  { id: 97, title: 'Air Purifier', price: 299, oldPrice: 349, rating: 4.8, image: airPurifier, sale: true },
+  { id: 98, title: 'Espresso Machine', price: 449, oldPrice: 549, rating: 4.9, image: espressoMachine, sale: false },
+  { id: 117, title: 'Smart Robot Vacuum', price: 399, oldPrice: 499, rating: 4.7, image: 'https://images.unsplash.com/photo-1518314916381-77a37c2a49ae?w=400&fit=crop', sale: true },
+  { id: 118, title: 'Digital Air Fryer', price: 129, oldPrice: 159, rating: 4.8, image: 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=400&fit=crop', sale: false },
+  { id: 148, title: 'Cordless Stick Vacuum', price: 199, oldPrice: 249, rating: 4.6, image: 'https://images.unsplash.com/photo-1558317374-067fb5f30001?w=400&fit=crop', sale: true },
+  { id: 149, title: 'Electric Stand Mixer', price: 250, oldPrice: 350, rating: 4.9, image: standMixer, sale: false },
+  { id: 150, title: 'Slow Juicer', price: 180, oldPrice: 230, rating: 4.7, image: slowJuicer, sale: true },
+  { id: 151, title: 'Convection Toaster Oven', price: 150, oldPrice: 190, rating: 4.8, image: 'https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=400&fit=crop', sale: false },
+  { id: 174, title: 'Steam Mop Cleaner', price: 89, oldPrice: 119, rating: 4.5, image: 'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=400&fit=crop', sale: true },
+  { id: 175, title: 'Induction Cooktop', price: 75, oldPrice: 95, rating: 4.6, image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400&fit=crop', sale: false },
+  { id: 176, title: 'Compact Dishwasher', price: 349, oldPrice: 449, rating: 4.7, image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=400&fit=crop', sale: true },
+  { id: 177, title: 'Window Cleaning Robot', price: 299, oldPrice: 399, rating: 4.8, image: 'https://images.unsplash.com/photo-1518314916381-77a37c2a49ae?w=400&fit=crop', sale: false },
+  { id: 178, title: 'Smart Kettle', price: 65, oldPrice: 85, rating: 4.4, image: smartKettle, sale: true },
+];
+
+export const vegetables = [
+  { id: 99, title: 'Organic Carrots', price: 5, oldPrice: 7, rating: 4.9, image: 'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=400&fit=crop', sale: true },
+  { id: 100, title: 'Fresh Broccoli', price: 4, oldPrice: 6, rating: 4.8, image: 'https://images.unsplash.com/photo-1583663848850-46af132dc08e?w=400&auto=format&fit=crop', sale: false },
+  { id: 119, title: 'Red Bell Peppers', price: 3, oldPrice: 5, rating: 4.7, image: 'https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?w=400&fit=crop', sale: true },
+  { id: 120, title: 'Sweet Corn', price: 2, oldPrice: 4, rating: 4.6, image: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=400&fit=crop', sale: false },
+  { id: 121, title: 'Organic Spinach', price: 6, oldPrice: 8, rating: 4.9, image: 'https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400&fit=crop', sale: true },
+  { id: 152, title: 'Bunch of Bananas', price: 4, oldPrice: 6, rating: 4.8, image: 'https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=400&fit=crop', sale: false },
+  { id: 153, title: 'Red Apples Bag', price: 8, oldPrice: 10, rating: 4.7, image: 'https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=400&fit=crop', sale: true },
+  { id: 154, title: 'Fresh Avocados', price: 5, oldPrice: 7, rating: 4.9, image: 'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=400&fit=crop', sale: false },
+  { id: 155, title: 'Organic Blueberries', price: 12, oldPrice: 15, rating: 4.8, image: 'https://images.unsplash.com/photo-1498557850523-fd3d118b962e?w=400&auto=format&fit=crop', sale: true },
+  { id: 179, title: 'Local Red Onions', price: 4, oldPrice: 6, rating: 4.6, image: 'https://images.unsplash.com/photo-1508747703725-719777637510?w=400&fit=crop', sale: false },
+  { id: 180, title: 'Organic Sweet Potatoes', price: 7, oldPrice: 9, rating: 4.8, image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&auto=format&fit=crop', sale: true },
+  { id: 181, title: 'Fresh Cauliflower', price: 5, oldPrice: 7, rating: 4.7, image: 'https://images.unsplash.com/photo-1568584711271-6c929fb49b60?w=400&auto=format&fit=crop', sale: false },
+  { id: 182, title: 'Green Bell Peppers', price: 3, oldPrice: 5, rating: 4.5, image: 'https://upload.wikimedia.org/wikipedia/commons/2/2b/Green_Bell_Pepper.jpg', sale: true },
+  { id: 183, title: 'Ripe Pears', price: 6, oldPrice: 8, rating: 4.6, image: 'https://images.unsplash.com/photo-1615484477778-ca3b77940c25?w=400&fit=crop', sale: false },
+  { id: 207, title: 'Organic Cucumbers', price: 3, oldPrice: 5, rating: 4.8, image: 'https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=400&fit=crop', sale: true },
+  { id: 208, title: 'Red Cherry Tomatoes', price: 4, oldPrice: 6, rating: 4.9, image: 'https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=400&fit=crop', sale: false },
+  { id: 209, title: 'Fresh Zucchini', price: 2, oldPrice: 4, rating: 4.6, image: 'https://images.unsplash.com/photo-1557844352-761f2565b576?w=400&fit=crop', sale: true },
+  { id: 210, title: 'Organic Ginger Root', price: 10, oldPrice: 15, rating: 4.7, image: 'https://images.unsplash.com/photo-1550989460-0adf9ea622e2?w=400&fit=crop', sale: false },
+  { id: 211, title: 'Fresh Lemons Bag', price: 6, oldPrice: 8, rating: 4.8, image: 'https://images.unsplash.com/photo-1590502593747-42a996133562?w=400&fit=crop', sale: true },
+  { id: 212, title: 'Organic Garlic Bulbs', price: 5, oldPrice: 7, rating: 4.9, image: 'https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?w=400&fit=crop', sale: false },
+];
+
+export const decor = [
+  { id: 101, title: 'Canvas Wall Art', price: 89, oldPrice: 119, rating: 4.7, image: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=400&fit=crop', sale: true },
+  { id: 102, title: 'Decorative Vase', price: 35, oldPrice: 45, rating: 4.6, image: 'https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=400&fit=crop', sale: false },
+  { id: 122, title: 'Abstract Sculpture', price: 150, oldPrice: 200, rating: 4.8, image: 'https://images.unsplash.com/photo-1554188248-986adbb73be4?w=400&fit=crop', sale: true },
+  { id: 123, title: 'Scented Candle Set', price: 25, oldPrice: 35, rating: 4.5, image: 'https://images.unsplash.com/photo-1603006905003-be475563bc59?w=400&fit=crop', sale: false },
+  { id: 124, title: 'Minimalist Wall Clock', price: 45, oldPrice: 60, rating: 4.6, image: 'https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?w=400&fit=crop', sale: true },
+  { id: 156, title: 'Woven Floor Rug', price: 120, oldPrice: 160, rating: 4.7, image: 'https://images.unsplash.com/photo-1575414003591-ece8d0416c7a?w=400&fit=crop', sale: false },
+  { id: 157, title: 'Macrame Wall Hanging', price: 35, oldPrice: 50, rating: 4.8, image: 'https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?w=400&fit=crop', sale: true },
+  { id: 158, title: 'Indoor Plant Set', price: 55, oldPrice: 75, rating: 4.9, image: 'https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=400&fit=crop', sale: false },
+  { id: 159, title: 'Ceramic Table Lamp', price: 75, oldPrice: 95, rating: 4.6, image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&fit=crop', sale: true },
+  { id: 184, title: 'Boho Style Pillow Case', price: 18, oldPrice: 25, rating: 4.7, image: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Decorative_pillows_for_the_couch.JPG', sale: false },
+  { id: 185, title: 'Crystal Figurine', price: 210, oldPrice: 280, rating: 4.9, image: 'https://images.unsplash.com/photo-1618220179428-22790b461013?w=400&fit=crop', sale: true },
+  { id: 186, title: 'Metallic Picture Frame', price: 30, oldPrice: 40, rating: 4.5, image: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=400&fit=crop', sale: false },
+  { id: 187, title: 'Rustic Wooden Bowl', price: 40, oldPrice: 55, rating: 4.6, image: 'https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=400&fit=crop', sale: true },
+  { id: 188, title: 'Hanging Garden Lantern', price: 50, oldPrice: 70, rating: 4.8, image: 'https://images.unsplash.com/photo-1540324155974-7523202daa3f?w=400&fit=crop', sale: false },
+  { id: 213, title: 'Velvet Throw Blanket', price: 45, oldPrice: 65, rating: 4.7, image: 'https://upload.wikimedia.org/wikipedia/commons/d/d8/Blanket_%28AM_8075-1%29.jpg', sale: true },
+  { id: 214, title: 'Silver Candle Holders', price: 35, oldPrice: 50, rating: 4.6, image: 'https://images.unsplash.com/photo-1603006905003-be475563bc59?w=400&fit=crop', sale: false },
+  { id: 215, title: 'Abstract Area Rug', price: 180, oldPrice: 250, rating: 4.9, image: 'https://images.unsplash.com/photo-1575414003591-ece8d0416c7a?w=400&fit=crop', sale: true },
+  { id: 216, title: 'Decorative Wall Mirror', price: 95, oldPrice: 135, rating: 4.8, image: 'https://images.unsplash.com/photo-1618220179428-22790b461013?w=400&fit=crop', sale: false },
+  { id: 217, title: 'Handmade Pottery Vase', price: 60, oldPrice: 85, rating: 4.7, image: 'https://images.unsplash.com/photo-1581783898377-1c85bf937427?w=400&fit=crop', sale: true },
+  { id: 218, title: 'Golden Desk Organizer', price: 25, oldPrice: 40, rating: 4.5, image: 'https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?w=400&fit=crop', sale: false },
+];
+
+export const books = [
+  { id: 103, title: 'The Great Gatsby', price: 15, oldPrice: 20, rating: 4.9, image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&fit=crop', sale: true },
+  { id: 104, title: 'Coding 101', price: 25, oldPrice: 35, rating: 4.8, image: 'https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=400&fit=crop', sale: false },
+  { id: 125, title: 'World History Atlas', price: 40, oldPrice: 55, rating: 4.7, image: 'https://upload.wikimedia.org/wikipedia/commons/8/87/Atlas_Van_der_Hagen-KW1049B11_013-TITLE_PAGE_D._van_den_Burg%2C_Naauwkeurige_Aanwijzing.jpeg', sale: true },
+  { id: 126, title: 'Space Exploration', price: 30, oldPrice: 40, rating: 4.8, image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&fit=crop', sale: false },
+  { id: 127, title: 'Mystery at Midnight', price: 18, oldPrice: 25, rating: 4.6, image: 'https://upload.wikimedia.org/wikipedia/commons/3/30/The_Mystery_of_the_Yellow_Room.jpg', sale: true },
+  { id: 160, title: 'The Art of War', price: 12, oldPrice: 18, rating: 4.9, image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&fit=crop', sale: false },
+  { id: 161, title: 'Python for Beginners', price: 35, oldPrice: 45, rating: 4.7, image: 'https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=400&fit=crop', sale: true },
+  { id: 162, title: 'Mindset: Success', price: 22, oldPrice: 30, rating: 4.8, image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&fit=crop', sale: false },
+  { id: 163, title: 'Recipe for Adventure', price: 28, oldPrice: 38, rating: 4.6, image: 'https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?w=400&fit=crop', sale: true },
+  { id: 189, title: 'The Silent Patient', price: 16, oldPrice: 22, rating: 4.9, image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&fit=crop', sale: false },
+  { id: 190, title: 'Becoming by Michelle Obama', price: 20, oldPrice: 30, rating: 4.8, image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&fit=crop', sale: true },
+  { id: 191, title: 'Educated: A Memoir', price: 18, oldPrice: 25, rating: 4.7, image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&fit=crop', sale: false },
+  { id: 192, title: 'The Power of Habit', price: 15, oldPrice: 20, rating: 4.6, image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&fit=crop', sale: true },
+  { id: 193, title: 'Where the Crawdads Sing', price: 17, oldPrice: 24, rating: 4.9, image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&fit=crop', sale: false },
+  { id: 219, title: 'Atomic Habits', price: 14, oldPrice: 20, rating: 4.9, image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&fit=crop', sale: true },
+  { id: 220, title: 'The Alchemist', price: 12, oldPrice: 18, rating: 4.8, image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&fit=crop', sale: false },
+  { id: 221, title: 'Deep Work', price: 16, oldPrice: 22, rating: 4.7, image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&fit=crop', sale: true },
+  { id: 222, title: 'Start with Why', price: 15, oldPrice: 21, rating: 4.6, image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&fit=crop', sale: false },
+  { id: 223, title: 'Think and Grow Rich', price: 10, oldPrice: 15, rating: 4.8, image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&fit=crop', sale: true },
+  { id: 224, title: 'Man\'s Search for Meaning', price: 13, oldPrice: 19, rating: 4.9, image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&fit=crop', sale: false },
 ];
 
 export const fashion = [
@@ -227,7 +391,7 @@ export const sellers = [
     id: 4,
     name: 'Kids World',
     description: 'Playful Learning & Toys',
-    logo: 'https://images.unsplash.com/photo-1515488484532-43d792739f9b?w=300&h=300&fit=crop',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/7/73/2015-Ostsee-Baellebad.jpg',
     rating: 4.5,
     products: kids
   },
@@ -245,8 +409,8 @@ export const sellers = [
     description: 'Tech & Innovation Store',
     logo: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=300&h=300&fit=crop',
     rating: 4.7,
-    products: digital
+    products: electronics
   }
 ];
 
-export const allProducts = [...smartphones, ...watches, ...furniture, ...kids, ...fashion, ...digital];
+export const allProducts = [...smartphones, ...watches, ...furniture, ...kids, ...fashion, ...electronics, ...digitalProduct, ...homeAppliances, ...vegetables, ...decor, ...books];

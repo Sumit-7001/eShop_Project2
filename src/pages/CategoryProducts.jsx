@@ -4,7 +4,7 @@ import { ChevronRight } from 'lucide-react';
 import FilterSidebar from '../components/products/FilterSidebar';
 import ProductTopBar from '../components/products/ProductTopBar';
 import ProductCard from '../components/common/ProductCard';
-import { smartphones, watches, furniture, kids } from '../data/dummyData';
+import { smartphones, watches, furniture, kids, fashion, electronics, digitalProduct, homeAppliances, vegetables, decor, books } from '../data/dummyData';
 import '../styles/CategoryProducts.css';
 
 const CategoryProducts = ({ addToCart }) => {
@@ -26,10 +26,38 @@ const CategoryProducts = ({ addToCart }) => {
     kids: {
       title: "Kid's Section",
       data: kids
+    },
+    fashion: {
+      title: 'Fashion Trends',
+      data: fashion
+    },
+    electronics: {
+      title: 'Electronic Gadgets',
+      data: electronics
+    },
+    'digital-product': {
+      title: 'Digital Products',
+      data: digitalProduct
+    },
+    'home-appliances': {
+      title: 'Home Appliances',
+      data: homeAppliances
+    },
+    vegetable: {
+      title: 'Fresh Vegetables',
+      data: vegetables
+    },
+    decor: {
+      title: 'Home Decor',
+      data: decor
+    },
+    books: {
+      title: 'Books & Literature',
+      data: books
     }
   };
 
-  const currentCategory = categoryMap[slug] || categoryMap.smartphones;
+  const currentCategory = categoryMap[slug] || { title: 'Products', data: [] };
 
   return (
     <div className="category-products-page">
