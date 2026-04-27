@@ -13,6 +13,7 @@ import FAQPage from './pages/FAQPage';
 import CategoryProducts from './pages/CategoryProducts';
 import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
+import Compare from './pages/Compare';
 import AuthModal from './components/common/AuthModal';
 import { CheckCircle } from 'lucide-react';
 import './App.css';
@@ -78,6 +79,7 @@ function App() {
           <Route path="/blogs/view_detail/:slug" element={<BlogDetails />} />
           <Route path="/category/:slug" element={<CategoryProducts addToCart={addToCart} />} />
           <Route path="/product/:id" element={<ProductDetails addToCart={addToCart} />} />
+          <Route path="/compare" element={<Compare />} />
           <Route path="/cart" element={
             <Cart 
               cartItems={cartItems} 

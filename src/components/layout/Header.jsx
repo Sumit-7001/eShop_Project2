@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Search, ShoppingCart, Menu, X, ChevronDown } from 'lucide-react';
+import { Search, ShoppingCart, Menu, X, ChevronDown, ArrowLeftRight } from 'lucide-react';
 import '../../styles/Header.css';
 
 const Header = ({ cartCount, openLogin, openSignup }) => {
@@ -65,6 +65,7 @@ const Header = ({ cartCount, openLogin, openSignup }) => {
 
           <div className="nav-actions">
             <button className="nav-icon-btn"><Search size={20} /></button>
+            <Link to="/compare" className="nav-icon-btn"><ArrowLeftRight size={20} /></Link>
             <Link to="/cart" className="nav-icon-btn cart-btn">
               <ShoppingCart size={20} />
               <span className="cart-count" key={cartCount}>{cartCount}</span>

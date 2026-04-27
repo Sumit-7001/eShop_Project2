@@ -72,7 +72,7 @@ export const blogsData = [
     <p>There’s salt, there’s pepper, and there’s paprika to season, but hello VERY IMPORTANT there’s also hot crusty bread for dipping.<p>
     <p>If this soup isn’t the dictionary definition of fall cozy…<p>
     <p>Well, there’s not even anything to say because it is. It just really is.<p>
-    <p>You should be able to use all milk or all half and half rather than 1 cup of each if you only have one of the two. Averie’s recipe suggests fat free half and half as the creamy thickener, and I know several people who swear by that for other soups as well, but that’s not an ingredient I usually keep in my fridge. I wanted to make a version with what I almost always have in my fridge (which is whole milk, and half and half) and it worked beautifully<p>`,
+    <p>You should be able to use all milk or all half and half rather than 1 cup of each if you only have one of the two. Averie’s recipe suggests fat free half and half as the creamy thickener, and I know several people who swear by that for other soups as well, but that’s not an ingredient I usually keep in my fridge. I wanted to make a version with what I almost always have in my fridge (which is whole milk, and half and half) and it worked beautifully.<p>`,
     category: 'food'
   }
 ];
