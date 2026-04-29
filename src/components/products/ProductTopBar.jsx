@@ -1,12 +1,16 @@
 import React from 'react';
-import { LayoutGrid, List } from 'lucide-react';
+import { LayoutGrid, List, Filter } from 'lucide-react';
 import '../../styles/CategoryProducts.css';
 
-const ProductTopBar = ({ totalProducts, sortBy, onSortChange, itemsPerPage, onItemsPerPageChange }) => {
+const ProductTopBar = ({ totalProducts, sortBy, onSortChange, itemsPerPage, onItemsPerPageChange, onFilterClick, viewMode = 'grid', onViewModeChange }) => {
   return (
     <div className="product-top-bar">
       <div className="top-bar-left">
         <h2>Products</h2>
+        <button className="mobile-filter-btn" onClick={onFilterClick}>
+          <Filter size={18} />
+          <span>Filter</span>
+        </button>
       </div>
       <div className="top-bar-right">
         <div className="sort-by">
@@ -26,8 +30,18 @@ const ProductTopBar = ({ totalProducts, sortBy, onSortChange, itemsPerPage, onIt
           </select>
         </div>
         <div className="view-modes">
-          <button className="view-mode-btn active"><LayoutGrid size={20} /></button>
-          <button className="view-mode-btn"><List size={20} /></button>
+          <button 
+            className={`view-mode-btn ${viewMode === 'grid' ? 'active' : ''}`}
+            onClick={() => onViewModeChange && onViewModeChange('grid')}
+          >
+            <LayoutGrid size={20} />
+          </button>
+          <button 
+            className={`view-mode-btn ${viewMode === 'list' ? 'active' : ''}`}
+            onClick={() => onViewModeChange && onViewModeChange('list')}
+          >
+            <List size={20} />
+          </button>
         </div>
       </div>
     </div>

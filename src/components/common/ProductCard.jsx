@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import { Star, ShoppingCart } from 'lucide-react';
 import '../../styles/ProductCard.css';
 
-const ProductCard = ({ product, onAddToCart }) => {
+const ProductCard = ({ product, onAddToCart, viewMode = 'grid' }) => {
   const { id, title, price, oldPrice, rating, image, sale } = product;
 
   return (
-    <div className="product-card">
+    <div className={`product-card ${viewMode === 'list' ? 'list-card' : ''}`}>
       {sale && <div className="sale-badge">SALE</div>}
       <Link to={`/product/${id}`} className="product-image-wrapper">
         <img src={image} alt={title} className="product-image" />

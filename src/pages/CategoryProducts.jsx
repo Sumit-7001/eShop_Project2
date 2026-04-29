@@ -11,6 +11,8 @@ const CategoryProducts = ({ addToCart }) => {
   const { slug } = useParams();
   const [sortBy, setSortBy] = useState('relevance');
   const [itemsPerPage, setItemsPerPage] = useState(12);
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const [viewMode, setViewMode] = useState('grid');
 
   const categoryMap = {
     smartphones: {
@@ -91,7 +93,15 @@ const CategoryProducts = ({ addToCart }) => {
 
       <div className="container">
         <div className="category-products-layout">
-          <FilterSidebar />
+          {/* Mobile Overlay */}
+          {isMobileFilterOpen && (
+            <div className="filter-overlay" onClick={() => setIsMobileFilterOpen(false)}></div>
+          )}
+          
+          <FilterSidebar 
+            isOpen={isMobileFilterOpen} 
+            onClose={() => setIsMobileFilterOpen(false)} 
+          />
           
           <main className="products-main-content">
             <ProductTopBar 
@@ -100,14 +110,18 @@ const CategoryProducts = ({ addToCart }) => {
               onSortChange={setSortBy}
               itemsPerPage={itemsPerPage}
               onItemsPerPageChange={setItemsPerPage}
+              onFilterClick={() => setIsMobileFilterOpen(true)}
+              viewMode={viewMode}
+              onViewModeChange={setViewMode}
             />
             
-            <div className="products-grid-listing">
+            <div className={`products-grid-listing ${viewMode === 'list' ? 'list-view' : ''}`}>
               {displayedProducts.map(product => (
                 <ProductCard 
                   key={product.id} 
                   product={product} 
                   onAddToCart={addToCart} 
+                  viewMode={viewMode}
                 />
               ))}
             </div>

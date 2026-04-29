@@ -26,7 +26,20 @@
 
 @media (max-width: 576px) {
   .products-grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 15px;
+    padding-bottom: 15px;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .products-grid::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+  .products-grid > * {
+    flex: 0 0 75%; /* Show 75% of one card to hint at scrollability */
+    scroll-snap-align: start;
   }
 }
 

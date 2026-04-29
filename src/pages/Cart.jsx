@@ -52,7 +52,7 @@ const Cart = ({ cartItems, removeFromCart, updateQuantity, clearCart }) => {
               <tbody>
                 {cartItems.map((item) => (
                   <tr key={item.id}>
-                    <td>
+                    <td data-label="Product">
                       <div className="cart-product-cell">
                         <img src={item.image} alt={item.title} className="cart-product-img" />
                         <div className="cart-product-info">
@@ -61,9 +61,9 @@ const Cart = ({ cartItems, removeFromCart, updateQuantity, clearCart }) => {
                         </div>
                       </div>
                     </td>
-                    <td><div className="cart-price">${item.price.toLocaleString()}</div></td>
-                    <td><div className="cart-tax">-</div></td>
-                    <td>
+                    <td data-label="Price"><div className="cart-price">${item.price.toLocaleString()}</div></td>
+                    <td data-label="Tax(%)"><div className="cart-tax">-</div></td>
+                    <td data-label="Quantity">
                       <div className="cart-quantity-selector">
                         <button 
                           className="qty-btn" 
@@ -80,8 +80,8 @@ const Cart = ({ cartItems, removeFromCart, updateQuantity, clearCart }) => {
                         </button>
                       </div>
                     </td>
-                    <td><div className="cart-subtotal">${(item.price * item.quantity).toLocaleString()}</div></td>
-                    <td>
+                    <td data-label="Subtotal"><div className="cart-subtotal">${(item.price * item.quantity).toLocaleString()}</div></td>
+                    <td data-label="Actions">
                       <div className="cart-actions">
                         <Trash2 
                           className="action-icon delete-icon" 

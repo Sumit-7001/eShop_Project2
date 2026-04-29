@@ -244,3 +244,68 @@
     overflow-x: auto;
   }
 }
+
+@media (max-width: 576px) {
+  .cart-main, .cart-total-card {
+    padding: 15px;
+  }
+  .cart-product-img {
+    width: 60px;
+    height: 60px;
+  }
+  .cart-product-info h4 {
+    font-size: 14px;
+    white-space: normal;
+  }
+  
+  /* Responsive Table */
+  .cart-table thead {
+    display: none;
+  }
+  .cart-table, .cart-table tbody, .cart-table tr, .cart-table td {
+    display: block;
+    width: 100%;
+  }
+  .cart-table tr {
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 10px;
+    background: #fff;
+  }
+  .cart-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 5px;
+    border-bottom: 1px solid #f9f9f9;
+  }
+  .cart-table td:last-child {
+    border-bottom: none;
+  }
+  .cart-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #666;
+    font-size: 13px;
+    flex-basis: 40%;
+  }
+  
+  /* Specific styling for the product cell */
+  .cart-table td[data-label="Product"] {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .cart-table td[data-label="Product"]::before {
+    display: none; /* Don't need label for the product image/title */
+  }
+  .cart-product-cell {
+    max-width: 100%;
+  }
+  
+  .cart-actions {
+    justify-content: flex-end;
+    width: 100%;
+  }
+}

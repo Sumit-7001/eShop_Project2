@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { X } from 'lucide-react';
 import '../../styles/CategoryProducts.css';
 import { brands, categories } from '../../data/dummyData';
 
-const FilterSidebar = () => {
+const FilterSidebar = ({ isOpen, onClose }) => {
   const [expandedSections, setExpandedSections] = useState({
     attributes: true,
     brands: true,
@@ -23,7 +24,14 @@ const FilterSidebar = () => {
   ];
 
   return (
-    <aside className="filter-sidebar">
+    <aside className={`filter-sidebar ${isOpen ? 'mobile-open' : ''}`}>
+      <div className="mobile-filter-header">
+        <h2>Filters</h2>
+        <button className="close-filter-btn" onClick={onClose}>
+          <X size={24} />
+        </button>
+      </div>
+
       <div className="filter-section">
         <div className="filter-header" onClick={() => toggleSection('attributes')}>
           <h3>Attributes</h3>
@@ -74,8 +82,8 @@ const FilterSidebar = () => {
       </div>
 
       <div className="filter-actions">
-        <button className="btn-filter">Filter</button>
-        <button className="btn-clear">Clear</button>
+        <button className="btn-filter" onClick={onClose}>Filter</button>
+        <button className="btn-clear" onClick={onClose}>Clear</button>
       </div>
     </aside>
   );

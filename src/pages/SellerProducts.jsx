@@ -11,6 +11,8 @@ const SellerProducts = ({ addToCart }) => {
   const { id } = useParams();
   const [sortBy, setSortBy] = useState('relevance');
   const [itemsPerPage, setItemsPerPage] = useState(12);
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const [viewMode, setViewMode] = useState('grid');
   
   const seller = sellers.find(s => s.id === parseInt(id));
 
@@ -54,7 +56,15 @@ const SellerProducts = ({ addToCart }) => {
 
       <div className="container">
         <div className="category-products-layout">
-          <FilterSidebar />
+          {/* Mobile Overlay */}
+          {isMobileFilterOpen && (
+            <div className="filter-overlay" onClick={() => setIsMobileFilterOpen(false)}></div>
+          )}
+          
+          <FilterSidebar 
+            isOpen={isMobileFilterOpen} 
+            onClose={() => setIsMobileFilterOpen(false)} 
+          />
           
           <main className="products-main-content">
             <ProductTopBar 
@@ -63,15 +73,19 @@ const SellerProducts = ({ addToCart }) => {
               onSortChange={setSortBy}
               itemsPerPage={itemsPerPage}
               onItemsPerPageChange={setItemsPerPage}
+              onFilterClick={() => setIsMobileFilterOpen(true)}
+              viewMode={viewMode}
+              onViewModeChange={setViewMode}
             />
             
-            <div className="products-grid-listing">
+            <div className={`products-grid-listing ${viewMode === 'list' ? 'list-view' : ''}`}>
               {displayedProducts.length > 0 ? (
                 displayedProducts.map(product => (
                   <ProductCard 
                     key={product.id} 
                     product={product} 
                     onAddToCart={addToCart} 
+                    viewMode={viewMode}
                   />
                 ))
               ) : (

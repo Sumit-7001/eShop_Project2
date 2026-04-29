@@ -46,6 +46,35 @@
   height: fit-content;
 }
 
+.mobile-filter-header {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.close-filter-btn {
+  background: transparent;
+  color: var(--text-dark);
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.filter-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
 .filter-section {
   margin-bottom: 25px;
   border-bottom: 1px solid #f0f0f0;
@@ -190,9 +219,29 @@
   margin-bottom: 20px;
 }
 
+.top-bar-left {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .top-bar-left h2 {
   font-size: 20px;
   font-weight: 700;
+}
+
+.mobile-filter-btn {
+  display: none;
+  align-items: center;
+  gap: 5px;
+  background: var(--primary-color);
+  color: white;
+  padding: 6px 12px;
+  border-radius: var(--border-radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
 }
 
 .top-bar-right {
@@ -250,6 +299,10 @@
   gap: 25px;
 }
 
+.products-grid-listing.list-view {
+  grid-template-columns: 1fr;
+}
+
 @media (max-width: 1200px) {
   .products-grid-listing {
     grid-template-columns: repeat(2, 1fr);
@@ -260,8 +313,36 @@
   .category-products-layout {
     flex-direction: column;
   }
+  
   .filter-sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 300px;
+    max-width: 85vw;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 1000;
+    transition: left 0.3s ease-in-out;
+    border-radius: 0;
+    margin: 0;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+  }
+  
+  .filter-sidebar.mobile-open {
+    left: 0;
+  }
+  
+  .mobile-filter-header {
+    display: flex;
+  }
+  
+  .top-bar-left {
     width: 100%;
+  }
+  
+  .mobile-filter-btn {
+    display: flex;
   }
 }
 
@@ -275,11 +356,17 @@
     width: 100%;
     justify-content: space-between;
     flex-wrap: wrap;
+    gap: 10px;
+  }
+  .view-modes {
+    border-left: none;
+    padding-left: 0;
   }
 }
 
 @media (max-width: 576px) {
   .products-grid-listing {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
   }
 }

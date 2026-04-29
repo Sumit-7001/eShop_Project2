@@ -287,14 +287,21 @@
 
   .brand-products-header {
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
     align-items: flex-start;
+  }
+
+  .brand-products-header-right {
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
   }
 }
 
 @media (max-width: 576px) {
   .brand-products-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
   }
 
   .brand-hero-logo {

@@ -199,3 +199,26 @@
     border-radius: 8px;
   }
 }
+
+@media (max-width: 576px) {
+  .top-bar-content {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .top-bar-left {
+    display: none; /* Hide decorative icons on very small screens to save space */
+  }
+  .nav-actions {
+    gap: 10px;
+  }
+  .logo-text {
+    display: none; /* Hide text, keep only 'e' icon to save space if needed, or keep text and reduce font */
+  }
+  .logo {
+    font-size: 22px;
+  }
+  .nav-icon-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+}
