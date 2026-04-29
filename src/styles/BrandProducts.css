@@ -161,6 +161,41 @@
   border-radius: 20px;
 }
 
+.brand-products-header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.brand-sort-by {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-gray);
+}
+
+.brand-sort-by select {
+  padding: 8px 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--text-dark);
+  background: #f8f9fd;
+  cursor: pointer;
+  outline: none;
+  transition: var(--transition);
+}
+
+.brand-sort-by select:hover {
+  border-color: var(--primary-color);
+}
+
+.brand-sort-by select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
 .brand-products-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

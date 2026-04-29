@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ChevronRight, Package } from 'lucide-react';
 import ProductCard from '../components/common/ProductCard';
@@ -9,6 +9,24 @@ const BrandProducts = ({ addToCart }) => {
   const { slug } = useParams();
   const brand = brands.find(b => b.slug === slug);
   const products = brandProducts[slug] || [];
+  const [sortBy, setSortBy] = useState('relevance');
+  const [itemsPerPage, setItemsPerPage] = useState(12);
+
+  const sortedProducts = useMemo(() => {
+    const sorted = [...products];
+    switch (sortBy) {
+      case 'price-low-high':
+        return sorted.sort((a, b) => a.price - b.price);
+      case 'price-high-low':
+        return sorted.sort((a, b) => b.price - a.price);
+      case 'newest':
+        return sorted.sort((a, b) => b.id - a.id);
+      default:
+        return sorted;
+    }
+  }, [products, sortBy]);
+
+  const displayedProducts = sortedProducts.slice(0, itemsPerPage);
 
   if (!brand) {
     return (
@@ -63,12 +81,30 @@ const BrandProducts = ({ addToCart }) => {
         <div className="brand-products-section">
           <div className="brand-products-header">
             <h2>All {brand.name} Products</h2>
-            <span className="product-count">{products.length} items found</span>
+            <div className="brand-products-header-right">
+              <span className="product-count">{products.length} items found</span>
+              <div className="brand-sort-by">
+                <span>Show:</span>
+                <select value={itemsPerPage} onChange={(e) => setItemsPerPage(Number(e.target.value))}>
+                  {Array.from({ length: 22 }, (_, i) => i + 1).map(n => (
+                    <option key={n} value={n}>{n}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="brand-sort-by">
+                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                  <option value="relevance">Relevance</option>
+                  <option value="price-low-high">Price: Low to High</option>
+                  <option value="price-high-low">Price: High to Low</option>
+                  <option value="newest">Newest Arrivals</option>
+                </select>
+              </div>
+            </div>
           </div>
 
-          {products.length > 0 ? (
+          {displayedProducts.length > 0 ? (
             <div className="brand-products-grid">
-              {products.map(product => (
+              {displayedProducts.map(product => (
                 <ProductCard
                   key={product.id}
                   product={product}
@@ -90,3 +126,4 @@ const BrandProducts = ({ addToCart }) => {
 };
 
 export default BrandProducts;
+

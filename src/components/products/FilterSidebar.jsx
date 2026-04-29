@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../../styles/CategoryProducts.css';
 import { brands, categories } from '../../data/dummyData';
 
@@ -47,9 +48,9 @@ const FilterSidebar = () => {
         {expandedSections.brands && (
           <div className="brands-grid-small">
             {brands.map(brand => (
-              <div key={brand.id} className="brand-logo-small" title={brand.name}>
+              <Link key={brand.id} to={`/brand/${brand.slug}`} className="brand-logo-small" title={brand.name}>
                 <img src={brand.logo} alt={brand.name} />
-              </div>
+              </Link>
             ))}
           </div>
         )}

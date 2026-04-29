@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import FilterSidebar from '../components/products/FilterSidebar';
@@ -9,8 +9,27 @@ import '../styles/CategoryProducts.css'; // Reusing styles for consistency
 
 const SellerProducts = ({ addToCart }) => {
   const { id } = useParams();
+  const [sortBy, setSortBy] = useState('relevance');
+  const [itemsPerPage, setItemsPerPage] = useState(12);
   
   const seller = sellers.find(s => s.id === parseInt(id));
+
+  const sortedProducts = useMemo(() => {
+    if (!seller) return [];
+    const products = [...seller.products];
+    switch (sortBy) {
+      case 'price-low-high':
+        return products.sort((a, b) => a.price - b.price);
+      case 'price-high-low':
+        return products.sort((a, b) => b.price - a.price);
+      case 'newest':
+        return products.sort((a, b) => b.id - a.id);
+      default:
+        return products;
+    }
+  }, [seller, sortBy]);
+
+  const displayedProducts = sortedProducts.slice(0, itemsPerPage);
 
   if (!seller) {
     return (
@@ -38,11 +57,17 @@ const SellerProducts = ({ addToCart }) => {
           <FilterSidebar />
           
           <main className="products-main-content">
-            <ProductTopBar totalProducts={seller.products.length} />
+            <ProductTopBar 
+              totalProducts={sortedProducts.length} 
+              sortBy={sortBy} 
+              onSortChange={setSortBy}
+              itemsPerPage={itemsPerPage}
+              onItemsPerPageChange={setItemsPerPage}
+            />
             
             <div className="products-grid-listing">
-              {seller.products.length > 0 ? (
-                seller.products.map(product => (
+              {displayedProducts.length > 0 ? (
+                displayedProducts.map(product => (
                   <ProductCard 
                     key={product.id} 
                     product={product} 
@@ -63,3 +88,4 @@ const SellerProducts = ({ addToCart }) => {
 };
 
 export default SellerProducts;
+

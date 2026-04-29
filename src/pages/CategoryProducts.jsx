@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import FilterSidebar from '../components/products/FilterSidebar';
@@ -9,6 +9,8 @@ import '../styles/CategoryProducts.css';
 
 const CategoryProducts = ({ addToCart }) => {
   const { slug } = useParams();
+  const [sortBy, setSortBy] = useState('relevance');
+  const [itemsPerPage, setItemsPerPage] = useState(12);
 
   const categoryMap = {
     smartphones: {
@@ -59,6 +61,22 @@ const CategoryProducts = ({ addToCart }) => {
 
   const currentCategory = categoryMap[slug] || { title: 'Products', data: [] };
 
+  const sortedProducts = useMemo(() => {
+    const products = [...currentCategory.data];
+    switch (sortBy) {
+      case 'price-low-high':
+        return products.sort((a, b) => a.price - b.price);
+      case 'price-high-low':
+        return products.sort((a, b) => b.price - a.price);
+      case 'newest':
+        return products.sort((a, b) => b.id - a.id);
+      default:
+        return products;
+    }
+  }, [currentCategory.data, sortBy]);
+
+  const displayedProducts = sortedProducts.slice(0, itemsPerPage);
+
   return (
     <div className="category-products-page">
       <div className="category-breadcrumb-area">
@@ -76,10 +94,16 @@ const CategoryProducts = ({ addToCart }) => {
           <FilterSidebar />
           
           <main className="products-main-content">
-            <ProductTopBar totalProducts={currentCategory.data.length} />
+            <ProductTopBar 
+              totalProducts={sortedProducts.length} 
+              sortBy={sortBy} 
+              onSortChange={setSortBy}
+              itemsPerPage={itemsPerPage}
+              onItemsPerPageChange={setItemsPerPage}
+            />
             
             <div className="products-grid-listing">
-              {currentCategory.data.map(product => (
+              {displayedProducts.map(product => (
                 <ProductCard 
                   key={product.id} 
                   product={product} 
@@ -95,3 +119,4 @@ const CategoryProducts = ({ addToCart }) => {
 };
 
 export default CategoryProducts;
+
