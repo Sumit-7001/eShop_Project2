@@ -1,5 +1,5 @@
 .brands-section {
-  padding: 60px 0;
+  padding: 0 0 60px 0;
   background: var(--bg-light);
 }
 
@@ -50,7 +50,7 @@
 
 @media (max-width: 768px) {
   .brands-section {
-    padding: 40px 0;
+    padding: 0 0 40px 0;
   }
   
   .brands-header h2 {

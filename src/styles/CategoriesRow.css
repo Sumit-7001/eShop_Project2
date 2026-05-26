@@ -1,5 +1,12 @@
 .categories-section {
   background: var(--bg-light);
+  padding: 60px 0 0 0;
+}
+
+@media (max-width: 768px) {
+  .categories-section {
+    padding: 40px 0 0 0;
+  }
 }
 
 .categories-header {
