@@ -108,7 +108,7 @@ const Cart = ({ cartItems, removeFromCart, updateQuantity, clearCart }) => {
                 <span>Total</span>
                 <span>${total.toLocaleString()}</span>
               </div>
-              <button className="checkout-btn">Go To Checkout</button>
+              <Link to="/checkout" className="checkout-btn">Go To Checkout</Link>
             </div>
           </div>
         </div>

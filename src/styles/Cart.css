@@ -197,6 +197,10 @@
 }
 
 .checkout-btn {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  box-sizing: border-box;
   width: 100%;
   background-color: #ff9980; /* Coral/Peach from reference */
   color: white;

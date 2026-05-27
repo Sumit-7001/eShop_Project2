@@ -13,6 +13,7 @@ import FAQPage from './pages/FAQPage';
 import CategoryProducts from './pages/CategoryProducts';
 import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
 import Compare from './pages/Compare';
 import SellerProducts from './pages/SellerProducts';
 import BrandProducts from './pages/BrandProducts';
@@ -162,6 +163,12 @@ function App() {
               cartItems={cartItems} 
               removeFromCart={removeFromCart} 
               updateQuantity={updateQuantity} 
+              clearCart={clearCart} 
+            />
+          } />
+          <Route path="/checkout" element={
+            <Checkout 
+              cartItems={cartItems} 
               clearCart={clearCart} 
             />
           } />
