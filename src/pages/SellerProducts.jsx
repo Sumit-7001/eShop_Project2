@@ -7,7 +7,13 @@ import ProductCard from '../components/common/ProductCard';
 import { sellers } from '../data/dummyData';
 import '../styles/CategoryProducts.css'; // Reusing styles for consistency
 
-const SellerProducts = ({ addToCart }) => {
+const SellerProducts = ({ 
+  addToCart,
+  favoriteItems = [],
+  compareItems = [],
+  toggleFavorite,
+  toggleCompare
+}) => {
   const { id } = useParams();
   const [sortBy, setSortBy] = useState('relevance');
   const [itemsPerPage, setItemsPerPage] = useState(12);
@@ -86,6 +92,10 @@ const SellerProducts = ({ addToCart }) => {
                     product={product} 
                     onAddToCart={addToCart} 
                     viewMode={viewMode}
+                    isFavorite={favoriteItems.some(item => item.id === product.id)}
+                    isComparing={compareItems.some(item => item.id === product.id)}
+                    onToggleFavorite={toggleFavorite}
+                    onToggleCompare={toggleCompare}
                   />
                 ))
               ) : (

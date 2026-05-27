@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Search, ShoppingCart, Menu, X, ChevronDown, ArrowLeftRight } from 'lucide-react';
+import { Search, ShoppingCart, Menu, X, ChevronDown, ArrowLeftRight, Heart } from 'lucide-react';
 import '../../styles/Header.css';
 
-const Header = ({ cartCount, openLogin, openSignup }) => {
+const Header = ({ 
+  cartCount, 
+  favoriteItems = [], 
+  toggleFavorite, 
+  addToCart, 
+  compareCount = 0,
+  openLogin, 
+  openSignup 
+}) => {
   const [isSticky, setIsSticky] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [favoritesSidebarOpen, setFavoritesSidebarOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -65,8 +74,23 @@ const Header = ({ cartCount, openLogin, openSignup }) => {
 
           <div className="nav-actions">
             <button className="nav-icon-btn"><Search size={20} /></button>
-            <Link to="/compare" className="nav-icon-btn"><ArrowLeftRight size={20} /></Link>
-            <Link to="/cart" className="nav-icon-btn cart-btn">
+            <Link to="/compare" className="nav-icon-btn compare-btn" title="Compare Products">
+              <ArrowLeftRight size={20} />
+              {compareCount > 0 && (
+                <span className="compare-count" key={compareCount}>{compareCount}</span>
+              )}
+            </Link>
+            <button 
+              className="nav-icon-btn wishlist-btn" 
+              onClick={() => setFavoritesSidebarOpen(true)}
+              title="View Wishlist"
+            >
+              <Heart size={20} />
+              {favoriteItems.length > 0 && (
+                <span className="wishlist-count" key={favoriteItems.length}>{favoriteItems.length}</span>
+              )}
+            </button>
+            <Link to="/cart" className="nav-icon-btn cart-btn" title="Shopping Cart">
               <ShoppingCart size={20} />
               <span className="cart-count" key={cartCount}>{cartCount}</span>
             </Link>
@@ -79,6 +103,74 @@ const Header = ({ cartCount, openLogin, openSignup }) => {
           </div>
         </div>
       </nav>
+
+      {/* Favorites Sidebar Drawer */}
+      <div 
+        className={`favorites-sidebar-backdrop ${favoritesSidebarOpen ? 'active' : ''}`} 
+        onClick={() => setFavoritesSidebarOpen(false)}
+      >
+        <div 
+          className={`favorites-sidebar ${favoritesSidebarOpen ? 'open' : ''}`} 
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="favorites-sidebar-header">
+            <h3>My Wishlist ({favoriteItems.length})</h3>
+            <button className="close-sidebar-btn" onClick={() => setFavoritesSidebarOpen(false)}>
+              <X size={24} />
+            </button>
+          </div>
+          
+          <div className="favorites-sidebar-content">
+            {favoriteItems.length === 0 ? (
+              <div className="favorites-empty-state">
+                <Heart size={48} className="empty-heart-icon" />
+                <p>Your wishlist is empty.</p>
+                <span>Add products you love to your wishlist to buy them later!</span>
+                <button className="continue-shopping-btn" onClick={() => setFavoritesSidebarOpen(false)}>
+                  Continue Shopping
+                </button>
+              </div>
+            ) : (
+              <div className="favorites-list">
+                {favoriteItems.map(item => (
+                  <div key={item.id} className="favorites-item">
+                    <Link to={`/product/${item.id}`} className="fav-item-image-link" onClick={() => setFavoritesSidebarOpen(false)}>
+                      <div className="fav-item-image-wrapper">
+                        <img src={item.image} alt={item.title} className="fav-item-image" />
+                      </div>
+                    </Link>
+                    <div className="fav-item-details">
+                      <Link to={`/product/${item.id}`} className="fav-item-title-link" onClick={() => setFavoritesSidebarOpen(false)}>
+                        <h4 className="fav-item-title">{item.title}</h4>
+                      </Link>
+                      <div className="fav-item-price">${item.price}</div>
+                      <div className="fav-item-actions">
+                        <button 
+                          className="fav-add-to-cart-btn"
+                          onClick={() => {
+                            addToCart(item);
+                            setFavoritesSidebarOpen(false);
+                          }}
+                        >
+                          <ShoppingCart size={12} style={{ marginRight: '4px' }} />
+                          Add
+                        </button>
+                        <button 
+                          className="fav-remove-btn"
+                          onClick={() => toggleFavorite(item)}
+                          title="Remove from favorites"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </header>
   );
 };

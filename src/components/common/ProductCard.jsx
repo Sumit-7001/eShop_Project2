@@ -1,14 +1,48 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Star, ShoppingCart } from 'lucide-react';
+import { Star, ShoppingCart, Heart, ArrowLeftRight } from 'lucide-react';
 import '../../styles/ProductCard.css';
 
-const ProductCard = ({ product, onAddToCart, viewMode = 'grid' }) => {
+const ProductCard = ({ 
+  product, 
+  onAddToCart, 
+  viewMode = 'grid',
+  isFavorite = false,
+  isComparing = false,
+  onToggleFavorite,
+  onToggleCompare
+}) => {
   const { id, title, price, oldPrice, rating, image, sale } = product;
 
   return (
     <div className={`product-card ${viewMode === 'list' ? 'list-card' : ''}`}>
       {sale && <div className="sale-badge">SALE</div>}
+      
+      <div className="product-actions-floating">
+        <button 
+          className={`floating-action-btn ${isFavorite ? 'active' : ''}`}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (onToggleFavorite) onToggleFavorite(product);
+          }}
+          title={isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+        >
+          <Heart size={16} fill={isFavorite ? "#ff4d4d" : "none"} color={isFavorite ? "#ff4d4d" : "currentColor"} />
+        </button>
+        <button 
+          className={`floating-action-btn ${isComparing ? 'active' : ''}`}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (onToggleCompare) onToggleCompare(product);
+          }}
+          title={isComparing ? "Remove from Compare" : "Compare Product"}
+        >
+          <ArrowLeftRight size={16} />
+        </button>
+      </div>
+
       <Link to={`/product/${id}`} className="product-image-wrapper">
         <img src={image} alt={title} className="product-image" />
       </Link>

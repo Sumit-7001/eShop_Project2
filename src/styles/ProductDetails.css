@@ -270,19 +270,40 @@
 .icon-btn-outline {
   width: 44px;
   height: 44px;
-  border: 1px solid #007bff;
+  border: 1px solid #ccc;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #007bff;
+  color: var(--text-gray);
   background: transparent;
   transition: all 0.3s;
 }
 
 .icon-btn-outline:hover {
+  background: #f5f5f5;
+  color: var(--text-dark);
+}
+
+.compare-btn {
+  border-color: #007bff;
+  color: #007bff;
+}
+
+.compare-btn:hover {
   background: #007bff;
   color: #fff;
+}
+
+.compare-btn.active {
+  background: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+.compare-btn.active:hover {
+  background: #0056b3;
+  border-color: #0056b3;
 }
 
 .wishlist-btn {
@@ -292,6 +313,18 @@
 
 .wishlist-btn:hover {
   background: #ff4d4d;
+  color: #fff;
+}
+
+.wishlist-btn.active {
+  background: #ff4d4d;
+  color: #fff;
+  border-color: #ff4d4d;
+}
+
+.wishlist-btn.active:hover {
+  background: #e03d3d;
+  border-color: #e03d3d;
 }
 
 /* Seller Info */

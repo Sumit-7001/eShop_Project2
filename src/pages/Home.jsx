@@ -9,7 +9,13 @@ import SectionTitle from '../components/common/SectionTitle';
 import ProductCard from '../components/common/ProductCard';
 import { smartphones, watches, furniture, kids } from '../data/dummyData';
 
-const Home = ({ addToCart }) => {
+const Home = ({ 
+  addToCart, 
+  favoriteItems = [], 
+  compareItems = [], 
+  toggleFavorite, 
+  toggleCompare 
+}) => {
   return (
     <main>
       <HeroSection onAddToCart={addToCart} />
@@ -25,7 +31,15 @@ const Home = ({ addToCart }) => {
           <SectionTitle title="Smartphones & Basic Mobiles" viewMoreLink="/category/smartphones" />
           <div className="products-grid">
             {smartphones.slice(0, 4).map(product => (
-              <ProductCard key={product.id} product={product} onAddToCart={addToCart} />
+              <ProductCard 
+                key={product.id} 
+                product={product} 
+                onAddToCart={addToCart} 
+                isFavorite={favoriteItems.some(item => item.id === product.id)}
+                isComparing={compareItems.some(item => item.id === product.id)}
+                onToggleFavorite={toggleFavorite}
+                onToggleCompare={toggleCompare}
+              />
             ))}
           </div>
         </div>
@@ -38,7 +52,15 @@ const Home = ({ addToCart }) => {
           <SectionTitle title="Top Rated Watches" viewMoreLink="/category/watches" />
           <div className="products-grid">
             {watches.slice(0, 4).map(product => (
-              <ProductCard key={product.id} product={product} onAddToCart={addToCart} />
+              <ProductCard 
+                key={product.id} 
+                product={product} 
+                onAddToCart={addToCart} 
+                isFavorite={favoriteItems.some(item => item.id === product.id)}
+                isComparing={compareItems.some(item => item.id === product.id)}
+                onToggleFavorite={toggleFavorite}
+                onToggleCompare={toggleCompare}
+              />
             ))}
           </div>
         </div>
@@ -49,7 +71,15 @@ const Home = ({ addToCart }) => {
           <SectionTitle title="Top Rated Furniture Products" viewMoreLink="/category/furniture" />
           <div className="products-grid">
             {furniture.slice(0, 4).map(product => (
-              <ProductCard key={product.id} product={product} onAddToCart={addToCart} />
+              <ProductCard 
+                key={product.id} 
+                product={product} 
+                onAddToCart={addToCart} 
+                isFavorite={favoriteItems.some(item => item.id === product.id)}
+                isComparing={compareItems.some(item => item.id === product.id)}
+                onToggleFavorite={toggleFavorite}
+                onToggleCompare={toggleCompare}
+              />
             ))}
           </div>
         </div>
@@ -60,7 +90,15 @@ const Home = ({ addToCart }) => {
           <SectionTitle title="Kid's Section" viewMoreLink="/category/kids" />
           <div className="products-grid">
             {kids.slice(0, 4).map(product => (
-              <ProductCard key={product.id} product={product} onAddToCart={addToCart} />
+              <ProductCard 
+                key={product.id} 
+                product={product} 
+                onAddToCart={addToCart} 
+                isFavorite={favoriteItems.some(item => item.id === product.id)}
+                isComparing={compareItems.some(item => item.id === product.id)}
+                onToggleFavorite={toggleFavorite}
+                onToggleCompare={toggleCompare}
+              />
             ))}
           </div>
         </div>

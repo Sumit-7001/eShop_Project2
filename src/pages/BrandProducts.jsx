@@ -5,7 +5,13 @@ import ProductCard from '../components/common/ProductCard';
 import { brands, brandProducts } from '../data/dummyData';
 import '../styles/BrandProducts.css';
 
-const BrandProducts = ({ addToCart }) => {
+const BrandProducts = ({ 
+  addToCart,
+  favoriteItems = [],
+  compareItems = [],
+  toggleFavorite,
+  toggleCompare
+}) => {
   const { slug } = useParams();
   const brand = brands.find(b => b.slug === slug);
   const products = brandProducts[slug] || [];
@@ -109,6 +115,10 @@ const BrandProducts = ({ addToCart }) => {
                   key={product.id}
                   product={product}
                   onAddToCart={addToCart}
+                  isFavorite={favoriteItems.some(item => item.id === product.id)}
+                  isComparing={compareItems.some(item => item.id === product.id)}
+                  onToggleFavorite={toggleFavorite}
+                  onToggleCompare={toggleCompare}
                 />
               ))}
             </div>

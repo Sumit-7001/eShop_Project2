@@ -7,7 +7,13 @@ import ProductCard from '../components/common/ProductCard';
 import { smartphones, watches, furniture, kids, fashion, electronics, digitalProduct, homeAppliances, vegetables, decor, books } from '../data/dummyData';
 import '../styles/CategoryProducts.css';
 
-const CategoryProducts = ({ addToCart }) => {
+const CategoryProducts = ({ 
+  addToCart,
+  favoriteItems = [],
+  compareItems = [],
+  toggleFavorite,
+  toggleCompare
+}) => {
   const { slug } = useParams();
   const [sortBy, setSortBy] = useState('relevance');
   const [itemsPerPage, setItemsPerPage] = useState(12);
@@ -122,6 +128,10 @@ const CategoryProducts = ({ addToCart }) => {
                   product={product} 
                   onAddToCart={addToCart} 
                   viewMode={viewMode}
+                  isFavorite={favoriteItems.some(item => item.id === product.id)}
+                  isComparing={compareItems.some(item => item.id === product.id)}
+                  onToggleFavorite={toggleFavorite}
+                  onToggleCompare={toggleCompare}
                 />
               ))}
             </div>

@@ -9,7 +9,13 @@ import { allProducts, smartphones, watches, furniture, kids } from '../data/dumm
 import ProductCard from '../components/common/ProductCard';
 import '../styles/ProductDetails.css';
 
-const ProductDetails = ({ addToCart }) => {
+const ProductDetails = ({ 
+  addToCart,
+  favoriteItems = [],
+  compareItems = [],
+  toggleFavorite,
+  toggleCompare
+}) => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -40,13 +46,15 @@ const ProductDetails = ({ addToCart }) => {
 
   // Mock related products based on the current product category/type
   const getRelatedProducts = () => {
-    // This is a simple logic, in a real app it would be more complex
     if (smartphones.find(p => p.id === product.id)) return smartphones.filter(p => p.id !== product.id).slice(0, 4);
     if (watches.find(p => p.id === product.id)) return watches.filter(p => p.id !== product.id).slice(0, 4);
     if (furniture.find(p => p.id === product.id)) return furniture.filter(p => p.id !== product.id).slice(0, 4);
     if (kids.find(p => p.id === product.id)) return kids.filter(p => p.id !== product.id).slice(0, 4);
     return allProducts.filter(p => p.id !== product.id).slice(0, 4);
   };
+
+  const isCurrentFavorite = favoriteItems.some(item => item.id === product.id);
+  const isCurrentComparing = compareItems.some(item => item.id === product.id);
 
   return (
     <div className="product-details-page">
@@ -132,8 +140,20 @@ const ProductDetails = ({ addToCart }) => {
               <button className="add-cart-large" onClick={() => addToCart(product, quantity)}>
                 <ShoppingCart size={20} /> Add to Cart
               </button>
-              <button className="icon-btn-outline"><GitCompare size={20} /></button>
-              <button className="icon-btn-outline wishlist-btn"><Heart size={20} /></button>
+              <button 
+                className={`icon-btn-outline compare-btn ${isCurrentComparing ? 'active' : ''}`}
+                onClick={() => toggleCompare(product)}
+                title={isCurrentComparing ? "Remove from comparison" : "Add to comparison"}
+              >
+                <GitCompare size={20} />
+              </button>
+              <button 
+                className={`icon-btn-outline wishlist-btn ${isCurrentFavorite ? 'active' : ''}`}
+                onClick={() => toggleFavorite(product)}
+                title={isCurrentFavorite ? "Remove from wishlist" : "Add to wishlist"}
+              >
+                <Heart size={20} fill={isCurrentFavorite ? "currentColor" : "none"} />
+              </button>
             </div>
 
             <div className="seller-mini-card">
@@ -274,7 +294,15 @@ const ProductDetails = ({ addToCart }) => {
           </div>
           <div className="related-grid">
             {getRelatedProducts().map(item => (
-              <ProductCard key={item.id} product={item} onAddToCart={addToCart} />
+              <ProductCard 
+                key={item.id} 
+                product={item} 
+                onAddToCart={addToCart} 
+                isFavorite={favoriteItems.some(f => f.id === item.id)}
+                isComparing={compareItems.some(c => c.id === item.id)}
+                onToggleFavorite={toggleFavorite}
+                onToggleCompare={toggleCompare}
+              />
             ))}
           </div>
         </section>

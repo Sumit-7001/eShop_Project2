@@ -22,6 +22,8 @@ import './App.css';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
+  const [favoriteItems, setFavoriteItems] = useState([]);
+  const [compareItems, setCompareItems] = useState([]);
   const [notification, setNotification] = useState({ show: false, message: '' });
   const [authModal, setAuthModal] = useState({ isOpen: false, mode: 'login' });
 
@@ -56,6 +58,45 @@ function App() {
     setCartItems([]);
   };
 
+  const toggleFavorite = (product) => {
+    setFavoriteItems(prev => {
+      const isFav = prev.some(item => item.id === product.id);
+      if (isFav) {
+        setNotification({ show: true, message: 'Removed from favorites' });
+        setTimeout(() => setNotification({ show: false, message: '' }), 2000);
+        return prev.filter(item => item.id !== product.id);
+      } else {
+        setNotification({ show: true, message: 'Added to favorites!' });
+        setTimeout(() => setNotification({ show: false, message: '' }), 2000);
+        return [...prev, product];
+      }
+    });
+  };
+
+  const toggleCompare = (product) => {
+    setCompareItems(prev => {
+      const isComparing = prev.some(item => item.id === product.id);
+      if (isComparing) {
+        setNotification({ show: true, message: 'Removed from comparison' });
+        setTimeout(() => setNotification({ show: false, message: '' }), 2000);
+        return prev.filter(item => item.id !== product.id);
+      } else {
+        if (prev.length >= 4) {
+          setNotification({ show: true, message: 'You can compare up to 4 products only' });
+          setTimeout(() => setNotification({ show: false, message: '' }), 3000);
+          return prev;
+        }
+        setNotification({ show: true, message: 'Added to comparison!' });
+        setTimeout(() => setNotification({ show: false, message: '' }), 2000);
+        return [...prev, product];
+      }
+    });
+  };
+
+  const removeFromCompare = (id) => {
+    setCompareItems(prev => prev.filter(item => item.id !== id));
+  };
+
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   const openAuthModal = (mode) => setAuthModal({ isOpen: true, mode });
@@ -66,12 +107,24 @@ function App() {
       <div className="App">
         <Header 
           cartCount={cartCount} 
+          favoriteItems={favoriteItems}
+          toggleFavorite={toggleFavorite}
+          addToCart={addToCart}
+          compareCount={compareItems.length}
           openLogin={() => openAuthModal('login')} 
           openSignup={() => openAuthModal('signup')} 
         />
         
         <Routes>
-          <Route path="/" element={<Home addToCart={addToCart} />} />
+          <Route path="/" element={
+            <Home 
+              addToCart={addToCart} 
+              favoriteItems={favoriteItems}
+              compareItems={compareItems}
+              toggleFavorite={toggleFavorite}
+              toggleCompare={toggleCompare}
+            />
+          } />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/sellers" element={<Sellers />} />
           <Route path="/categories" element={<AllCategoriesPage />} />
@@ -79,9 +132,31 @@ function App() {
           <Route path="/faqs" element={<FAQPage />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/view_detail/:slug" element={<BlogDetails />} />
-          <Route path="/category/:slug" element={<CategoryProducts addToCart={addToCart} />} />
-          <Route path="/product/:id" element={<ProductDetails addToCart={addToCart} />} />
-          <Route path="/compare" element={<Compare />} />
+          <Route path="/category/:slug" element={
+            <CategoryProducts 
+              addToCart={addToCart} 
+              favoriteItems={favoriteItems}
+              compareItems={compareItems}
+              toggleFavorite={toggleFavorite}
+              toggleCompare={toggleCompare}
+            />
+          } />
+          <Route path="/product/:id" element={
+            <ProductDetails 
+              addToCart={addToCart} 
+              favoriteItems={favoriteItems}
+              compareItems={compareItems}
+              toggleFavorite={toggleFavorite}
+              toggleCompare={toggleCompare}
+            />
+          } />
+          <Route path="/compare" element={
+            <Compare 
+              compareItems={compareItems} 
+              onRemoveFromCompare={removeFromCompare} 
+              onAddToCart={addToCart} 
+            />
+          } />
           <Route path="/cart" element={
             <Cart 
               cartItems={cartItems} 
@@ -90,8 +165,24 @@ function App() {
               clearCart={clearCart} 
             />
           } />
-          <Route path="/seller/:id" element={<SellerProducts addToCart={addToCart} />} />
-          <Route path="/brand/:slug" element={<BrandProducts addToCart={addToCart} />} />
+          <Route path="/seller/:id" element={
+            <SellerProducts 
+              addToCart={addToCart} 
+              favoriteItems={favoriteItems}
+              compareItems={compareItems}
+              toggleFavorite={toggleFavorite}
+              toggleCompare={toggleCompare}
+            />
+          } />
+          <Route path="/brand/:slug" element={
+            <BrandProducts 
+              addToCart={addToCart} 
+              favoriteItems={favoriteItems}
+              compareItems={compareItems}
+              toggleFavorite={toggleFavorite}
+              toggleCompare={toggleCompare}
+            />
+          } />
         </Routes>
 
         {/* Global Notification */}
