@@ -460,3 +460,145 @@
 .continue-btn:hover {
   background-color: #555;
 }
+
+/* Stepper Progress Bar Styles */
+.checkout-stepper-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+  position: relative;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px 0;
+}
+
+.step-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+  background-color: #f8f9fa; /* Matches page background to mask the connector line */
+  padding: 0 25px;
+  cursor: pointer;
+}
+
+.step-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  background-color: #fff;
+  color: #888;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+}
+
+.step-indicator.active .step-circle {
+  border-color: #ff7e5f;
+  background-color: #ff7e5f;
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(255, 126, 95, 0.15);
+}
+
+.step-indicator.completed .step-circle {
+  border-color: #28a745;
+  background-color: #28a745;
+  color: #fff;
+}
+
+.step-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #888;
+  transition: color 0.3s;
+}
+
+.step-indicator.active .step-label {
+  color: #333;
+  font-weight: 600;
+}
+
+.step-indicator.completed .step-label {
+  color: #28a745;
+}
+
+.step-connector-line {
+  position: absolute;
+  top: 28px;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background-color: #eee;
+  z-index: 1;
+}
+
+.step-connector-line-progress {
+  height: 100%;
+  background-color: #ff7e5f;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.step-connector-line-progress.step2-active {
+  width: 100%;
+}
+
+/* Form Action Buttons */
+.step-actions-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.next-step-btn {
+  background-color: #ff9980;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.next-step-btn:hover {
+  background-color: #ff8566;
+}
+
+.prev-step-btn {
+  background: white;
+  border: 1px solid #ddd;
+  color: #666;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s;
+}
+
+.prev-step-btn:hover {
+  border-color: #999;
+  color: #333;
+  background-color: #f9f9f9;
+}
+

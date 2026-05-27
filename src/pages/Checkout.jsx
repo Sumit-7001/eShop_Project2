@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ChevronRight, CreditCard, Landmark, Truck, CheckCircle2, AlertCircle, ShoppingBag, ArrowLeft } from 'lucide-react';
+import { ChevronRight, CreditCard, Landmark, Truck, CheckCircle2, AlertCircle, ShoppingBag, ArrowLeft, Check } from 'lucide-react';
 import '../styles/Checkout.css';
 
 const Checkout = ({ cartItems, clearCart }) => {
   const navigate = useNavigate();
+  const [step, setStep] = useState(1); // 1: Shipping, 2: Payment & Review
 
   // If cart is empty, redirect to home/cart
   useEffect(() => {
@@ -99,8 +100,8 @@ const Checkout = ({ cartItems, clearCart }) => {
     }
   };
 
-  // Form Validation
-  const validateForm = () => {
+  // Validate Step 1 (Shipping & Contact)
+  const validateStep1 = () => {
     const newErrors = {};
 
     if (!formData.name.trim()) newErrors.name = 'Full name is required';
@@ -121,6 +122,14 @@ const Checkout = ({ cartItems, clearCart }) => {
     if (!formData.city.trim()) newErrors.city = 'City is required';
     if (!formData.state.trim()) newErrors.state = 'State/Province is required';
     if (!formData.zip.trim()) newErrors.zip = 'ZIP/Postal code is required';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Validate Step 2 (Payment card details if credit card selected)
+  const validateStep2 = () => {
+    const newErrors = {};
 
     if (formData.paymentMethod === 'card') {
       if (!formData.cardNumber.trim()) {
@@ -146,17 +155,34 @@ const Checkout = ({ cartItems, clearCart }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Place Order Action
-  const handlePlaceOrder = (e) => {
-    e.preventDefault();
-
-    if (!validateForm()) {
-      // Scroll to first error
+  // Handle Stepping forward
+  const handleNextStep = () => {
+    if (validateStep1()) {
+      setStep(2);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      // Scroll to first error in shipping
       const firstErrorKey = Object.keys(errors)[0];
       const element = document.getElementsByName(firstErrorKey)[0];
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
+    }
+  };
+
+  // Place Order Action
+  const handlePlaceOrder = (e) => {
+    if (e) e.preventDefault();
+
+    // Perform final check of all inputs
+    const isStep1Valid = validateStep1();
+    if (!isStep1Valid) {
+      setStep(1);
+      return;
+    }
+
+    const isStep2Valid = validateStep2();
+    if (!isStep2Valid) {
       return;
     }
 
@@ -200,244 +226,288 @@ const Checkout = ({ cartItems, clearCart }) => {
           </ul>
         </div>
 
+        {/* Stepper Progress Bar */}
+        <div className="checkout-stepper-container">
+          <div className="step-connector-line">
+            <div className={`step-connector-line-progress ${step === 2 ? 'step2-active' : ''}`}></div>
+          </div>
+          
+          <div 
+            className={`step-indicator ${step === 1 ? 'active' : 'completed'}`}
+            onClick={() => step === 2 && setStep(1)}
+          >
+            <div className="step-circle">
+              {step === 2 ? <Check size={16} /> : 1}
+            </div>
+            <div className="step-label">Shipping Address</div>
+          </div>
+
+          <div 
+            className={`step-indicator ${step === 2 ? 'active' : ''}`}
+            onClick={() => step === 2 && setStep(2)}
+          >
+            <div className="step-circle">2</div>
+            <div className="step-label">Billing & Payment</div>
+          </div>
+        </div>
+
         <div className="checkout-container">
           {/* Left Form Panel */}
-          <form className="checkout-form-section" onSubmit={handlePlaceOrder}>
+          <div className="checkout-form-section">
             
-            {/* Contact & Shipping Card */}
-            <div className="checkout-card">
-              <h3 className="checkout-card-title">
-                <Truck size={20} color="#ff7e5f" />
-                Shipping Information
-              </h3>
-              
-              <div className="form-grid">
-                <div className="form-group full-width">
-                  <label>Full Name *</label>
-                  <input 
-                    type="text" 
-                    name="name" 
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className={`form-control ${errors.name ? 'error' : ''}`}
-                    placeholder="John Doe"
-                  />
-                  {errors.name && <span className="error-message">{errors.name}</span>}
-                </div>
+            {/* Step 1: Shipping Information Card */}
+            {step === 1 && (
+              <div className="checkout-card">
+                <h3 className="checkout-card-title">
+                  <Truck size={20} color="#ff7e5f" />
+                  Shipping Information
+                </h3>
+                
+                <div className="form-grid">
+                  <div className="form-group full-width">
+                    <label>Full Name *</label>
+                    <input 
+                      type="text" 
+                      name="name" 
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      className={`form-control ${errors.name ? 'error' : ''}`}
+                      placeholder="John Doe"
+                    />
+                    {errors.name && <span className="error-message">{errors.name}</span>}
+                  </div>
 
-                <div className="form-group">
-                  <label>Email Address *</label>
-                  <input 
-                    type="email" 
-                    name="email" 
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className={`form-control ${errors.email ? 'error' : ''}`}
-                    placeholder="johndoe@example.com"
-                  />
-                  {errors.email && <span className="error-message">{errors.email}</span>}
-                </div>
+                  <div className="form-group">
+                    <label>Email Address *</label>
+                    <input 
+                      type="email" 
+                      name="email" 
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className={`form-control ${errors.email ? 'error' : ''}`}
+                      placeholder="johndoe@example.com"
+                    />
+                    {errors.email && <span className="error-message">{errors.email}</span>}
+                  </div>
 
-                <div className="form-group">
-                  <label>Phone Number *</label>
-                  <input 
-                    type="tel" 
-                    name="phone" 
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className={`form-control ${errors.phone ? 'error' : ''}`}
-                    placeholder="+1 (555) 123-4567"
-                  />
-                  {errors.phone && <span className="error-message">{errors.phone}</span>}
-                </div>
+                  <div className="form-group">
+                    <label>Phone Number *</label>
+                    <input 
+                      type="tel" 
+                      name="phone" 
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className={`form-control ${errors.phone ? 'error' : ''}`}
+                      placeholder="+1 (555) 123-4567"
+                    />
+                    {errors.phone && <span className="error-message">{errors.phone}</span>}
+                  </div>
 
-                <div className="form-group full-width">
-                  <label>Street Address *</label>
-                  <input 
-                    type="text" 
-                    name="address" 
-                    value={formData.address}
-                    onChange={handleInputChange}
-                    className={`form-control ${errors.address ? 'error' : ''}`}
-                    placeholder="123 Main St, Apt 4B"
-                  />
-                  {errors.address && <span className="error-message">{errors.address}</span>}
-                </div>
+                  <div className="form-group full-width">
+                    <label>Street Address *</label>
+                    <input 
+                      type="text" 
+                      name="address" 
+                      value={formData.address}
+                      onChange={handleInputChange}
+                      className={`form-control ${errors.address ? 'error' : ''}`}
+                      placeholder="123 Main St, Apt 4B"
+                    />
+                    {errors.address && <span className="error-message">{errors.address}</span>}
+                  </div>
 
-                <div className="form-group">
-                  <label>City *</label>
-                  <input 
-                    type="text" 
-                    name="city" 
-                    value={formData.city}
-                    onChange={handleInputChange}
-                    className={`form-control ${errors.city ? 'error' : ''}`}
-                    placeholder="New York"
-                  />
-                  {errors.city && <span className="error-message">{errors.city}</span>}
-                </div>
+                  <div className="form-group">
+                    <label>City *</label>
+                    <input 
+                      type="text" 
+                      name="city" 
+                      value={formData.city}
+                      onChange={handleInputChange}
+                      className={`form-control ${errors.city ? 'error' : ''}`}
+                      placeholder="New York"
+                    />
+                    {errors.city && <span className="error-message">{errors.city}</span>}
+                  </div>
 
-                <div className="form-group">
-                  <label>State / Province *</label>
-                  <input 
-                    type="text" 
-                    name="state" 
-                    value={formData.state}
-                    onChange={handleInputChange}
-                    className={`form-control ${errors.state ? 'error' : ''}`}
-                    placeholder="NY"
-                  />
-                  {errors.state && <span className="error-message">{errors.state}</span>}
-                </div>
+                  <div className="form-group">
+                    <label>State / Province *</label>
+                    <input 
+                      type="text" 
+                      name="state" 
+                      value={formData.state}
+                      onChange={handleInputChange}
+                      className={`form-control ${errors.state ? 'error' : ''}`}
+                      placeholder="NY"
+                    />
+                    {errors.state && <span className="error-message">{errors.state}</span>}
+                  </div>
 
-                <div className="form-group">
-                  <label>ZIP / Postal Code *</label>
-                  <input 
-                    type="text" 
-                    name="zip" 
-                    value={formData.zip}
-                    onChange={handleInputChange}
-                    className={`form-control ${errors.zip ? 'error' : ''}`}
-                    placeholder="10001"
-                  />
-                  {errors.zip && <span className="error-message">{errors.zip}</span>}
-                </div>
+                  <div className="form-group">
+                    <label>ZIP / Postal Code *</label>
+                    <input 
+                      type="text" 
+                      name="zip" 
+                      value={formData.zip}
+                      onChange={handleInputChange}
+                      className={`form-control ${errors.zip ? 'error' : ''}`}
+                      placeholder="10001"
+                    />
+                    {errors.zip && <span className="error-message">{errors.zip}</span>}
+                  </div>
 
-                <div className="form-group">
-                  <label>Country *</label>
-                  <select 
-                    name="country" 
-                    value={formData.country}
-                    onChange={handleInputChange}
-                    className="form-control"
-                  >
-                    <option value="United States">United States</option>
-                    <option value="Canada">Canada</option>
-                    <option value="United Kingdom">United Kingdom</option>
-                    <option value="India">India</option>
-                    <option value="Australia">Australia</option>
-                    <option value="Germany">Germany</option>
-                    <option value="France">France</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            {/* Payment Method Card */}
-            <div className="checkout-card">
-              <h3 className="checkout-card-title">
-                <CreditCard size={20} color="#ff7e5f" />
-                Payment Method
-              </h3>
-
-              <div className="payment-methods">
-                <div 
-                  className={`payment-method-card ${formData.paymentMethod === 'card' ? 'active' : ''}`}
-                  onClick={() => handlePaymentMethodChange('card')}
-                >
-                  <input 
-                    type="radio" 
-                    name="paymentRadio" 
-                    checked={formData.paymentMethod === 'card'} 
-                    onChange={() => {}}
-                  />
-                  <div>
-                    <div className="payment-method-info">
-                      <CreditCard size={18} />
-                      Credit or Debit Card
-                    </div>
-                    <div className="payment-method-desc">Pay securely using your Visa, Mastercard, or Amex card.</div>
+                  <div className="form-group">
+                    <label>Country *</label>
+                    <select 
+                      name="country" 
+                      value={formData.country}
+                      onChange={handleInputChange}
+                      className="form-control"
+                    >
+                      <option value="United States">United States</option>
+                      <option value="Canada">Canada</option>
+                      <option value="United Kingdom">United Kingdom</option>
+                      <option value="India">India</option>
+                      <option value="Australia">Australia</option>
+                      <option value="Germany">Germany</option>
+                      <option value="France">France</option>
+                    </select>
                   </div>
                 </div>
 
-                {formData.paymentMethod === 'card' && (
-                  <div className="card-details-fields">
-                    <div className="form-group">
-                      <label>Card Number *</label>
-                      <input 
-                        type="text" 
-                        name="cardNumber" 
-                        value={formData.cardNumber}
-                        onChange={handleInputChange}
-                        className={`form-control ${errors.cardNumber ? 'error' : ''}`}
-                        placeholder="1234 5678 1234 5678"
-                        maxLength="16"
-                      />
-                      {errors.cardNumber && <span className="error-message">{errors.cardNumber}</span>}
+                <div className="step-actions-row">
+                  <button type="button" className="next-step-btn" onClick={handleNextStep}>
+                    Continue to Payment
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Step 2: Payment Method Card */}
+            {step === 2 && (
+              <div className="checkout-card">
+                <h3 className="checkout-card-title">
+                  <CreditCard size={20} color="#ff7e5f" />
+                  Billing & Payment Method
+                </h3>
+
+                <div className="payment-methods">
+                  <div 
+                    className={`payment-method-card ${formData.paymentMethod === 'card' ? 'active' : ''}`}
+                    onClick={() => handlePaymentMethodChange('card')}
+                  >
+                    <input 
+                      type="radio" 
+                      name="paymentRadio" 
+                      checked={formData.paymentMethod === 'card'} 
+                      onChange={() => {}}
+                    />
+                    <div>
+                      <div className="payment-method-info">
+                        <CreditCard size={18} />
+                        Credit or Debit Card
+                      </div>
+                      <div className="payment-method-desc">Pay securely using your Visa, Mastercard, or Amex card.</div>
                     </div>
-                    
-                    <div className="form-grid" style={{ marginTop: '0px' }}>
+                  </div>
+
+                  {formData.paymentMethod === 'card' && (
+                    <div className="card-details-fields">
                       <div className="form-group">
-                        <label>Expiry Date *</label>
+                        <label>Card Number *</label>
                         <input 
                           type="text" 
-                          name="cardExpiry" 
-                          value={formData.cardExpiry}
+                          name="cardNumber" 
+                          value={formData.cardNumber}
                           onChange={handleInputChange}
-                          className={`form-control ${errors.cardExpiry ? 'error' : ''}`}
-                          placeholder="MM/YY"
-                          maxLength="5"
+                          className={`form-control ${errors.cardNumber ? 'error' : ''}`}
+                          placeholder="1234 5678 1234 5678"
+                          maxLength="16"
                         />
-                        {errors.cardExpiry && <span className="error-message">{errors.cardExpiry}</span>}
+                        {errors.cardNumber && <span className="error-message">{errors.cardNumber}</span>}
                       </div>
+                      
+                      <div className="form-grid" style={{ marginTop: '0px' }}>
+                        <div className="form-group">
+                          <label>Expiry Date *</label>
+                          <input 
+                            type="text" 
+                            name="cardExpiry" 
+                            value={formData.cardExpiry}
+                            onChange={handleInputChange}
+                            className={`form-control ${errors.cardExpiry ? 'error' : ''}`}
+                            placeholder="MM/YY"
+                            maxLength="5"
+                          />
+                          {errors.cardExpiry && <span className="error-message">{errors.cardExpiry}</span>}
+                        </div>
 
-                      <div className="form-group">
-                        <label>CVV *</label>
-                        <input 
-                          type="password" 
-                          name="cardCvv" 
-                          value={formData.cardCvv}
-                          onChange={handleInputChange}
-                          className={`form-control ${errors.cardCvv ? 'error' : ''}`}
-                          placeholder="123"
-                          maxLength="4"
-                        />
-                        {errors.cardCvv && <span className="error-message">{errors.cardCvv}</span>}
+                        <div className="form-group">
+                          <label>CVV *</label>
+                          <input 
+                            type="password" 
+                            name="cardCvv" 
+                            value={formData.cardCvv}
+                            onChange={handleInputChange}
+                            className={`form-control ${errors.cardCvv ? 'error' : ''}`}
+                            placeholder="123"
+                            maxLength="4"
+                          />
+                          {errors.cardCvv && <span className="error-message">{errors.cardCvv}</span>}
+                        </div>
                       </div>
+                    </div>
+                  )}
+
+                  <div 
+                    className={`payment-method-card ${formData.paymentMethod === 'paypal' ? 'active' : ''}`}
+                    onClick={() => handlePaymentMethodChange('paypal')}
+                  >
+                    <input 
+                      type="radio" 
+                      name="paymentRadio" 
+                      checked={formData.paymentMethod === 'paypal'} 
+                      onChange={() => {}}
+                    />
+                    <div>
+                      <div className="payment-method-info">
+                        <Landmark size={18} />
+                        PayPal
+                      </div>
+                      <div className="payment-method-desc">Redirect to PayPal to complete your purchase.</div>
                     </div>
                   </div>
-                )}
 
-                <div 
-                  className={`payment-method-card ${formData.paymentMethod === 'paypal' ? 'active' : ''}`}
-                  onClick={() => handlePaymentMethodChange('paypal')}
-                >
-                  <input 
-                    type="radio" 
-                    name="paymentRadio" 
-                    checked={formData.paymentMethod === 'paypal'} 
-                    onChange={() => {}}
-                  />
-                  <div>
-                    <div className="payment-method-info">
-                      <Landmark size={18} />
-                      PayPal
+                  <div 
+                    className={`payment-method-card ${formData.paymentMethod === 'cod' ? 'active' : ''}`}
+                    onClick={() => handlePaymentMethodChange('cod')}
+                  >
+                    <input 
+                      type="radio" 
+                      name="paymentRadio" 
+                      checked={formData.paymentMethod === 'cod'} 
+                      onChange={() => {}}
+                    />
+                    <div>
+                      <div className="payment-method-info">
+                        <Truck size={18} />
+                        Cash on Delivery
+                      </div>
+                      <div className="payment-method-desc">Pay cash when your order is delivered to your door.</div>
                     </div>
-                    <div className="payment-method-desc">Redirect to PayPal to complete your purchase.</div>
                   </div>
                 </div>
 
-                <div 
-                  className={`payment-method-card ${formData.paymentMethod === 'cod' ? 'active' : ''}`}
-                  onClick={() => handlePaymentMethodChange('cod')}
-                >
-                  <input 
-                    type="radio" 
-                    name="paymentRadio" 
-                    checked={formData.paymentMethod === 'cod'} 
-                    onChange={() => {}}
-                  />
-                  <div>
-                    <div className="payment-method-info">
-                      <Truck size={18} />
-                      Cash on Delivery
-                    </div>
-                    <div className="payment-method-desc">Pay cash when your order is delivered to your door.</div>
-                  </div>
+                <div className="step-actions-row">
+                  <button type="button" className="prev-step-btn" onClick={() => setStep(1)}>
+                    Back to Shipping
+                  </button>
+                  <button type="button" className="next-step-btn" onClick={handlePlaceOrder} disabled={isSubmitting}>
+                    {isSubmitting ? 'Processing...' : `Place Order - $${total.toLocaleString()}`}
+                  </button>
                 </div>
               </div>
-            </div>
-          </form>
+            )}
+          </div>
 
           {/* Right Summary Panel */}
           <div className="checkout-summary-card checkout-card">
@@ -505,18 +575,29 @@ const Checkout = ({ cartItems, clearCart }) => {
               </div>
             </div>
 
-            <button 
-              type="submit" 
-              className="place-order-btn" 
-              onClick={handlePlaceOrder}
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? (
-                <>Processing...</>
-              ) : (
-                <>Place Order - ${total.toLocaleString()}</>
-              )}
-            </button>
+            {/* Primary Action Sidebar CTA button */}
+            {step === 1 ? (
+              <button 
+                type="button" 
+                className="place-order-btn" 
+                onClick={handleNextStep}
+              >
+                Continue to Payment
+              </button>
+            ) : (
+              <button 
+                type="button" 
+                className="place-order-btn" 
+                onClick={handlePlaceOrder}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <>Processing...</>
+                ) : (
+                  <>Place Order - ${total.toLocaleString()}</>
+                )}
+              </button>
+            )}
 
             <Link to="/cart" className="back-to-cart-link">
               <ArrowLeft size={16} />
