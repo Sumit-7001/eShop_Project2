@@ -40,13 +40,13 @@
 .checkout-form-section {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 15px;
 }
 
 .checkout-card {
   background: #fff;
   border-radius: 12px;
-  padding: 30px;
+  padding: 20px;
   box-shadow: var(--shadow-soft);
 }
 
@@ -54,18 +54,18 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
   color: #333;
-  margin-bottom: 25px;
-  padding-bottom: 12px;
+  margin-bottom: 15px;
+  padding-bottom: 8px;
   border-bottom: 1px solid #f0f0f0;
 }
 
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 12px;
 }
 
 @media (max-width: 576px) {
@@ -77,7 +77,7 @@
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 5px;
 }
 
 .form-group.full-width {
@@ -126,13 +126,13 @@
 .payment-methods {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
 }
 
 .payment-method-card {
   border: 2px dashed #eee;
   border-radius: 8px;
-  padding: 15px 20px;
+  padding: 10px 15px;
   display: flex;
   align-items: center;
   gap: 15px;
@@ -173,8 +173,8 @@
 }
 
 .card-details-fields {
-  margin-top: 20px;
-  padding-top: 20px;
+  margin-top: 15px;
+  padding-top: 15px;
   border-top: 1px solid #f0f0f0;
   display: flex;
   flex-direction: column;
@@ -571,7 +571,7 @@
   max-width: 750px;
   background: #fff;
   border-radius: 12px;
-  padding: 35px;
+  padding: 25px;
   box-shadow: var(--shadow-soft);
 }
 
@@ -579,8 +579,8 @@
 .review-summary-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 25px;
-  margin-bottom: 30px;
+  gap: 15px;
+  margin-bottom: 20px;
 }
 
 @media (max-width: 600px) {
@@ -593,7 +593,7 @@
 .review-summary-block {
   background-color: #f8f9fa;
   border-radius: 8px;
-  padding: 20px;
+  padding: 15px;
   border: 1px solid #f0f0f0;
   position: relative;
 }
@@ -605,8 +605,8 @@
   font-size: 15px;
   font-weight: 600;
   color: #333;
-  margin-bottom: 12px;
-  padding-bottom: 8px;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
   border-bottom: 1px solid #eef0f2;
 }
 
@@ -650,25 +650,25 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   color: #333;
-  margin-top: 30px;
-  margin-bottom: 15px;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .review-items-list {
   border: 1px solid #eee;
   border-radius: 8px;
   overflow: hidden;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 
 .review-item {
   display: flex;
   align-items: center;
   gap: 15px;
-  padding: 15px 20px;
+  padding: 10px 15px;
   border-bottom: 1px solid #eee;
   background-color: #fff;
 }
@@ -721,16 +721,16 @@
   background-color: #fffbef;
   border: 1px dashed #ffeeba;
   border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 25px;
+  padding: 15px;
+  margin-bottom: 15px;
 }
 
 .review-bill-card {
   background-color: #f8f9fa;
   border-radius: 8px;
-  padding: 20px;
+  padding: 15px;
   border: 1px solid #eee;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 
 .review-bill-row {
@@ -738,7 +738,7 @@
   justify-content: space-between;
   font-size: 14px;
   color: #666;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .review-bill-row:last-child {
@@ -751,10 +751,10 @@
 }
 
 .review-bill-row.grand-total {
-  margin-top: 15px;
-  padding-top: 15px;
+  margin-top: 10px;
+  padding-top: 10px;
   border-top: 1px solid #eef0f2;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
   color: #333;
 }
@@ -772,9 +772,9 @@
 .step-actions-row {
   display: flex;
   justify-content: flex-end;
-  gap: 15px;
-  margin-top: 30px;
-  padding-top: 20px;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 15px;
   border-top: 1px solid #f0f0f0;
 }
 
