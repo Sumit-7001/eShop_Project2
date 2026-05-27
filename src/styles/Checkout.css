@@ -546,8 +546,226 @@
   transition: width 0.3s ease;
 }
 
-.step-connector-line-progress.step2-active {
+.step-connector-line-progress.step-progress-1 {
+  width: 0%;
+}
+
+.step-connector-line-progress.step-progress-2 {
+  width: 50%;
+}
+
+.step-connector-line-progress.step-progress-3 {
   width: 100%;
+}
+
+/* Wizard Layout (Centered Single Column) */
+.checkout-container.wizard-layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.checkout-wizard-card {
+  width: 100%;
+  max-width: 750px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 35px;
+  box-shadow: var(--shadow-soft);
+}
+
+/* Step 3: Review Page Styles */
+.review-summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+@media (max-width: 600px) {
+  .review-summary-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+
+.review-summary-block {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid #f0f0f0;
+  position: relative;
+}
+
+.review-block-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eef0f2;
+}
+
+.review-summary-block p {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 4px;
+  line-height: 1.5;
+}
+
+.card-masked-info {
+  font-family: monospace;
+  font-size: 13px !important;
+  color: #333 !important;
+  background: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px dashed #ddd;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.edit-step-btn {
+  background: none;
+  border: none;
+  color: #ff7e5f;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 10px;
+  text-decoration: underline;
+  display: block;
+}
+
+.edit-step-btn:hover {
+  color: #ff5e3a;
+}
+
+.review-items-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+.review-items-list {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 25px;
+}
+
+.review-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  background-color: #fff;
+}
+
+.review-item:last-child {
+  border-bottom: none;
+}
+
+.review-item-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #eee;
+}
+
+.review-item-info {
+  flex: 1;
+}
+
+.review-item-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 3px;
+}
+
+.review-item-subtitle {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 5px;
+}
+
+.review-item-qty-tag {
+  font-size: 11px;
+  background: #f1f3f5;
+  color: #495057;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.review-item-price {
+  font-size: 14px;
+  font-weight: 700;
+  color: #333;
+}
+
+.review-promo-section {
+  background-color: #fffbef;
+  border: 1px dashed #ffeeba;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 25px;
+}
+
+.review-bill-card {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid #eee;
+  margin-bottom: 25px;
+}
+
+.review-bill-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.review-bill-row:last-child {
+  margin-bottom: 0;
+}
+
+.review-bill-row.discount-row {
+  color: #28a745;
+  font-weight: 500;
+}
+
+.review-bill-row.grand-total {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #eef0f2;
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+}
+
+.place-order-final-btn {
+  background-color: #ff7e5f;
+  box-shadow: 0 4px 15px rgba(255, 126, 95, 0.3);
+}
+
+.place-order-final-btn:hover {
+  background-color: #ff5e3a;
 }
 
 /* Form Action Buttons */
@@ -601,4 +819,5 @@
   color: #333;
   background-color: #f9f9f9;
 }
+
 

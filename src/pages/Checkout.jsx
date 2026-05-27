@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ChevronRight, CreditCard, Landmark, Truck, CheckCircle2, AlertCircle, ShoppingBag, ArrowLeft, Check } from 'lucide-react';
+import { ChevronRight, CreditCard, Landmark, Truck, CheckCircle2, AlertCircle, ShoppingBag, ArrowLeft, Check, MapPin, ClipboardCheck } from 'lucide-react';
 import '../styles/Checkout.css';
 
 const Checkout = ({ cartItems, clearCart }) => {
   const navigate = useNavigate();
-  const [step, setStep] = useState(1); // 1: Shipping, 2: Payment & Review
+  const [step, setStep] = useState(1); // 1: Shipping Address, 2: Payment Method, 3: Review & Place Order
 
   // If cart is empty, redirect to home/cart
   useEffect(() => {
@@ -155,34 +155,30 @@ const Checkout = ({ cartItems, clearCart }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Handle Stepping forward
-  const handleNextStep = () => {
+  // Step Navigations
+  const handleToPayment = () => {
     if (validateStep1()) {
       setStep(2);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      // Scroll to first error in shipping
-      const firstErrorKey = Object.keys(errors)[0];
-      const element = document.getElementsByName(firstErrorKey)[0];
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
+    }
+  };
+
+  const handleToReview = () => {
+    if (validateStep2()) {
+      setStep(3);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   // Place Order Action
-  const handlePlaceOrder = (e) => {
-    if (e) e.preventDefault();
-
-    // Perform final check of all inputs
-    const isStep1Valid = validateStep1();
-    if (!isStep1Valid) {
+  const handlePlaceOrder = () => {
+    // Perform absolute check of everything
+    if (!validateStep1()) {
       setStep(1);
       return;
     }
-
-    const isStep2Valid = validateStep2();
-    if (!isStep2Valid) {
+    if (!validateStep2()) {
+      setStep(2);
       return;
     }
 
@@ -226,38 +222,47 @@ const Checkout = ({ cartItems, clearCart }) => {
           </ul>
         </div>
 
-        {/* Stepper Progress Bar */}
+        {/* 3-Step Progress Stepper */}
         <div className="checkout-stepper-container">
           <div className="step-connector-line">
-            <div className={`step-connector-line-progress ${step === 2 ? 'step2-active' : ''}`}></div>
+            <div className={`step-connector-line-progress step-progress-${step}`}></div>
           </div>
           
           <div 
             className={`step-indicator ${step === 1 ? 'active' : 'completed'}`}
-            onClick={() => step === 2 && setStep(1)}
+            onClick={() => step > 1 && setStep(1)}
           >
             <div className="step-circle">
-              {step === 2 ? <Check size={16} /> : 1}
+              {step > 1 ? <Check size={16} /> : 1}
             </div>
-            <div className="step-label">Shipping Address</div>
+            <div className="step-label">Shipping</div>
           </div>
 
           <div 
-            className={`step-indicator ${step === 2 ? 'active' : ''}`}
-            onClick={() => step === 2 && setStep(2)}
+            className={`step-indicator ${step === 2 ? 'active' : step > 2 ? 'completed' : ''}`}
+            onClick={() => step > 2 && setStep(2)}
           >
-            <div className="step-circle">2</div>
-            <div className="step-label">Billing & Payment</div>
+            <div className="step-circle">
+              {step > 2 ? <Check size={16} /> : 2}
+            </div>
+            <div className="step-label">Payment</div>
+          </div>
+
+          <div 
+            className={`step-indicator ${step === 3 ? 'active' : ''}`}
+          >
+            <div className="step-circle">3</div>
+            <div className="step-label">Review Order</div>
           </div>
         </div>
 
-        <div className="checkout-container">
-          {/* Left Form Panel */}
-          <div className="checkout-form-section">
+        <div className="checkout-container wizard-layout">
+          {/* Centered Single Column Form Box */}
+          <div className="checkout-wizard-card checkout-card">
             
-            {/* Step 1: Shipping Information Card */}
+            {/* Step 1: Shipping Information */}
             {step === 1 && (
-              <div className="checkout-card">
+              <div>
                 <h3 className="checkout-card-title">
                   <Truck size={20} color="#ff7e5f" />
                   Shipping Information
@@ -375,19 +380,22 @@ const Checkout = ({ cartItems, clearCart }) => {
                 </div>
 
                 <div className="step-actions-row">
-                  <button type="button" className="next-step-btn" onClick={handleNextStep}>
+                  <Link to="/cart" className="prev-step-btn" style={{ textDecoration: 'none' }}>
+                    <ArrowLeft size={16} /> Back to Cart
+                  </Link>
+                  <button type="button" className="next-step-btn" onClick={handleToPayment}>
                     Continue to Payment
                   </button>
                 </div>
               </div>
             )}
 
-            {/* Step 2: Payment Method Card */}
+            {/* Step 2: Payment Method */}
             {step === 2 && (
-              <div className="checkout-card">
+              <div>
                 <h3 className="checkout-card-title">
                   <CreditCard size={20} color="#ff7e5f" />
-                  Billing & Payment Method
+                  Payment Method
                 </h3>
 
                 <div className="payment-methods">
@@ -501,108 +509,137 @@ const Checkout = ({ cartItems, clearCart }) => {
                   <button type="button" className="prev-step-btn" onClick={() => setStep(1)}>
                     Back to Shipping
                   </button>
-                  <button type="button" className="next-step-btn" onClick={handlePlaceOrder} disabled={isSubmitting}>
-                    {isSubmitting ? 'Processing...' : `Place Order - $${total.toLocaleString()}`}
+                  <button type="button" className="next-step-btn" onClick={handleToReview}>
+                    Continue to Review
                   </button>
                 </div>
               </div>
             )}
-          </div>
 
-          {/* Right Summary Panel */}
-          <div className="checkout-summary-card checkout-card">
-            <h3 className="checkout-card-title" style={{ borderBottom: 'none', marginBottom: '15px' }}>
-              <ShoppingBag size={20} color="#ff7e5f" />
-              Order Summary
-            </h3>
+            {/* Step 3: Pure Order Review & Billing */}
+            {step === 3 && (
+              <div>
+                <h3 className="checkout-card-title">
+                  <ClipboardCheck size={20} color="#ff7e5f" />
+                  Review Your Order
+                </h3>
 
-            {/* Cart Items List */}
-            <div className="summary-items-list">
-              {cartItems.map(item => (
-                <div className="summary-item" key={item.id}>
-                  <img src={item.image} alt={item.title} className="summary-item-img" />
-                  <div className="summary-item-info">
-                    <div className="summary-item-title">{item.title}</div>
-                    <div className="summary-item-qty">Qty: {item.quantity}</div>
+                {/* Info summary grid (Address & Payment summarized) */}
+                <div className="review-summary-grid">
+                  <div className="review-summary-block">
+                    <h4 className="review-block-title">
+                      <MapPin size={16} /> Shipping Address
+                    </h4>
+                    <p><strong>{formData.name}</strong></p>
+                    <p>{formData.address}</p>
+                    <p>{formData.city}, {formData.state} {formData.zip}</p>
+                    <p>{formData.country}</p>
+                    <p>Phone: {formData.phone}</p>
+                    <button type="button" className="edit-step-btn" onClick={() => setStep(1)}>Edit Address</button>
                   </div>
-                  <div className="summary-item-price">${(item.price * item.quantity).toLocaleString()}</div>
+
+                  <div className="review-summary-block">
+                    <h4 className="review-block-title">
+                      <CreditCard size={16} /> Payment Method
+                    </h4>
+                    <p>
+                      <strong>
+                        {formData.paymentMethod === 'card' 
+                          ? 'Credit/Debit Card' 
+                          : formData.paymentMethod === 'paypal' 
+                            ? 'PayPal Account' 
+                            : 'Cash on Delivery (COD)'}
+                      </strong>
+                    </p>
+                    {formData.paymentMethod === 'card' && (
+                      <p className="card-masked-info">Card ending in **** {formData.cardNumber.slice(-4)}</p>
+                    )}
+                    <button type="button" className="edit-step-btn" onClick={() => setStep(2)}>Edit Payment</button>
+                  </div>
                 </div>
-              ))}
-            </div>
 
-            {/* Promo Code Input */}
-            <div className="promo-code-container">
-              <input 
-                type="text" 
-                placeholder="Promo Code (SAVE10 / FREESHIP)" 
-                value={promoCode}
-                onChange={(e) => setPromoCode(e.target.value)}
-                className="promo-input"
-              />
-              <button 
-                type="button" 
-                onClick={handleApplyPromo}
-                className="promo-apply-btn"
-              >
-                Apply
-              </button>
-            </div>
-            {promoError && <div className="promo-message error">{promoError}</div>}
-            {promoSuccess && <div className="promo-message success">{promoSuccess}</div>}
-
-            {/* Fee breakdowns */}
-            <div style={{ marginTop: '20px' }}>
-              <div className="summary-row">
-                <span>Subtotal</span>
-                <span>${subtotal.toLocaleString()}</span>
-              </div>
-              
-              <div className="summary-row">
-                <span>Shipping</span>
-                <span>{shipping === 0 ? 'Free' : `$${shipping.toLocaleString()}`}</span>
-              </div>
-
-              {discount > 0 && (
-                <div className="summary-row discount-row">
-                  <span>Discount ({appliedPromo?.code})</span>
-                  <span>-${discount.toLocaleString()}</span>
+                {/* Cart Items list in wizard */}
+                <h4 className="review-items-title">
+                  <ShoppingBag size={16} /> Items in Order
+                </h4>
+                
+                <div className="review-items-list">
+                  {cartItems.map(item => (
+                    <div className="review-item" key={item.id}>
+                      <img src={item.image} alt={item.title} className="review-item-img" />
+                      <div className="review-item-info">
+                        <h5 className="review-item-name">{item.title}</h5>
+                        <p className="review-item-subtitle">{item.subtitle || 'Premium Quality'}</p>
+                        <span className="review-item-qty-tag">Qty: {item.quantity}</span>
+                      </div>
+                      <div className="review-item-price">${(item.price * item.quantity).toLocaleString()}</div>
+                    </div>
+                  ))}
                 </div>
-              )}
 
-              <div className="summary-row grand-total">
-                <span>Total</span>
-                <span>${total.toLocaleString()}</span>
+                {/* Promo Code Input inside wizard */}
+                <div className="review-promo-section">
+                  <h4 className="review-items-title" style={{ marginTop: 0, marginBottom: '10px' }}>Apply Coupon</h4>
+                  <div className="promo-code-container" style={{ margin: 0, padding: 0, border: 'none' }}>
+                    <input 
+                      type="text" 
+                      placeholder="Promo Code (SAVE10 / FREESHIP)" 
+                      value={promoCode}
+                      onChange={(e) => setPromoCode(e.target.value)}
+                      className="promo-input"
+                    />
+                    <button 
+                      type="button" 
+                      onClick={handleApplyPromo}
+                      className="promo-apply-btn"
+                    >
+                      Apply
+                    </button>
+                  </div>
+                  {promoError && <div className="promo-message error">{promoError}</div>}
+                  {promoSuccess && <div className="promo-message success">{promoSuccess}</div>}
+                </div>
+
+                {/* Final Bill calculations */}
+                <div className="review-bill-card">
+                  <div className="review-bill-row">
+                    <span>Subtotal</span>
+                    <span>${subtotal.toLocaleString()}</span>
+                  </div>
+                  
+                  <div className="review-bill-row">
+                    <span>Shipping</span>
+                    <span>{shipping === 0 ? 'Free' : `$${shipping.toLocaleString()}`}</span>
+                  </div>
+
+                  {discount > 0 && (
+                    <div className="review-bill-row discount-row">
+                      <span>Discount ({appliedPromo?.code})</span>
+                      <span>-${discount.toLocaleString()}</span>
+                    </div>
+                  )}
+
+                  <div className="review-bill-row grand-total">
+                    <span>Total Amount</span>
+                    <span>${total.toLocaleString()}</span>
+                  </div>
+                </div>
+
+                <div className="step-actions-row">
+                  <button type="button" className="prev-step-btn" onClick={() => setStep(2)}>
+                    Back to Payment
+                  </button>
+                  <button 
+                    type="button" 
+                    className="next-step-btn place-order-final-btn" 
+                    onClick={handlePlaceOrder}
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? 'Processing Order...' : `Place Order - $${total.toLocaleString()}`}
+                  </button>
+                </div>
               </div>
-            </div>
-
-            {/* Primary Action Sidebar CTA button */}
-            {step === 1 ? (
-              <button 
-                type="button" 
-                className="place-order-btn" 
-                onClick={handleNextStep}
-              >
-                Continue to Payment
-              </button>
-            ) : (
-              <button 
-                type="button" 
-                className="place-order-btn" 
-                onClick={handlePlaceOrder}
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <>Processing...</>
-                ) : (
-                  <>Place Order - ${total.toLocaleString()}</>
-                )}
-              </button>
             )}
-
-            <Link to="/cart" className="back-to-cart-link">
-              <ArrowLeft size={16} />
-              Back to Cart
-            </Link>
           </div>
         </div>
       </div>
