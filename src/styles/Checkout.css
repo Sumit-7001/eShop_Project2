@@ -1,11 +1,11 @@
 .checkout-page {
-  padding: 50px 0 100px;
+  padding: 15px 0 60px;
   background-color: #f8f9fa;
   min-height: 90vh;
 }
 
 .checkout-breadcrumb {
-  margin-bottom: 40px;
+  margin-bottom: 15px;
 }
 
 .checkout-breadcrumb ul {
@@ -466,12 +466,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 25px;
   position: relative;
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
-  padding: 10px 0;
+  padding: 5px 0 10px;
 }
 
 .step-indicator {
