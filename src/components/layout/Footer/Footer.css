@@ -1,0 +1,156 @@
+.footer {
+  background: #111;
+  padding-top: 80px;
+  color: #fff;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+.footer-about .logo {
+  margin-bottom: 25px;
+}
+
+.footer .logo-text {
+  color: #fff;
+}
+
+.about-text {
+  color: #aaa;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  max-width: 350px;
+}
+
+.social-links {
+  display: flex;
+  gap: 15px;
+}
+
+.social-links a {
+  width: 45px;
+  height: 45px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.social-links a:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: translateY(-5px);
+  border-color: var(--primary-color);
+}
+
+.footer-links h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #fff;
+  position: relative;
+  display: inline-block;
+}
+
+.footer-links h3::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 30px;
+  height: 2px;
+  background: var(--primary-color);
+}
+
+.footer-links ul {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.footer-links li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: #aaa;
+  transition: var(--transition);
+}
+
+.footer-links a {
+  color: #aaa;
+  transition: var(--transition);
+}
+
+.footer-links a:hover {
+  color: var(--primary-color);
+  padding-left: 5px;
+}
+
+.footer-bottom {
+  padding: 30px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  background: #0a0a0a;
+}
+
+@media (max-width: 992px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px 15px;
+  }
+  
+  .footer-about {
+    grid-column: span 2;
+    text-align: center;
+  }
+  
+  .footer {
+    padding-top: 40px;
+  }
+  
+  .about-text {
+    margin: 0 auto 20px auto;
+  }
+  
+  .social-links {
+    justify-content: center;
+  }
+  
+  .footer-links h3 {
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+  
+  .footer-links h3::after {
+    left: 0;
+    transform: none;
+  }
+  
+  .footer-links li {
+    justify-content: flex-start;
+    font-size: 13px;
+    gap: 8px;
+  }
+  
+  .footer-links ul {
+    gap: 10px;
+  }
+}
