@@ -9,6 +9,8 @@ const Header = ({
   toggleFavorite, 
   addToCart, 
   compareCount = 0,
+  currentUser,
+  onSignOut,
   openLogin, 
   openSignup 
 }) => {
@@ -30,9 +32,11 @@ const Header = ({
     setMobileMenuOpen(false);
   }, [location]);
 
+  const isAdmin = currentUser && currentUser.role === 'admin';
+
   return (
     <header className="header">
-      <div className="top-bar">
+      <div className={`top-bar ${isAdmin ? 'admin-top-bar' : ''}`}>
         <div className="container top-bar-content">
           <div className="top-bar-left">
             <span className="top-icon apple-icon">
@@ -46,13 +50,31 @@ const Header = ({
               </svg>
             </span>
           </div>
+
+          {isAdmin && (
+            <div className="secure-portal-banner">
+              <span className="shield-icon">🛡️</span>
+              <span>SECURE ADMIN PORTAL</span>
+            </div>
+          )}
+
           <div className="top-bar-right">
             <span className="lang-selector coral-text">EN <ChevronDown size={14} /></span>
-            <span className="auth-links-group coral-text">
-              <span className="auth-link" style={{cursor: 'pointer'}} onClick={openLogin}>Sign In</span>
-              <span style={{margin: '0 5px'}}>/</span>
-              <span className="auth-link" style={{cursor: 'pointer'}} onClick={openSignup}>Sign Up Here</span>
-            </span>
+            {currentUser ? (
+              <span className="auth-links-group coral-text" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                <span className="user-greeting" style={{ fontWeight: '600' }}>Hello, {currentUser.name}</span>
+                {isAdmin && (
+                  <Link to="/admin" className="admin-panel-badge">Admin Panel</Link>
+                )}
+                <span className="auth-link" style={{ cursor: 'pointer', textDecoration: 'underline' }} onClick={onSignOut}>Sign Out</span>
+              </span>
+            ) : (
+              <span className="auth-links-group coral-text">
+                <span className="auth-link" style={{cursor: 'pointer'}} onClick={openLogin}>Sign In</span>
+                <span style={{margin: '0 5px'}}>/</span>
+                <span className="auth-link" style={{cursor: 'pointer'}} onClick={openSignup}>Sign Up Here</span>
+              </span>
+            )}
           </div>
         </div>
       </div>

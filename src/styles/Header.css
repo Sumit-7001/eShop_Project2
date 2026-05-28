@@ -483,3 +483,46 @@
   color: var(--primary-color);
 }
 
+/* Secure Admin Portal topbar theme */
+.admin-top-bar {
+  background: #0f172a !important; /* dark slate */
+  color: #94a3b8 !important;
+  border-bottom: 1px solid #1e293b !important;
+}
+
+.admin-top-bar .coral-text {
+  color: #38bdf8 !important; /* light sky blue */
+}
+
+.secure-portal-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #38bdf8;
+  letter-spacing: 0.5px;
+}
+
+.admin-panel-badge {
+  background: #0284c7; /* deep sky blue */
+  color: white !important;
+  padding: 5px 12px;
+  border-radius: var(--border-radius-sm);
+  font-size: 12px;
+  font-weight: 700;
+  transition: var(--transition);
+  box-shadow: 0 4px 10px rgba(2, 132, 199, 0.2);
+}
+
+.admin-panel-badge:hover {
+  background: #0369a1;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+  transform: translateY(-1px);
+}
+
+

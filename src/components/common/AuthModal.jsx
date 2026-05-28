@@ -2,15 +2,31 @@ import React, { useState } from 'react';
 import { X, Phone, Mail, ChevronDown, Eye, EyeOff } from 'lucide-react';
 import '../../styles/AuthModal.css';
 
-const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
+const AuthModal = ({ isOpen, onClose, initialMode = 'login', onLogin }) => {
   const [mode, setMode] = useState(initialMode); // 'login' or 'signup'
   const [activeTab, setActiveTab] = useState('phone'); // for signup
   const [showPassword, setShowPassword] = useState(false);
+  const [identifier, setIdentifier] = useState('');
+  const [password, setPassword] = useState('');
 
   if (!isOpen) return null;
 
   const toggleMode = () => {
     setMode(mode === 'login' ? 'signup' : 'login');
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (onLogin) {
+      if (identifier.toLowerCase().includes('admin')) {
+        onLogin({ name: 'Store Owner', email: 'admin@eshop.com', role: 'admin' });
+      } else {
+        onLogin({ name: 'John Customer', email: 'customer@eshop.com', role: 'customer' });
+      }
+    }
+    setIdentifier('');
+    setPassword('');
+    onClose();
   };
 
   return (
@@ -25,13 +41,19 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
           <>
             <div className="modal-header">
               <h2>Welcome Back</h2>
-              <p>Fill your email or mobile and password to sign in.</p>
+              <p>Fill your email or mobile and password to sign in. (Use "admin" for Admin Portal)</p>
             </div>
 
-            <form className="auth-form">
+            <form className="auth-form" onSubmit={handleSubmit}>
               <div className="form-group">
                 <label>Email or Mobile Number</label>
-                <input type="text" placeholder="9874565677" required />
+                <input 
+                  type="text" 
+                  placeholder="admin or email" 
+                  value={identifier} 
+                  onChange={(e) => setIdentifier(e.target.value)} 
+                  required 
+                />
               </div>
               <div className="form-group">
                 <label>Password</label>
@@ -39,6 +61,8 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
                   <input 
                     type={showPassword ? "text" : "password"} 
                     placeholder="........" 
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required 
                   />
                   <button 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
@@ -17,14 +17,21 @@ import Checkout from './pages/Checkout';
 import Compare from './pages/Compare';
 import SellerProducts from './pages/SellerProducts';
 import BrandProducts from './pages/BrandProducts';
+import AdminDashboard from './pages/AdminDashboard';
 import AuthModal from './components/common/AuthModal';
 import { CheckCircle } from 'lucide-react';
+import { smartphones, watches, furniture, kids } from './data/dummyData';
 import './App.css';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
   const [favoriteItems, setFavoriteItems] = useState([]);
   const [compareItems, setCompareItems] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null); // null, or { name, email, role }
+  const [smartphonesState, setSmartphonesState] = useState(smartphones);
+  const [watchesState, setWatchesState] = useState(watches);
+  const [furnitureState, setFurnitureState] = useState(furniture);
+  const [kidsState, setKidsState] = useState(kids);
   const [notification, setNotification] = useState({ show: false, message: '' });
   const [authModal, setAuthModal] = useState({ isOpen: false, mode: 'login' });
 
@@ -98,6 +105,68 @@ function App() {
     setCompareItems(prev => prev.filter(item => item.id !== id));
   };
 
+  const handleLogin = (user) => {
+    setCurrentUser(user);
+    setNotification({ show: true, message: `Welcome back, ${user.role === 'admin' ? 'Store Owner' : user.name}!` });
+    setTimeout(() => setNotification({ show: false, message: '' }), 3000);
+  };
+
+  const handleSignOut = () => {
+    setCurrentUser(null);
+    setNotification({ show: true, message: 'Logged out successfully!' });
+    setTimeout(() => setNotification({ show: false, message: '' }), 3000);
+  };
+
+  const addProduct = (newProduct) => {
+    const productWithId = { 
+      ...newProduct, 
+      id: Date.now(), 
+      rating: 5.0, 
+      image: newProduct.image || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&fit=crop' 
+    };
+    if (newProduct.category === 'smartphones') {
+      setSmartphonesState(prev => [productWithId, ...prev]);
+    } else if (newProduct.category === 'watches') {
+      setWatchesState(prev => [productWithId, ...prev]);
+    } else if (newProduct.category === 'furniture') {
+      setFurnitureState(prev => [productWithId, ...prev]);
+    } else if (newProduct.category === 'kids') {
+      setKidsState(prev => [productWithId, ...prev]);
+    }
+    setNotification({ show: true, message: 'Product added successfully!' });
+    setTimeout(() => setNotification({ show: false, message: '' }), 3000);
+  };
+
+  const deleteProduct = (id, category) => {
+    if (category === 'smartphones') {
+      setSmartphonesState(prev => prev.filter(p => p.id !== id));
+    } else if (category === 'watches') {
+      setWatchesState(prev => prev.filter(p => p.id !== id));
+    } else if (category === 'furniture') {
+      setFurnitureState(prev => prev.filter(p => p.id !== id));
+    } else if (category === 'kids') {
+      setKidsState(prev => prev.filter(p => p.id !== id));
+    }
+    setNotification({ show: true, message: 'Product deleted successfully!' });
+    setTimeout(() => setNotification({ show: false, message: '' }), 3000);
+  };
+
+  const updateProduct = (updatedProduct) => {
+    const { id, category } = updatedProduct;
+    const updateInList = (list) => list.map(p => p.id === id ? { ...p, ...updatedProduct } : p);
+    if (category === 'smartphones') {
+      setSmartphonesState(updateInList);
+    } else if (category === 'watches') {
+      setWatchesState(updateInList);
+    } else if (category === 'furniture') {
+      setFurnitureState(updateInList);
+    } else if (category === 'kids') {
+      setKidsState(updateInList);
+    }
+    setNotification({ show: true, message: 'Product updated successfully!' });
+    setTimeout(() => setNotification({ show: false, message: '' }), 3000);
+  };
+
   const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   const openAuthModal = (mode) => setAuthModal({ isOpen: true, mode });
@@ -112,6 +181,8 @@ function App() {
           toggleFavorite={toggleFavorite}
           addToCart={addToCart}
           compareCount={compareItems.length}
+          currentUser={currentUser}
+          onSignOut={handleSignOut}
           openLogin={() => openAuthModal('login')} 
           openSignup={() => openAuthModal('signup')} 
         />
@@ -124,6 +195,10 @@ function App() {
               compareItems={compareItems}
               toggleFavorite={toggleFavorite}
               toggleCompare={toggleCompare}
+              smartphones={smartphonesState}
+              watches={watchesState}
+              furniture={furnitureState}
+              kids={kidsState}
             />
           } />
           <Route path="/contact" element={<ContactUs />} />
@@ -140,6 +215,10 @@ function App() {
               compareItems={compareItems}
               toggleFavorite={toggleFavorite}
               toggleCompare={toggleCompare}
+              smartphones={smartphonesState}
+              watches={watchesState}
+              furniture={furnitureState}
+              kids={kidsState}
             />
           } />
           <Route path="/product/:id" element={
@@ -190,6 +269,21 @@ function App() {
               toggleCompare={toggleCompare}
             />
           } />
+          <Route path="/admin" element={
+            currentUser && currentUser.role === 'admin' ? (
+              <AdminDashboard 
+                smartphones={smartphonesState}
+                watches={watchesState}
+                furniture={furnitureState}
+                kids={kidsState}
+                onAddProduct={addProduct}
+                onDeleteProduct={deleteProduct}
+                onUpdateProduct={updateProduct}
+              />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          } />
         </Routes>
 
         {/* Global Notification */}
@@ -208,6 +302,7 @@ function App() {
           isOpen={authModal.isOpen} 
           onClose={closeAuthModal} 
           initialMode={authModal.mode} 
+          onLogin={handleLogin}
         />
       </div>
     </Router>
