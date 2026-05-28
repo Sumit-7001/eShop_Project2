@@ -1,0 +1,73 @@
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background-color: var(--card-bg, #ffffff);
+  border: none;
+  cursor: pointer;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.9);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme='dark'] .scroll-to-top-btn {
+  background-color: #1f2937;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.scroll-to-top-btn.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.scroll-to-top-btn:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(255, 126, 95, 0.25);
+}
+
+.progress-circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotate(-90deg);
+}
+
+.progress-track {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme='dark'] .progress-track {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+.progress-bar {
+  fill: none;
+  stroke: var(--primary-color, #ff4d4d);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.1s ease;
+}
+
+.arrow-icon-wrapper {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-color, #ff4d4d);
+  transition: transform 0.3s ease;
+}
+
+.scroll-to-top-btn:hover .arrow-icon-wrapper {
+  transform: translateY(-2px);
+  color: var(--secondary-color, #ff7e5f);
+}

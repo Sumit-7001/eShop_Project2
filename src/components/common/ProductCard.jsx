@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Star, ShoppingCart, Heart, ArrowLeftRight } from 'lucide-react';
 import '../../styles/ProductCard.css';
@@ -78,4 +78,4 @@ const ProductCard = ({
   );
 };
 
-export default ProductCard;
+export default memo(ProductCard);

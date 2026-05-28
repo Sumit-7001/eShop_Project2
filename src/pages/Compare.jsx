@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import emptyCompareImg from '../assets/images/empty_compare.png';
+import { useApp } from '../context/AppContext';
 import '../styles/Compare.css';
 
-const Compare = ({ compareItems = [], onRemoveFromCompare, onAddToCart }) => {
+const Compare = () => {
+  const { compareItems, removeFromCompare: onRemoveFromCompare, addToCart: onAddToCart } = useApp();
   return (
     <div className="compare-page">
       <div className="breadcrumb-section">

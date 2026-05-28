@@ -1,8 +1,10 @@
 import React from 'react';
+import { useApp } from '../../context/AppContext';
 import '../../styles/BannerVR.css';
 import vrImage from '../../assets/images/vr.png';
 
-const BannerVR = ({ onAddToCart }) => {
+const BannerVR = () => {
+  const { addToCart } = useApp();
   return (
     <section className="vr-section">
       <div className="container">
@@ -12,7 +14,7 @@ const BannerVR = ({ onAddToCart }) => {
             <p className="vr-description">
               Experience the extraordinary with our exclusive VR offer. Immerse yourself in limitless adventures today.
             </p>
-            <button className="vr-cta-btn" onClick={() => onAddToCart({ id: 999, title: 'Virtual Reality Headset', price: 299, image: vrImage })}>Order Now Via Online Store</button>
+            <button className="vr-cta-btn" onClick={() => addToCart({ id: 999, title: 'Virtual Reality Headset', price: 299, image: vrImage })}>Order Now Via Online Store</button>
           </div>
           <div className="vr-image-container">
             <img src={vrImage} alt="VR Headset" className="vr-img" />

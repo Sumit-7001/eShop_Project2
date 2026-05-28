@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import HeroSection from '../components/home/HeroSection';
 import CategoriesRow from '../components/home/CategoriesRow';
 import BrandsRow from '../components/home/BrandsRow';
@@ -7,21 +7,30 @@ import BannerVR from '../components/home/BannerVR';
 import AppDownload from '../components/home/AppDownload';
 import SectionTitle from '../components/common/SectionTitle';
 import ProductCard from '../components/common/ProductCard';
-import { smartphones, watches, furniture, kids } from '../data/dummyData';
+import { useApp } from '../context/AppContext';
 
-const Home = ({ 
-  addToCart, 
-  favoriteItems = [], 
-  compareItems = [], 
-  toggleFavorite, 
-  toggleCompare 
-}) => {
+const Home = () => {
+  // Phase 1 BUG FIX: Use live state from context (not static dummyData imports)
+  const {
+    smartphonesState,
+    watchesState,
+    furnitureState,
+    kidsState,
+    addToCart,
+    favoriteItems,
+    compareItems,
+    toggleFavorite,
+    toggleCompare,
+    isFavorite,
+    isComparing,
+  } = useApp();
+
   return (
     <main>
-      <HeroSection onAddToCart={addToCart} />
-      
+      <HeroSection />
+
       <CategoriesRow />
-      
+
       <BrandsRow />
 
       <PromoBanner />
@@ -30,13 +39,13 @@ const Home = ({
         <div className="container">
           <SectionTitle title="Smartphones & Basic Mobiles" viewMoreLink="/category/smartphones" />
           <div className="products-grid">
-            {smartphones.slice(0, 4).map(product => (
-              <ProductCard 
-                key={product.id} 
-                product={product} 
-                onAddToCart={addToCart} 
-                isFavorite={favoriteItems.some(item => item.id === product.id)}
-                isComparing={compareItems.some(item => item.id === product.id)}
+            {smartphonesState.slice(0, 4).map(product => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onAddToCart={addToCart}
+                isFavorite={isFavorite(product.id)}
+                isComparing={isComparing(product.id)}
                 onToggleFavorite={toggleFavorite}
                 onToggleCompare={toggleCompare}
               />
@@ -45,19 +54,19 @@ const Home = ({
         </div>
       </section>
 
-      <BannerVR onAddToCart={addToCart} />
+      <BannerVR />
 
       <section className="products-grid-section">
         <div className="container">
           <SectionTitle title="Top Rated Watches" viewMoreLink="/category/watches" />
           <div className="products-grid">
-            {watches.slice(0, 4).map(product => (
-              <ProductCard 
-                key={product.id} 
-                product={product} 
-                onAddToCart={addToCart} 
-                isFavorite={favoriteItems.some(item => item.id === product.id)}
-                isComparing={compareItems.some(item => item.id === product.id)}
+            {watchesState.slice(0, 4).map(product => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onAddToCart={addToCart}
+                isFavorite={isFavorite(product.id)}
+                isComparing={isComparing(product.id)}
                 onToggleFavorite={toggleFavorite}
                 onToggleCompare={toggleCompare}
               />
@@ -70,13 +79,13 @@ const Home = ({
         <div className="container">
           <SectionTitle title="Top Rated Furniture Products" viewMoreLink="/category/furniture" />
           <div className="products-grid">
-            {furniture.slice(0, 4).map(product => (
-              <ProductCard 
-                key={product.id} 
-                product={product} 
-                onAddToCart={addToCart} 
-                isFavorite={favoriteItems.some(item => item.id === product.id)}
-                isComparing={compareItems.some(item => item.id === product.id)}
+            {furnitureState.slice(0, 4).map(product => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onAddToCart={addToCart}
+                isFavorite={isFavorite(product.id)}
+                isComparing={isComparing(product.id)}
                 onToggleFavorite={toggleFavorite}
                 onToggleCompare={toggleCompare}
               />
@@ -89,13 +98,13 @@ const Home = ({
         <div className="container">
           <SectionTitle title="Kid's Section" viewMoreLink="/category/kids" />
           <div className="products-grid">
-            {kids.slice(0, 4).map(product => (
-              <ProductCard 
-                key={product.id} 
-                product={product} 
-                onAddToCart={addToCart} 
-                isFavorite={favoriteItems.some(item => item.id === product.id)}
-                isComparing={compareItems.some(item => item.id === product.id)}
+            {kidsState.slice(0, 4).map(product => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onAddToCart={addToCart}
+                isFavorite={isFavorite(product.id)}
+                isComparing={isComparing(product.id)}
                 onToggleFavorite={toggleFavorite}
                 onToggleCompare={toggleCompare}
               />
@@ -109,4 +118,4 @@ const Home = ({
   );
 };
 
-export default Home;
+export default memo(Home);

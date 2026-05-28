@@ -525,4 +525,86 @@
   transform: translateY(-1px);
 }
 
+/* ── Dark Mode Toggle Button ─────────────────────────────────────────────── */
+.dark-mode-toggle {
+  background: var(--bg-light, #f5f5f5) !important;
+  color: var(--text-dark, #333) !important;
+}
 
+.dark-mode-toggle:hover {
+  background: var(--primary-color) !important;
+  color: white !important;
+}
+
+/* ── Dark Mode Header Overrides ──────────────────────────────────────────── */
+[data-theme="dark"] .top-bar {
+  background: #161622;
+  border-bottom-color: #2d2d40;
+}
+
+[data-theme="dark"] .navbar {
+  background: #161622;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .navbar.sticky {
+  background: rgba(22, 22, 34, 0.95);
+}
+
+[data-theme="dark"] .nav-links a {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .nav-links a:hover,
+[data-theme="dark"] .nav-links a.active {
+  color: var(--primary-color);
+}
+
+[data-theme="dark"] .nav-icon-btn {
+  background: #1e1e2e;
+  color: #e2e8f0;
+}
+
+[data-theme="dark"] .favorites-sidebar {
+  background: #161622;
+  border-left-color: #2d2d40;
+}
+
+[data-theme="dark"] .favorites-sidebar-header {
+  border-bottom-color: #2d2d40;
+}
+
+[data-theme="dark"] .favorites-item {
+  border-bottom-color: #2d2d40;
+}
+
+[data-theme="dark"] .fav-item-image-wrapper {
+  background: #1e1e2e;
+  border-color: #2d2d40;
+}
+
+[data-theme="dark"] .fav-item-title {
+  color: #e2e8f0;
+}
+
+[data-theme="dark"] .fav-add-to-cart-btn {
+  background: var(--primary-color);
+  color: white;
+}
+
+[data-theme="dark"] .fav-remove-btn {
+  background: #252535;
+  color: #94a3b8;
+}
+
+/* ── Divider dot in top-bar-right ────────────────────────────────────────── */
+.divider {
+  color: inherit;
+  opacity: 0.5;
+  margin: 0 4px;
+}
+
+/* ── Navbar now has SearchBar inside — adjust layout ──────────────────────── */
+.navbar-content {
+  gap: 16px;
+}

@@ -5,17 +5,24 @@ import {
   Facebook, Twitter, Linkedin, MessageCircle, Share2,
   Truck, ShieldCheck, RotateCcw, Store, ShoppingCart
 } from 'lucide-react';
-import { allProducts, smartphones, watches, furniture, kids } from '../data/dummyData';
 import ProductCard from '../components/common/ProductCard';
+import { useApp } from '../context/AppContext';
 import '../styles/ProductDetails.css';
 
-const ProductDetails = ({ 
-  addToCart,
-  favoriteItems = [],
-  compareItems = [],
-  toggleFavorite,
-  toggleCompare
-}) => {
+const ProductDetails = () => {
+  const {
+    addToCart,
+    isFavorite,
+    isComparing,
+    toggleFavorite,
+    toggleCompare,
+    smartphonesState,
+    watchesState,
+    furnitureState,
+    kidsState,
+    favoriteItems,
+    compareItems
+  } = useApp();
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -23,7 +30,13 @@ const ProductDetails = ({
   const [selectedImage, setSelectedImage] = useState(0);
 
   useEffect(() => {
-    const foundProduct = allProducts.find(p => p.id === parseInt(id));
+    const mergedProducts = [
+      ...smartphonesState,
+      ...watchesState,
+      ...furnitureState,
+      ...kidsState
+    ];
+    const foundProduct = mergedProducts.find(p => p.id === parseInt(id));
     setProduct(foundProduct);
     window.scrollTo(0, 0);
   }, [id]);
@@ -46,15 +59,15 @@ const ProductDetails = ({
 
   // Mock related products based on the current product category/type
   const getRelatedProducts = () => {
-    if (smartphones.find(p => p.id === product.id)) return smartphones.filter(p => p.id !== product.id).slice(0, 4);
-    if (watches.find(p => p.id === product.id)) return watches.filter(p => p.id !== product.id).slice(0, 4);
-    if (furniture.find(p => p.id === product.id)) return furniture.filter(p => p.id !== product.id).slice(0, 4);
-    if (kids.find(p => p.id === product.id)) return kids.filter(p => p.id !== product.id).slice(0, 4);
-    return allProducts.filter(p => p.id !== product.id).slice(0, 4);
+    if (smartphonesState.find(p => p.id === product.id)) return smartphonesState.filter(p => p.id !== product.id).slice(0, 4);
+    if (watchesState.find(p => p.id === product.id)) return watchesState.filter(p => p.id !== product.id).slice(0, 4);
+    if (furnitureState.find(p => p.id === product.id)) return furnitureState.filter(p => p.id !== product.id).slice(0, 4);
+    if (kidsState.find(p => p.id === product.id)) return kidsState.filter(p => p.id !== product.id).slice(0, 4);
+    return [...smartphonesState, ...watchesState, ...furnitureState, ...kidsState].filter(p => p.id !== product.id).slice(0, 4);
   };
 
-  const isCurrentFavorite = favoriteItems.some(item => item.id === product.id);
-  const isCurrentComparing = compareItems.some(item => item.id === product.id);
+  const isCurrentFavorite = isFavorite(product.id);
+  const isCurrentComparing = isComparing(product.id);
 
   return (
     <div className="product-details-page">
@@ -92,7 +105,7 @@ const ProductDetails = ({
           {/* Right: Info */}
           <div className="product-info-details">
             <h1 className="product-title-large">{title}</h1>
-            {smartphones.some(p => p.id === product.id) && <p className="product-subtitle">Premium Smartphone Experience</p>}
+            {smartphonesState.some(p => p.id === product.id) && <p className="product-subtitle">Premium Smartphone Experience</p>}
             
             <div className="price-rating-row">
               <div className="large-price">${price.toLocaleString()}</div>
@@ -111,7 +124,7 @@ const ProductDetails = ({
               </div>
             </div>
 
-            {smartphones.some(p => p.id === product.id) && (
+            {smartphonesState.some(p => p.id === product.id) && (
               <div className="option-group">
                 <span className="option-label">Color</span>
                 <div className="color-options">
@@ -121,7 +134,7 @@ const ProductDetails = ({
               </div>
             )}
 
-            {smartphones.some(p => p.id === product.id) && (
+            {smartphonesState.some(p => p.id === product.id) && (
               <div className="option-group">
                 <span className="option-label">Expandable Storage</span>
                 <div className="storage-options">
@@ -186,8 +199,8 @@ const ProductDetails = ({
             </div>
 
             <div className="product-meta" style={{ fontSize: '13px', color: '#666', display: 'flex', flexDirection: 'column', gap: '5px' }}>
-              {smartphones.some(p => p.id === product.id) && <div>Color : <span style={{ color: '#1a1a1a' }}>Red, Black</span></div>}
-              {smartphones.some(p => p.id === product.id) && <div>Expandable Storage : <span style={{ color: '#1a1a1a' }}>128 GB, 256 GB</span></div>}
+              {smartphonesState.some(p => p.id === product.id) && <div>Color : <span style={{ color: '#1a1a1a' }}>Red, Black</span></div>}
+              {smartphonesState.some(p => p.id === product.id) && <div>Expandable Storage : <span style={{ color: '#1a1a1a' }}>128 GB, 256 GB</span></div>}
               <div>Brand : <span style={{ color: '#ff4d4d' }}>● Apple</span></div>
             </div>
 
@@ -236,7 +249,7 @@ const ProductDetails = ({
             {activeTab === 'description' && (
               <div className="description-grid">
                 <div className="spec-table">
-                  {smartphones.some(p => p.id === product.id) ? (
+                  {smartphonesState.some(p => p.id === product.id) ? (
                     <>
                       <div className="spec-row">
                         <div className="spec-label">256 GB ROM</div>

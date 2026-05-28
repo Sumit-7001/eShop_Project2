@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useApp } from '../../context/AppContext';
 import '../../styles/HeroSection.css';
 import heroImage from '../../assets/images/hero.png';
 
@@ -41,7 +42,9 @@ const slides = [
   }
 ];
 
-const HeroSection = ({ onAddToCart }) => {
+const HeroSection = () => {
+  const { addToCart } = useApp();
+  const onAddToCart = addToCart;
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {

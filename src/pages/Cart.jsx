@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Trash2, ShoppingBag, Minus, Plus, ChevronRight } from 'lucide-react';
+import { useApp } from '../context/AppContext';
 import '../styles/Cart.css';
 
-const Cart = ({ cartItems, removeFromCart, updateQuantity, clearCart }) => {
+const Cart = () => {
+  const { cartItems, removeFromCart, updateQuantity, clearCart } = useApp();
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   const total = subtotal; // Simplified, you can add tax logic here if needed
 

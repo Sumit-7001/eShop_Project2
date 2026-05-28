@@ -3,15 +3,11 @@ import { Link, useParams } from 'react-router-dom';
 import { ChevronRight, Package } from 'lucide-react';
 import ProductCard from '../components/common/ProductCard';
 import { brands, brandProducts } from '../data/dummyData';
+import { useApp } from '../context/AppContext';
 import '../styles/BrandProducts.css';
 
-const BrandProducts = ({ 
-  addToCart,
-  favoriteItems = [],
-  compareItems = [],
-  toggleFavorite,
-  toggleCompare
-}) => {
+const BrandProducts = () => {
+  const { addToCart, isFavorite, isComparing, toggleFavorite, toggleCompare } = useApp();
   const { slug } = useParams();
   const brand = brands.find(b => b.slug === slug);
   const products = brandProducts[slug] || [];
@@ -115,8 +111,8 @@ const BrandProducts = ({
                   key={product.id}
                   product={product}
                   onAddToCart={addToCart}
-                  isFavorite={favoriteItems.some(item => item.id === product.id)}
-                  isComparing={compareItems.some(item => item.id === product.id)}
+                  isFavorite={isFavorite(product.id)}
+                  isComparing={isComparing(product.id)}
                   onToggleFavorite={toggleFavorite}
                   onToggleCompare={toggleCompare}
                 />

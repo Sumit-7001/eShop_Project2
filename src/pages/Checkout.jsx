@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ChevronRight, CreditCard, Landmark, Truck, CheckCircle2, AlertCircle, ShoppingBag, ArrowLeft, Check, MapPin, ClipboardCheck } from 'lucide-react';
+import { useApp } from '../context/AppContext';
 import '../styles/Checkout.css';
 
-const Checkout = ({ cartItems, clearCart }) => {
+const Checkout = () => {
+  const { cartItems, clearCart } = useApp();
   const navigate = useNavigate();
   const [step, setStep] = useState(1); // 1: Shipping Address, 2: Payment Method, 3: Review & Place Order
 

@@ -1,41 +1,50 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Search, ShoppingCart, Menu, X, ChevronDown, ArrowLeftRight, Heart } from 'lucide-react';
+import { ShoppingCart, Menu, X, ArrowLeftRight, Heart, Sun, Moon, ShoppingBag } from 'lucide-react';
+import { useApp } from '../../context/AppContext';
+import SearchBar from '../common/SearchBar';
 import '../../styles/Header.css';
 
-const Header = ({ 
-  cartCount, 
-  favoriteItems = [], 
-  toggleFavorite, 
-  addToCart, 
-  compareCount = 0,
-  currentUser,
-  onSignOut,
-  openLogin, 
-  openSignup 
-}) => {
+const Header = memo(() => {
+  const {
+    cartCount,
+    favoriteItems,
+    compareItems,
+    toggleFavorite,
+    addToCart,
+    currentUser,
+    handleSignOut,
+    openAuthModal,
+    isDark,
+    toggleDarkMode,
+  } = useApp();
+
   const [isSticky, setIsSticky] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [favoritesSidebarOpen, setFavoritesSidebarOpen] = useState(false);
   const location = useLocation();
+  const isAdmin = currentUser?.role === 'admin';
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsSticky(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => setIsSticky(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileMenuOpen(false);
-  }, [location]);
+    setFavoritesSidebarOpen(false);
+  }, [location.pathname]);
 
-  const isAdmin = currentUser && currentUser.role === 'admin';
+  // Lock body scroll when sidebar is open
+  useEffect(() => {
+    document.body.style.overflow = favoritesSidebarOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [favoritesSidebarOpen]);
 
   return (
     <header className="header">
+      {/* Top Bar */}
       <div className={`top-bar ${isAdmin ? 'admin-top-bar' : ''}`}>
         <div className="container top-bar-content">
           <div className="top-bar-left">
@@ -59,66 +68,91 @@ const Header = ({
           )}
 
           <div className="top-bar-right">
-            <span className="lang-selector coral-text">EN <ChevronDown size={14} /></span>
+            <span className="lang-selector coral-text">EN</span>
             {currentUser ? (
-              <span className="auth-links-group coral-text" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                <span className="user-greeting" style={{ fontWeight: '600' }}>Hello, {currentUser.name}</span>
+              <span className="auth-links-group coral-text">
+                <span className="user-greeting">Hello, {currentUser.name}</span>
                 {isAdmin && (
                   <Link to="/admin" className="admin-panel-badge">Admin Panel</Link>
                 )}
-                <span className="auth-link" style={{ cursor: 'pointer', textDecoration: 'underline' }} onClick={onSignOut}>Sign Out</span>
+                <span className="auth-link" onClick={handleSignOut}>Sign Out</span>
               </span>
             ) : (
               <span className="auth-links-group coral-text">
-                <span className="auth-link" style={{cursor: 'pointer'}} onClick={openLogin}>Sign In</span>
-                <span style={{margin: '0 5px'}}>/</span>
-                <span className="auth-link" style={{cursor: 'pointer'}} onClick={openSignup}>Sign Up Here</span>
+                <span className="auth-link" onClick={() => openAuthModal('login')}>Sign In</span>
+                <span className="divider">/</span>
+                <span className="auth-link" onClick={() => openAuthModal('signup')}>Sign Up</span>
               </span>
             )}
           </div>
         </div>
       </div>
 
+      {/* Main Navbar */}
       <nav className={`navbar ${isSticky ? 'sticky' : ''}`}>
         <div className="container navbar-content">
-          <Link to="/" className="logo">
+          <Link to="/" className="logo" aria-label="eShop Home">
             <span className="logo-icon">e</span>
             <span className="logo-text">Shop</span>
           </Link>
 
-          <ul className={`nav-links ${mobileMenuOpen ? 'active' : ''}`}>
+          {/* Search Bar */}
+          <SearchBar />
+
+          {/* Nav Links */}
+          <ul className={`nav-links ${mobileMenuOpen ? 'active' : ''}`} role="navigation">
             <li><Link to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link></li>
             <li><Link to="/sellers" className={location.pathname === '/sellers' ? 'active' : ''}>Sellers</Link></li>
-            <li><Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>Contact Us</Link></li>
+            <li><Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>Contact</Link></li>
             <li><Link to="/faqs" className={location.pathname === '/faqs' ? 'active' : ''}>FAQs</Link></li>
-            <li><Link to="/blogs" className={location.pathname === '/blogs' ? 'active' : ''}>Blogs</Link></li>
+            <li><Link to="/blogs" className={location.pathname === '/blogs' ? 'active' : ''}>Blog</Link></li>
           </ul>
 
+          {/* Action Icons */}
           <div className="nav-actions">
-            <button className="nav-icon-btn"><Search size={20} /></button>
-            <Link to="/compare" className="nav-icon-btn compare-btn" title="Compare Products">
+            {/* Dark Mode Toggle */}
+            <button
+              className="nav-icon-btn dark-mode-toggle"
+              onClick={toggleDarkMode}
+              title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              aria-label="Toggle dark mode"
+            >
+              {isDark ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+
+            {/* Compare */}
+            <Link to="/compare" className="nav-icon-btn compare-btn" title="Compare Products" aria-label={`Compare (${compareItems.length})`}>
               <ArrowLeftRight size={20} />
-              {compareCount > 0 && (
-                <span className="compare-count" key={compareCount}>{compareCount}</span>
+              {compareItems.length > 0 && (
+                <span className="compare-count">{compareItems.length}</span>
               )}
             </Link>
-            <button 
-              className="nav-icon-btn wishlist-btn" 
+
+            {/* Wishlist */}
+            <button
+              className="nav-icon-btn wishlist-btn"
               onClick={() => setFavoritesSidebarOpen(true)}
               title="View Wishlist"
+              aria-label={`Wishlist (${favoriteItems.length})`}
             >
               <Heart size={20} />
               {favoriteItems.length > 0 && (
-                <span className="wishlist-count" key={favoriteItems.length}>{favoriteItems.length}</span>
+                <span className="wishlist-count">{favoriteItems.length}</span>
               )}
             </button>
-            <Link to="/cart" className="nav-icon-btn cart-btn" title="Shopping Cart">
+
+            {/* Cart */}
+            <Link to="/cart" className="nav-icon-btn cart-btn" title="Shopping Cart" aria-label={`Cart (${cartCount})`}>
               <ShoppingCart size={20} />
-              <span className="cart-count" key={cartCount}>{cartCount}</span>
+              <span className="cart-count">{cartCount}</span>
             </Link>
-            <button 
-              className="menu-toggle" 
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+
+            {/* Mobile Menu Toggle */}
+            <button
+              className="menu-toggle"
+              onClick={() => setMobileMenuOpen(prev => !prev)}
+              aria-label="Toggle menu"
+              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -126,28 +160,34 @@ const Header = ({
         </div>
       </nav>
 
-      {/* Favorites Sidebar Drawer */}
-      <div 
-        className={`favorites-sidebar-backdrop ${favoritesSidebarOpen ? 'active' : ''}`} 
+      {/* Wishlist Sidebar Drawer */}
+      <div
+        className={`favorites-sidebar-backdrop ${favoritesSidebarOpen ? 'active' : ''}`}
         onClick={() => setFavoritesSidebarOpen(false)}
+        aria-hidden="true"
       >
-        <div 
-          className={`favorites-sidebar ${favoritesSidebarOpen ? 'open' : ''}`} 
-          onClick={(e) => e.stopPropagation()}
+        <div
+          className={`favorites-sidebar ${favoritesSidebarOpen ? 'open' : ''}`}
+          onClick={e => e.stopPropagation()}
+          role="dialog"
+          aria-label="Wishlist"
         >
           <div className="favorites-sidebar-header">
-            <h3>My Wishlist ({favoriteItems.length})</h3>
-            <button className="close-sidebar-btn" onClick={() => setFavoritesSidebarOpen(false)}>
+            <h3>
+              <Heart size={18} style={{ marginRight: 8, color: 'var(--primary-color)' }} />
+              My Wishlist ({favoriteItems.length})
+            </h3>
+            <button className="close-sidebar-btn" onClick={() => setFavoritesSidebarOpen(false)} aria-label="Close wishlist">
               <X size={24} />
             </button>
           </div>
-          
+
           <div className="favorites-sidebar-content">
             {favoriteItems.length === 0 ? (
               <div className="favorites-empty-state">
-                <Heart size={48} className="empty-heart-icon" />
+                <Heart size={52} className="empty-heart-icon" />
                 <p>Your wishlist is empty.</p>
-                <span>Add products you love to your wishlist to buy them later!</span>
+                <span>Save products you love to buy them later!</span>
                 <button className="continue-shopping-btn" onClick={() => setFavoritesSidebarOpen(false)}>
                   Continue Shopping
                 </button>
@@ -156,31 +196,39 @@ const Header = ({
               <div className="favorites-list">
                 {favoriteItems.map(item => (
                   <div key={item.id} className="favorites-item">
-                    <Link to={`/product/${item.id}`} className="fav-item-image-link" onClick={() => setFavoritesSidebarOpen(false)}>
+                    <Link
+                      to={`/product/${item.id}`}
+                      className="fav-item-image-link"
+                      onClick={() => setFavoritesSidebarOpen(false)}
+                    >
                       <div className="fav-item-image-wrapper">
                         <img src={item.image} alt={item.title} className="fav-item-image" />
                       </div>
                     </Link>
                     <div className="fav-item-details">
-                      <Link to={`/product/${item.id}`} className="fav-item-title-link" onClick={() => setFavoritesSidebarOpen(false)}>
+                      <Link
+                        to={`/product/${item.id}`}
+                        className="fav-item-title-link"
+                        onClick={() => setFavoritesSidebarOpen(false)}
+                      >
                         <h4 className="fav-item-title">{item.title}</h4>
                       </Link>
                       <div className="fav-item-price">${item.price}</div>
                       <div className="fav-item-actions">
-                        <button 
+                        <button
                           className="fav-add-to-cart-btn"
                           onClick={() => {
                             addToCart(item);
                             setFavoritesSidebarOpen(false);
                           }}
                         >
-                          <ShoppingCart size={12} style={{ marginRight: '4px' }} />
-                          Add
+                          <ShoppingBag size={12} style={{ marginRight: 4 }} />
+                          Add to Cart
                         </button>
-                        <button 
+                        <button
                           className="fav-remove-btn"
                           onClick={() => toggleFavorite(item)}
-                          title="Remove from favorites"
+                          title="Remove from wishlist"
                         >
                           Remove
                         </button>
@@ -195,6 +243,8 @@ const Header = ({
       </div>
     </header>
   );
-};
+});
+
+Header.displayName = 'Header';
 
 export default Header;

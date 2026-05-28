@@ -5,15 +5,11 @@ import FilterSidebar from '../components/products/FilterSidebar';
 import ProductTopBar from '../components/products/ProductTopBar';
 import ProductCard from '../components/common/ProductCard';
 import { sellers } from '../data/dummyData';
-import '../styles/CategoryProducts.css'; // Reusing styles for consistency
+import { useApp } from '../context/AppContext';
+import '../styles/CategoryProducts.css';
 
-const SellerProducts = ({ 
-  addToCart,
-  favoriteItems = [],
-  compareItems = [],
-  toggleFavorite,
-  toggleCompare
-}) => {
+const SellerProducts = () => {
+  const { addToCart, isFavorite, isComparing, toggleFavorite, toggleCompare } = useApp();
   const { id } = useParams();
   const [sortBy, setSortBy] = useState('relevance');
   const [itemsPerPage, setItemsPerPage] = useState(12);
@@ -92,8 +88,8 @@ const SellerProducts = ({
                     product={product} 
                     onAddToCart={addToCart} 
                     viewMode={viewMode}
-                    isFavorite={favoriteItems.some(item => item.id === product.id)}
-                    isComparing={compareItems.some(item => item.id === product.id)}
+                    isFavorite={isFavorite(product.id)}
+                    isComparing={isComparing(product.id)}
                     onToggleFavorite={toggleFavorite}
                     onToggleCompare={toggleCompare}
                   />
