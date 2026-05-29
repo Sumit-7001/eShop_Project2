@@ -14,7 +14,7 @@ const Cart = () => {
       <div className="cart-page">
         <div className="container">
           <div className="empty-cart">
-            <ShoppingBag size={80} color="#ccc" style={{ marginBottom: '20px' }} />
+            <ShoppingBag size={80} color="#ccc" style={{ display: 'block', margin: '0 auto 20px' }} />
             <h2>Your cart is empty</h2>
             <p style={{ color: '#888', marginBottom: '30px' }}>Looks like you haven't added anything to your cart yet.</p>
             <Link to="/" className="continue-shopping">Continue Shopping</Link>
