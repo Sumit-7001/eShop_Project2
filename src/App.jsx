@@ -27,6 +27,7 @@ import Compare from './pages/Compare';
 import SellerProducts from './pages/SellerProducts';
 import BrandProducts from './pages/BrandProducts';
 import AdminDashboard from './pages/AdminDashboard';
+import Profile from './pages/Profile';
 
 
 // ── Protected Admin Route ──────────────────────────────────────────────────
@@ -83,6 +84,16 @@ const AppShell = () => {
           <Route path="/admin"                     element={
             <ProtectedRoute adminOnly={true}>
               <AdminRoute />
+            </ProtectedRoute>
+          } />
+          <Route path="/profile"                   element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          } />
+          <Route path="/profile/track/:trackOrderId" element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           } />
         </Routes>

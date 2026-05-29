@@ -3,6 +3,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
+const orderRoutes = require('./routes/order');
 
 // Load environment variables
 dotenv.config();
@@ -22,12 +24,23 @@ app.use(async (req, res, next) => {
 
 // ── CORS ─────────────────────────────────────────────────────────────────────
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'https://e-shop-project-six.vercel.app',
-    'https://e-shop-project.vercel.app',
-    process.env.CLIENT_URL
-  ].filter(Boolean),
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps, curl, postman)
+    if (!origin) return callback(null, true);
+    
+    const isLocalhost = /^http:\/\/localhost(:\d+)?$/.test(origin);
+    const allowedProductionOrigins = [
+      'https://e-shop-project-six.vercel.app',
+      'https://e-shop-project.vercel.app',
+      process.env.CLIENT_URL
+    ].filter(Boolean);
+
+    if (isLocalhost || allowedProductionOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -38,6 +51,8 @@ app.use(express.json());
 
 // ── Routes ───────────────────────────────────────────────────────────────────
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/orders', orderRoutes);
 
 // Health check endpoint
 app.get('/', (req, res) => {

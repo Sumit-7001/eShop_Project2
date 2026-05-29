@@ -5,7 +5,7 @@ import { useApp } from '../context/AppContext';
 import '../styles/Checkout.css';
 
 const Checkout = () => {
-  const { cartItems, clearCart } = useApp();
+  const { cartItems, clearCart, currentUser, createOrder } = useApp();
   const navigate = useNavigate();
   const [step, setStep] = useState(1); // 1: Shipping Address, 2: Payment Method, 3: Review & Place Order
 
@@ -173,7 +173,8 @@ const Checkout = () => {
   };
 
   // Place Order Action
-  const handlePlaceOrder = () => {
+  // Place Order Action
+  const handlePlaceOrder = async () => {
     // Perform absolute check of everything
     if (!validateStep1()) {
       setStep(1);
@@ -186,53 +187,77 @@ const Checkout = () => {
 
     setIsSubmitting(true);
 
-    // Simulate Payment / Server Request
-    setTimeout(() => {
-      const orderId = 'ORD-' + Math.floor(1000000 + Math.random() * 9000000);
-      const deliveryDate = new Date();
-      deliveryDate.setDate(deliveryDate.getDate() + 5); // Est. delivery in 5 days
-      const formattedDelivery = deliveryDate.toLocaleDateString('en-US', {
-        weekday: 'long',
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric'
+    const paymentMethodText = formData.paymentMethod === 'card' ? 'Credit Card' : formData.paymentMethod === 'paypal' ? 'PayPal' : 'Cash on Delivery';
+
+    if (currentUser) {
+      // Save order to real MongoDB Atlas database via context API action
+      const order = await createOrder({
+        items: cartItems.map(item => ({
+          title: item.title,
+          price: item.price,
+          quantity: item.quantity,
+          image: item.image
+        })),
+        shippingAddress: {
+          name: formData.name,
+          phone: formData.phone,
+          address: formData.address,
+          city: formData.city,
+          state: formData.state,
+          zip: formData.zip,
+          country: formData.country
+        },
+        paymentMethod: paymentMethodText,
+        subtotal,
+        shipping,
+        discount,
+        total
       });
 
-      const orderDetails = {
-        orderId,
-        deliveryEstimate: formattedDelivery,
-        total: total,
-        paymentMethod: formData.paymentMethod === 'card' ? 'Credit Card' : formData.paymentMethod === 'paypal' ? 'PayPal' : 'Cash on Delivery',
-        email: formData.email
-      };
+      if (order) {
+        setPlacedOrderDetails({
+          orderId: order.orderId,
+          deliveryEstimate: new Date(order.estimatedDelivery).toLocaleDateString('en-US', {
+            weekday: 'long',
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric'
+          }),
+          total: order.total,
+          paymentMethod: order.paymentMethod,
+          email: formData.email
+        });
+        setIsSubmitting(false);
+        setOrderSuccess(true);
+      } else {
+        setIsSubmitting(false);
+      }
+    } else {
+      // Fallback for unauthenticated sandbox checkout simulation
+      setTimeout(() => {
+        const orderId = 'ORD-' + Math.floor(1000000 + Math.random() * 9000000);
+        const deliveryDate = new Date();
+        deliveryDate.setDate(deliveryDate.getDate() + 5); // Est. delivery in 5 days
+        const formattedDelivery = deliveryDate.toLocaleDateString('en-US', {
+          weekday: 'long',
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric'
+        });
 
-      setPlacedOrderDetails(orderDetails);
-
-      // Send Real Order Confirmation Invoice Email via Google SMTP backend API
-      const API_URL = import.meta.env.VITE_API_URL || 'https://backend-teal-eta-97.vercel.app/api/auth';
-      fetch(`${API_URL}/order-confirmation`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
+        setPlacedOrderDetails({
           orderId,
-          total,
-          paymentMethod: orderDetails.paymentMethod,
           deliveryEstimate: formattedDelivery,
-          items: cartItems.map(item => ({
-            title: item.title,
-            price: item.price,
-            quantity: item.quantity,
-            image: item.image
-          }))
-        })
-      }).catch(err => console.error('Failed to trigger order confirmation email:', err));
+          total: total,
+          paymentMethod: paymentMethodText,
+          email: formData.email
+        });
 
-      setIsSubmitting(false);
-      setOrderSuccess(true);
-      clearCart(); // Empty the cart items
-    }, 2000);
+        setIsSubmitting(false);
+        setOrderSuccess(true);
+        clearCart(); // Empty the cart items
+      }, 2000);
+    }
   };
 
   return (
@@ -292,6 +317,41 @@ const Checkout = () => {
                   <Truck size={20} color="#ff7e5f" />
                   Shipping Information
                 </h3>
+
+                {currentUser && currentUser.savedAddresses && currentUser.savedAddresses.length > 0 && (
+                  <div className="saved-addresses-selector">
+                    <h4 className="selector-title">Select from Saved Addresses</h4>
+                    <div className="saved-addresses-grid">
+                      {currentUser.savedAddresses.map((addr) => (
+                        <div 
+                          key={addr._id} 
+                          className="saved-address-card"
+                          onClick={() => {
+                            setFormData(prev => ({
+                              ...prev,
+                              name: addr.name,
+                              phone: addr.phone,
+                              address: addr.address,
+                              city: addr.city,
+                              state: addr.state,
+                              zip: addr.zip,
+                              country: addr.country
+                            }));
+                            setErrors({});
+                          }}
+                        >
+                          <div className="address-card-header">
+                            <span className="address-label">{addr.label}</span>
+                          </div>
+                          <p className="address-name">{addr.name}</p>
+                          <p className="address-details">{addr.address}, {addr.city}</p>
+                          <p className="address-details">{addr.state} - {addr.zip}</p>
+                          <span className="select-badge">Click to Select</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 
                 <div className="form-grid">
                   <div className="form-group full-width">

@@ -49,6 +49,16 @@ const UserSchema = new mongoose.Schema({
     default: 0
   },
   otpType: String,
+  savedAddresses: [{
+    label: { type: String, default: 'Home' },
+    name: { type: String, required: true },
+    phone: { type: String, required: true },
+    address: { type: String, required: true },
+    city: { type: String, required: true },
+    state: { type: String, required: true },
+    zip: { type: String, required: true },
+    country: { type: String, default: 'India' }
+  }],
   createdAt: {
     type: Date,
     default: Date.now

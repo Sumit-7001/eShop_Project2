@@ -1,6 +1,6 @@
 import React, { useState, useEffect, memo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Menu, X, ArrowLeftRight, Heart, Sun, Moon, ShoppingBag } from 'lucide-react';
+import { ShoppingCart, Menu, X, ArrowLeftRight, Heart, Sun, Moon, ShoppingBag, User, LogOut, LayoutDashboard, ChevronDown } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import SearchBar from '../common/SearchBar';
 import '../../styles/Header.css';
@@ -22,8 +22,30 @@ const Header = memo(() => {
   const [isSticky, setIsSticky] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [favoritesSidebarOpen, setFavoritesSidebarOpen] = useState(false);
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const location = useLocation();
   const isAdmin = currentUser?.role === 'admin';
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (!e.target.closest('.user-profile-menu-container')) {
+        setProfileDropdownOpen(false);
+      }
+    };
+    if (profileDropdownOpen) {
+      document.addEventListener('click', handleOutsideClick);
+    }
+    return () => document.removeEventListener('click', handleOutsideClick);
+  }, [profileDropdownOpen]);
+
+  const getInitials = (name) => {
+    if (!name) return 'U';
+    const parts = name.trim().split(/\s+/);
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+    return parts[0][0].toUpperCase();
+  };
 
   useEffect(() => {
     const handleScroll = () => setIsSticky(window.scrollY > 50);
@@ -68,25 +90,95 @@ const Header = memo(() => {
           )}
 
           <div className="top-bar-right">
-            <span className="lang-selector coral-text">EN</span>
+            <span className="lang-selector">EN</span>
             {currentUser ? (
-              <span className="auth-links-group coral-text">
-                <span className="user-greeting">Hello, {currentUser.name}</span>
-                <span className="divider" style={{ margin: '0 8px' }}>/</span>
-                {isAdmin && (
-                  <>
-                    <Link to="/admin" className="admin-panel-badge">Admin Panel</Link>
-                    <span className="divider" style={{ margin: '0 8px' }}>/</span>
-                  </>
+              <div className="user-profile-menu-container">
+                <button 
+                  className={`user-profile-pill ${profileDropdownOpen ? 'active' : ''}`}
+                  onClick={() => setProfileDropdownOpen(prev => !prev)}
+                  aria-expanded={profileDropdownOpen}
+                  aria-haspopup="true"
+                >
+                  <div className="user-avatar-circle">
+                    {getInitials(currentUser.name)}
+                  </div>
+                  <span className="user-name-label">{currentUser.name}</span>
+                  <ChevronDown size={14} className="dropdown-arrow-icon" />
+                </button>
+                
+                {profileDropdownOpen && (
+                  <div className="user-profile-dropdown animate-in">
+                    <div className="dropdown-user-info">
+                      <div className="dropdown-user-avatar">
+                        {getInitials(currentUser.name)}
+                      </div>
+                      <div className="dropdown-user-details">
+                        <h4 className="dropdown-user-name">{currentUser.name}</h4>
+                        <p className="dropdown-user-email">{currentUser.email || 'Welcome to eShop'}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="dropdown-divider"></div>
+                    
+                    <ul className="dropdown-menu-list">
+                      <li>
+                        <Link to="/profile" onClick={() => setProfileDropdownOpen(false)}>
+                          <User size={16} />
+                          <span>My Profile</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/profile?tab=orders" onClick={() => setProfileDropdownOpen(false)}>
+                          <ShoppingBag size={16} />
+                          <span>My Orders</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/compare" onClick={() => setProfileDropdownOpen(false)}>
+                          <ArrowLeftRight size={16} />
+                          <span>Compare Items</span>
+                        </Link>
+                      </li>
+                      {isAdmin && (
+                        <li>
+                          <Link to="/admin" className="admin-menu-link" onClick={() => setProfileDropdownOpen(false)}>
+                            <LayoutDashboard size={16} />
+                            <span>Admin Dashboard</span>
+                          </Link>
+                        </li>
+                      )}
+                    </ul>
+                    
+                    <div className="dropdown-divider"></div>
+                    
+                    <button 
+                      className="dropdown-signout-btn" 
+                      onClick={() => {
+                        setProfileDropdownOpen(false);
+                        handleSignOut();
+                      }}
+                    >
+                      <LogOut size={16} />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
                 )}
-                <span className="auth-link" onClick={handleSignOut}>Sign Out</span>
-              </span>
+              </div>
             ) : (
-              <span className="auth-links-group coral-text">
-                <span className="auth-link" onClick={() => openAuthModal('login')}>Sign In</span>
-                <span className="divider">/</span>
-                <span className="auth-link" onClick={() => openAuthModal('signup')}>Sign Up</span>
-              </span>
+              <div className="auth-pill-buttons">
+                <button 
+                  className="auth-pill-btn signin-btn" 
+                  onClick={() => openAuthModal('login')}
+                >
+                  Sign In
+                </button>
+                <button 
+                  className="auth-pill-btn signup-btn" 
+                  onClick={() => openAuthModal('signup')}
+                >
+                  Sign Up
+                </button>
+              </div>
             )}
           </div>
         </div>

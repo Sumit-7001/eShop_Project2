@@ -820,4 +820,93 @@
   background-color: #f9f9f9;
 }
 
+/* Saved Address Selector for Checkout */
+.saved-addresses-selector {
+  margin-bottom: 20px;
+  background-color: #fcfcfd;
+  border: 1px solid #edf0f2;
+  border-radius: 16px;
+  padding: 18px;
+}
+
+.selector-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.saved-addresses-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 576px) {
+  .saved-addresses-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.saved-address-card {
+  background: white;
+  border: 2px dashed #e4e4e7;
+  border-radius: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.saved-address-card:hover {
+  border-color: #ff7e5f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 126, 95, 0.08);
+}
+
+.address-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.address-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  background-color: rgba(255, 126, 95, 0.1);
+  color: #ff7e5f;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.address-name {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #18181b;
+  margin: 0 0 4px 0;
+}
+
+.address-details {
+  font-size: 12px;
+  color: #71717a;
+  margin: 0 0 2px 0;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.select-badge {
+  display: block;
+  font-size: 11px;
+  color: #ff7e5f;
+  font-weight: 600;
+  margin-top: 8px;
+  text-align: right;
+}
+
 

@@ -72,6 +72,7 @@ export const AppProvider = ({ children }) => {
   const [authModal, setAuthModal] = useState({ isOpen: false, mode: 'login' });
 
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api/auth';
+  const BASE_API_URL = API_URL.replace('/api/auth', '/api') || 'http://localhost:5001/api';
 
   // Auto-verify session on mount
   useEffect(() => {
@@ -258,6 +259,141 @@ export const AppProvider = ({ children }) => {
     }
   }, []);
 
+  const fetchUserProfile = useCallback(async () => {
+    const token = localStorage.getItem('eshop_token');
+    if (!token) return null;
+    try {
+      const res = await fetch(`${BASE_API_URL}/users/profile`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const data = await res.json();
+      if (data.success) {
+        setCurrentUser(data.user);
+        return data.user;
+      }
+      return null;
+    } catch (err) {
+      console.error('Failed to fetch user profile:', err);
+      return null;
+    }
+  }, [BASE_API_URL]);
+
+  const saveAddress = useCallback(async (addressData) => {
+    const token = localStorage.getItem('eshop_token');
+    if (!token) {
+      showToastRef.current?.('Please login to save shipping address.', 'error');
+      return false;
+    }
+    try {
+      const res = await fetch(`${BASE_API_URL}/users/profile/addresses`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(addressData)
+      });
+      const data = await res.json();
+      if (!data.success) {
+        showToastRef.current?.(data.message || 'Failed to save address', 'error');
+        return false;
+      }
+      setCurrentUser(prev => prev ? { ...prev, savedAddresses: data.savedAddresses } : null);
+      showToastRef.current?.(data.message || 'Address saved successfully!', 'success');
+      return true;
+    } catch (err) {
+      showToastRef.current?.('Server connection error. Please try again.', 'error');
+      return false;
+    }
+  }, [BASE_API_URL]);
+
+  const deleteAddress = useCallback(async (addressId) => {
+    const token = localStorage.getItem('eshop_token');
+    if (!token) return false;
+    try {
+      const res = await fetch(`${BASE_API_URL}/users/profile/addresses/${addressId}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const data = await res.json();
+      if (!data.success) {
+        showToastRef.current?.(data.message || 'Failed to delete address', 'error');
+        return false;
+      }
+      setCurrentUser(prev => prev ? { ...prev, savedAddresses: data.savedAddresses } : null);
+      showToastRef.current?.('Address deleted successfully!', 'success');
+      return true;
+    } catch (err) {
+      showToastRef.current?.('Server connection error.', 'error');
+      return false;
+    }
+  }, [BASE_API_URL]);
+
+  const createOrder = useCallback(async (orderData) => {
+    const token = localStorage.getItem('eshop_token');
+    if (!token) {
+      showToastRef.current?.('Please log in to place your order.', 'error');
+      return null;
+    }
+    try {
+      const res = await fetch(`${BASE_API_URL}/orders`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(orderData)
+      });
+      const data = await res.json();
+      if (!data.success) {
+        showToastRef.current?.(data.message || 'Failed to place order.', 'error');
+        return null;
+      }
+      showToastRef.current?.('Order placed successfully!', 'success');
+      clearCart();
+      return data.order;
+    } catch (err) {
+      showToastRef.current?.('Server connection error. Please try again.', 'error');
+      return null;
+    }
+  }, [BASE_API_URL]);
+
+  const fetchUserOrders = useCallback(async () => {
+    const token = localStorage.getItem('eshop_token');
+    if (!token) return [];
+    try {
+      const res = await fetch(`${BASE_API_URL}/orders/my-orders`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const data = await res.json();
+      if (data.success) {
+        return data.orders;
+      }
+      return [];
+    } catch (err) {
+      console.error('Error fetching past orders:', err);
+      return [];
+    }
+  }, [BASE_API_URL]);
+
+  const fetchOrderTracking = useCallback(async (orderId) => {
+    const token = localStorage.getItem('eshop_token');
+    if (!token) return null;
+    try {
+      const res = await fetch(`${BASE_API_URL}/orders/${orderId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const data = await res.json();
+      if (data.success) {
+        return data.order;
+      }
+      return null;
+    } catch (err) {
+      console.error('Error fetching order tracking details:', err);
+      return null;
+    }
+  }, [BASE_API_URL]);
+
   const handleSignOut = useCallback(() => {
     setCurrentUser(null);
     localStorage.removeItem('eshop_token');
@@ -417,6 +553,13 @@ export const AppProvider = ({ children }) => {
     handleSignOut,
     openAuthModal,
     closeAuthModal,
+    // profile & orders
+    fetchUserProfile,
+    saveAddress,
+    deleteAddress,
+    createOrder,
+    fetchUserOrders,
+    fetchOrderTracking,
     // cart
     cartItems,
     cartCount,
@@ -448,6 +591,7 @@ export const AppProvider = ({ children }) => {
   }), [
     isDark, toggleDarkMode,
     currentUser, authLoading, authModal, handleLogin, handleRegister, handleGoogleLogin, handleForgotPassword, handleVerifyOTP, handleResendOTP, handleResetPassword, handleSignOut, openAuthModal, closeAuthModal,
+    fetchUserProfile, saveAddress, deleteAddress, createOrder, fetchUserOrders, fetchOrderTracking,
     cartItems, cartCount, addToCart, removeFromCart, updateQuantity, clearCart,
     favoriteItems, toggleFavorite, isFavorite,
     compareItems, toggleCompare, removeFromCompare, isComparing,
