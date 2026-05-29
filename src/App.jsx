@@ -7,6 +7,7 @@ import Toast from './components/common/Toast';
 import AuthModal from './components/common/AuthModal';
 import PageLoader from './components/common/PageLoader';
 import ScrollToTop from './components/common/ScrollToTop';
+import ProtectedRoute from './components/common/ProtectedRoute';
 import './App.css';
 
 // ── Eager-loaded pages (Instant navigation transition) ──────────────────────
@@ -72,10 +73,18 @@ const AppShell = () => {
           <Route path="/product/:id"               element={<ProductDetails />} />
           <Route path="/compare"                   element={<Compare />} />
           <Route path="/cart"                      element={<Cart />} />
-          <Route path="/checkout"                  element={<Checkout />} />
+          <Route path="/checkout"                  element={
+            <ProtectedRoute>
+              <Checkout />
+            </ProtectedRoute>
+          } />
           <Route path="/seller/:id"                element={<SellerProducts />} />
           <Route path="/brand/:slug"               element={<BrandProducts />} />
-          <Route path="/admin"                     element={<AdminRoute />} />
+          <Route path="/admin"                     element={
+            <ProtectedRoute adminOnly={true}>
+              <AdminRoute />
+            </ProtectedRoute>
+          } />
         </Routes>
       </Suspense>
 

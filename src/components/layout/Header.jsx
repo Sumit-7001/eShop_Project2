@@ -72,8 +72,12 @@ const Header = memo(() => {
             {currentUser ? (
               <span className="auth-links-group coral-text">
                 <span className="user-greeting">Hello, {currentUser.name}</span>
+                <span className="divider" style={{ margin: '0 8px' }}>/</span>
                 {isAdmin && (
-                  <Link to="/admin" className="admin-panel-badge">Admin Panel</Link>
+                  <>
+                    <Link to="/admin" className="admin-panel-badge">Admin Panel</Link>
+                    <span className="divider" style={{ margin: '0 8px' }}>/</span>
+                  </>
                 )}
                 <span className="auth-link" onClick={handleSignOut}>Sign Out</span>
               </span>

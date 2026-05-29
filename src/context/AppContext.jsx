@@ -56,7 +56,7 @@ export const AppProvider = ({ children }) => {
   const [isDark, setIsDark] = useState(() => {
     const stored = localStorage.getItem('eshop_theme');
     if (stored) return stored === 'dark';
-    return window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false;
+    return false;
   });
 
   useEffect(() => {
@@ -67,24 +67,150 @@ export const AppProvider = ({ children }) => {
   const toggleDarkMode = useCallback(() => setIsDark(prev => !prev), []);
 
   // ── Auth ───────────────────────────────────────────────────────────────────
-  const [currentUser, setCurrentUser] = useState(() => {
-    try {
-      const raw = sessionStorage.getItem('eshop_user');
-      return raw ? JSON.parse(raw) : null;
-    } catch { return null; }
-  });
-
+  const [currentUser, setCurrentUser] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
   const [authModal, setAuthModal] = useState({ isOpen: false, mode: 'login' });
 
-  const handleLogin = useCallback((user) => {
-    setCurrentUser(user);
-    sessionStorage.setItem('eshop_user', JSON.stringify(user));
-    showToastRef.current?.(`Welcome back, ${user.role === 'admin' ? 'Store Owner' : user.name}!`, 'success');
+  const API_URL = 'http://localhost:5001/api/auth';
+
+  // Auto-verify session on mount
+  useEffect(() => {
+    const verifyUser = async () => {
+      const token = localStorage.getItem('eshop_token');
+      if (!token) {
+        setAuthLoading(false);
+        return;
+      }
+      try {
+        const res = await fetch(`${API_URL}/me`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (data.success) {
+          setCurrentUser(data.user);
+        } else {
+          localStorage.removeItem('eshop_token');
+        }
+      } catch (err) {
+        console.error('Session verification failed:', err);
+      } finally {
+        setAuthLoading(false);
+      }
+    };
+    verifyUser();
+  }, []);
+
+  const handleLogin = useCallback(async (email, password) => {
+    try {
+      const res = await fetch(`${API_URL}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (!data.success) {
+        showToastRef.current?.(data.message || 'Login failed', 'error');
+        return false;
+      }
+      localStorage.setItem('eshop_token', data.token);
+      setCurrentUser(data.user);
+      showToastRef.current?.(`Welcome back, ${data.user.role === 'admin' ? 'Store Owner' : data.user.name}!`, 'success');
+      return true;
+    } catch (err) {
+      showToastRef.current?.('Server connection error. Please try again.', 'error');
+      return false;
+    }
+  }, []);
+
+  const handleRegister = useCallback(async (name, email, password) => {
+    try {
+      const res = await fetch(`${API_URL}/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password })
+      });
+      const data = await res.json();
+      if (!data.success) {
+        showToastRef.current?.(data.message || 'Registration failed', 'error');
+        return false;
+      }
+      localStorage.setItem('eshop_token', data.token);
+      setCurrentUser(data.user);
+      showToastRef.current?.(`Welcome, ${data.user.name}! Account created successfully.`, 'success');
+      return true;
+    } catch (err) {
+      showToastRef.current?.('Server connection error. Please try again.', 'error');
+      return false;
+    }
+  }, []);
+
+  const handleGoogleLogin = useCallback(async (idToken) => {
+    try {
+      const res = await fetch(`${API_URL}/google`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idToken })
+      });
+      const data = await res.json();
+      if (!data.success) {
+        showToastRef.current?.(data.message || 'Google Login failed', 'error');
+        return false;
+      }
+      localStorage.setItem('eshop_token', data.token);
+      setCurrentUser(data.user);
+      showToastRef.current?.(`Welcome back, ${data.user.name}!`, 'success');
+      return true;
+    } catch (err) {
+      showToastRef.current?.('Google authentication server connection error.', 'error');
+      return false;
+    }
+  }, []);
+
+  const handleForgotPassword = useCallback(async (email) => {
+    try {
+      const res = await fetch(`${API_URL}/forgot-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      const data = await res.json();
+      if (!data.success) {
+        showToastRef.current?.(data.message || 'Forgot password failed', 'error');
+        return null;
+      }
+      showToastRef.current?.('Reset token generated. Check your console logs!', 'success');
+      return data.resetToken;
+    } catch (err) {
+      showToastRef.current?.('Server connection error. Please try again.', 'error');
+      return null;
+    }
+  }, []);
+
+  const handleResetPassword = useCallback(async (resetToken, password) => {
+    try {
+      const res = await fetch(`${API_URL}/reset-password/${resetToken}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password })
+      });
+      const data = await res.json();
+      if (!data.success) {
+        showToastRef.current?.(data.message || 'Reset password failed', 'error');
+        return false;
+      }
+      localStorage.setItem('eshop_token', data.token);
+      setCurrentUser(data.user);
+      showToastRef.current?.('Password reset successful! You are now logged in.', 'success');
+      return true;
+    } catch (err) {
+      showToastRef.current?.('Server connection error. Please try again.', 'error');
+      return false;
+    }
   }, []);
 
   const handleSignOut = useCallback(() => {
     setCurrentUser(null);
-    sessionStorage.removeItem('eshop_user');
+    localStorage.removeItem('eshop_token');
     showToastRef.current?.('Logged out successfully!', 'info');
   }, []);
 
@@ -229,8 +355,13 @@ export const AppProvider = ({ children }) => {
     toggleDarkMode,
     // auth
     currentUser,
+    authLoading,
     authModal,
     handleLogin,
+    handleRegister,
+    handleGoogleLogin,
+    handleForgotPassword,
+    handleResetPassword,
     handleSignOut,
     openAuthModal,
     closeAuthModal,
@@ -264,7 +395,7 @@ export const AppProvider = ({ children }) => {
     dismissToast,
   }), [
     isDark, toggleDarkMode,
-    currentUser, authModal, handleLogin, handleSignOut, openAuthModal, closeAuthModal,
+    currentUser, authLoading, authModal, handleLogin, handleRegister, handleGoogleLogin, handleForgotPassword, handleResetPassword, handleSignOut, openAuthModal, closeAuthModal,
     cartItems, cartCount, addToCart, removeFromCart, updateQuantity, clearCart,
     favoriteItems, toggleFavorite, isFavorite,
     compareItems, toggleCompare, removeFromCompare, isComparing,
