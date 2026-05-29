@@ -15,9 +15,16 @@
     "express": "^4.19.2",
     "google-auth-library": "^9.10.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.4.1"
+    "mongoose": "^8.4.1",
+    "nodemailer": "^8.0.9"
   },
   "devDependencies": {
     "nodemon": "^3.1.2"
+  },
+  "nodemonConfig": {
+    "watch": ["*.js", "routes", "models", "middleware", "config", "utils"],
+    "ext": "js,json",
+    "ignore": [".env", "node_modules", "*.log"],
+    "delay": 500
   }
 }

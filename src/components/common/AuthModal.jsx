@@ -3,7 +3,7 @@ import { X, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import '../../styles/AuthModal.css';
 
-const MODES = { LOGIN: 'login', SIGNUP: 'signup', FORGOT: 'forgot', RESET: 'reset' };
+const MODES = { LOGIN: 'login', SIGNUP: 'signup', FORGOT: 'forgot', RESET: 'reset', VERIFY_OTP: 'verify_otp' };
 
 const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
   const { 
@@ -11,6 +11,8 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
     handleRegister, 
     handleGoogleLogin, 
     handleForgotPassword, 
+    handleVerifyOTP,
+    handleResendOTP,
     handleResetPassword 
   } = useApp();
 
@@ -20,6 +22,12 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [resetTokenState, setResetTokenState] = useState('');
   const [googleLoaded, setGoogleLoaded] = useState(false);
+
+  // OTP Verification states
+  const [otpValue, setOtpValue] = useState('');
+  const [otpType, setOtpType] = useState('verification');
+  const [otpEmail, setOtpEmail] = useState('');
+  const [cooldown, setCooldown] = useState(0);
 
   // Form fields
   const [loginData, setLoginData] = useState({ identifier: '', password: '' });
@@ -46,8 +54,22 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
       setLastName('');
       setForgotEmail('');
       setResetPasswordData({ password: '', confirmPassword: '' });
+      setOtpValue('');
+      setOtpEmail('');
+      setCooldown(0);
     }
   }, [isOpen, initialMode]);
+
+  // OTP Resend cooldown timer hook
+  useEffect(() => {
+    let timer;
+    if (cooldown > 0) {
+      timer = setInterval(() => {
+        setCooldown(c => c - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [cooldown]);
 
   const handleGoogleCallback = async (response) => {
     setIsLoading(true);
@@ -148,11 +170,19 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
     if (Object.keys(errs).length) { setErrors(errs); return; }
 
     setIsLoading(true);
-    const success = await handleLogin(loginData.identifier, loginData.password);
+    const result = await handleLogin(loginData.identifier, loginData.password);
     setIsLoading(false);
     
-    if (success) {
-      onClose();
+    if (result) {
+      if (result.success) {
+        onClose();
+      } else if (result.isVerified === false) {
+        setOtpEmail(result.email);
+        setOtpType('verification');
+        setCooldown(60);
+        setOtpValue('');
+        setMode(MODES.VERIFY_OTP);
+      }
     }
   };
 
@@ -163,11 +193,15 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
 
     setIsLoading(true);
     const fullName = `${firstName.trim()} ${lastName.trim()}`;
-    const success = await handleRegister(fullName, signupData.email, signupData.password);
+    const result = await handleRegister(fullName, signupData.email, signupData.password);
     setIsLoading(false);
 
-    if (success) {
-      onClose();
+    if (result && result.success) {
+      setOtpEmail(result.email);
+      setOtpType('verification');
+      setCooldown(60);
+      setOtpValue('');
+      setMode(MODES.VERIFY_OTP);
     }
   };
 
@@ -179,12 +213,15 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
     }
 
     setIsLoading(true);
-    const resetToken = await handleForgotPassword(forgotEmail);
+    const result = await handleForgotPassword(forgotEmail);
     setIsLoading(false);
 
-    if (resetToken) {
-      setResetTokenState(resetToken);
-      setMode(MODES.RESET);
+    if (result && result.success) {
+      setOtpEmail(result.email);
+      setOtpType('forgot');
+      setCooldown(60);
+      setOtpValue('');
+      setMode(MODES.VERIFY_OTP);
     }
   };
 
@@ -200,6 +237,33 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
     if (success) {
       onClose();
     }
+  };
+
+  const handleVerifyOTPSubmit = async (e) => {
+    e.preventDefault();
+    if (!otpValue || otpValue.length < 6) {
+      setErrors({ otpValue: 'Please enter a valid 6-digit verification code' });
+      return;
+    }
+
+    setIsLoading(true);
+    const result = await handleVerifyOTP(otpEmail, otpValue, otpType);
+    setIsLoading(false);
+
+    if (result && result.success) {
+      if (otpType === 'verification') {
+        onClose();
+      } else {
+        setResetTokenState(result.resetToken);
+        setMode(MODES.RESET);
+      }
+    }
+  };
+
+  const handleResendOTPClick = async () => {
+    if (cooldown > 0) return;
+    setCooldown(60);
+    await handleResendOTP(otpEmail, otpType);
   };
 
   const handleGoogleClick = async () => {
@@ -504,6 +568,58 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
               <button type="submit" className="submit-btn" disabled={isLoading}>
                 {isLoading ? <span className="btn-spinner" /> : 'Reset & Sign In'}
               </button>
+            </form>
+          </>
+        )}
+
+        {/* ── OTP VERIFICATION ─────────────────────────────────────────── */}
+        {mode === MODES.VERIFY_OTP && (
+          <>
+            <form className="auth-form" onSubmit={handleVerifyOTPSubmit} noValidate>
+              <h3 className="otp-modal-title">Verify security code</h3>
+              <p className="otp-modal-subtitle">
+                Enter the 6-digit code sent to <br />
+                <span style={{ fontWeight: '700', color: 'var(--text-dark)' }}>{otpEmail}</span>
+              </p>
+
+              <div className={`form-group ${errors.otpValue ? 'has-error' : ''}`}>
+                <input
+                  id="otp-value"
+                  type="text"
+                  name="otpValue"
+                  placeholder="0 0 0 0 0 0"
+                  value={otpValue}
+                  onChange={(e) => {
+                    const cleaned = e.target.value.replace(/[^0-9]/g, '').slice(0, 6);
+                    setOtpValue(cleaned);
+                    if (errors.otpValue) setErrors({});
+                  }}
+                  maxLength={6}
+                  style={{ textAlign: 'center', letterSpacing: '8px', fontSize: '20px', fontWeight: 'bold' }}
+                  autoComplete="one-time-code"
+                />
+                {errors.otpValue && <span className="field-error"><AlertCircle size={12} />{errors.otpValue}</span>}
+              </div>
+
+              <button type="submit" className="submit-btn" disabled={isLoading || otpValue.length < 6}>
+                {isLoading ? <span className="btn-spinner" /> : 'Verify Code'}
+              </button>
+
+              <div className="otp-resend-wrapper">
+                {cooldown > 0 ? (
+                  <span className="otp-cooldown-text">Resend code in {cooldown}s</span>
+                ) : (
+                  <button type="button" className="otp-resend-link" onClick={handleResendOTPClick}>
+                    Resend Code
+                  </button>
+                )}
+              </div>
+
+              <p className="auth-switch-text">
+                <button type="button" className="toggle-link" onClick={() => switchMode(MODES.LOGIN)}>
+                  Back to Log In
+                </button>
+              </p>
             </form>
           </>
         )}

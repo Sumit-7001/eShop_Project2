@@ -3,9 +3,20 @@ const crypto = require('crypto');
 const { OAuth2Client } = require('google-auth-library');
 const User = require('../models/User');
 const { protect } = require('../middleware/auth');
+const {
+  sendWelcomeEmail,
+  sendVerificationOTPEmail,
+  sendForgotPasswordOTPEmail,
+  sendLoginAlertEmail
+} = require('../utils/emailService');
 
 const router = express.Router();
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+// 6-digit OTP code generator
+const generateOTP = () => {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+};
 
 // Helper function to send token in JSON response
 const sendTokenResponse = (user, statusCode, res) => {
@@ -25,7 +36,7 @@ const sendTokenResponse = (user, statusCode, res) => {
 
 /**
  * @route   POST /api/auth/register
- * @desc    Register a new user
+ * @desc    Register a new user (Unverified, triggers OTP mail)
  * @access  Public
  */
 router.post('/register', async (req, res) => {
@@ -42,14 +53,32 @@ router.post('/register', async (req, res) => {
       });
     }
 
-    // Create user
+    // Generate 6-digit verification OTP
+    const otp = generateOTP();
+    const otpExpire = Date.now() + 5 * 60 * 1000; // 5 minutes
+
+    // Create unverified user
     user = await User.create({
       name,
       email,
-      password
+      password,
+      isVerified: false,
+      otpCode: otp,
+      otpExpire,
+      otpType: 'verification',
+      otpAttempts: 0
     });
 
-    sendTokenResponse(user, 201, res);
+    // Send Welcome Email and Verification OTP Email asynchronously
+    sendWelcomeEmail(user.name, user.email).catch(console.error);
+    sendVerificationOTPEmail(user.name, user.email, otp).catch(console.error);
+
+    res.status(201).json({
+      success: true,
+      message: 'Registration successful! A 6-digit security code has been sent to your email address.',
+      email: user.email,
+      otp // Sandbox fallback for development simplicity
+    });
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -60,7 +89,7 @@ router.post('/register', async (req, res) => {
 
 /**
  * @route   POST /api/auth/login
- * @desc    Authenticate user & get token
+ * @desc    Authenticate user, check verification state, issue token, send Login Alert
  * @access  Public
  */
 router.post('/login', async (req, res) => {
@@ -95,6 +124,31 @@ router.post('/login', async (req, res) => {
       });
     }
 
+    // Check if email is verified
+    if (!user.isVerified) {
+      // Generate a new 6-digit OTP code
+      const otp = generateOTP();
+      user.otpCode = otp;
+      user.otpExpire = Date.now() + 5 * 60 * 1000; // 5 mins
+      user.otpType = 'verification';
+      user.otpAttempts = 0;
+      await user.save({ validateBeforeSave: false });
+
+      // Send Verification OTP Email
+      sendVerificationOTPEmail(user.name, user.email, otp).catch(console.error);
+
+      return res.status(200).json({
+        success: false,
+        isVerified: false,
+        message: 'Please verify your email address to activate your account. A 6-digit security code has been sent to your email address.',
+        email: user.email,
+        otp // Sandbox fallback for development simplicity
+      });
+    }
+
+    // Send Login Alert email asynchronously
+    sendLoginAlertEmail(user, req).catch(console.error);
+
     sendTokenResponse(user, 200, res);
   } catch (error) {
     res.status(500).json({
@@ -105,8 +159,160 @@ router.post('/login', async (req, res) => {
 });
 
 /**
+ * @route   POST /api/auth/verify-otp
+ * @desc    Verify 6-digit OTP (for email verification or password reset authorization)
+ * @access  Public
+ */
+router.post('/verify-otp', async (req, res) => {
+  const { email, otp, type } = req.body;
+
+  if (!email || !otp || !type) {
+    return res.status(400).json({
+      success: false,
+      message: 'Please provide email, OTP code, and verification type.'
+    });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'No user registered with this email address.'
+      });
+    }
+
+    // Check brute-force attempts lockout (max 5 failed attempts)
+    if (user.otpAttempts >= 5) {
+      return res.status(400).json({
+        success: false,
+        message: 'Too many failed verification attempts. This security code is locked. Please request a new code.'
+      });
+    }
+
+    // Validate OTP matches, is correct type, and is not expired
+    const isMatch = user.otpCode === otp;
+    const isCorrectType = user.otpType === type;
+    const isNotExpired = user.otpExpire && Date.now() < user.otpExpire;
+
+    if (!isMatch || !isCorrectType || !isNotExpired) {
+      // Increment failed attempts
+      user.otpAttempts += 1;
+      await user.save({ validateBeforeSave: false });
+
+      let failMsg = 'Invalid security verification code.';
+      if (isMatch && isCorrectType && !isNotExpired) {
+        failMsg = 'The security verification code has expired (valid for 5 mins).';
+      }
+      
+      const attemptsRemaining = Math.max(0, 5 - user.otpAttempts);
+      const remainingMsg = attemptsRemaining > 0 
+        ? ` You have ${attemptsRemaining} attempts remaining before this code gets locked.`
+        : ' This security code is now locked. Please generate a new code.';
+
+      return res.status(400).json({
+        success: false,
+        message: failMsg + remainingMsg
+      });
+    }
+
+    // Reset OTP fields on successful verification
+    user.otpCode = undefined;
+    user.otpExpire = undefined;
+    user.otpType = undefined;
+    user.otpAttempts = 0;
+
+    if (type === 'verification') {
+      user.isVerified = true;
+      await user.save({ validateBeforeSave: false });
+
+      // Automatically log them in on successful email verification
+      sendTokenResponse(user, 200, res);
+    } else if (type === 'forgot') {
+      // Generate secure temporary reset token
+      const resetToken = crypto.randomBytes(20).toString('hex');
+      
+      // Hash reset token and store in database with 15-minute expiration
+      user.resetPasswordToken = crypto
+        .createHash('sha256')
+        .update(resetToken)
+        .digest('hex');
+      user.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
+
+      await user.save({ validateBeforeSave: false });
+
+      res.status(200).json({
+        success: true,
+        message: 'OTP verified successfully. You can now reset your password.',
+        resetToken
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Server error verifying OTP code.'
+    });
+  }
+});
+
+/**
+ * @route   POST /api/auth/resend-otp
+ * @desc    Regenerate and resend 6-digit OTP
+ * @access  Public
+ */
+router.post('/resend-otp', async (req, res) => {
+  const { email, type } = req.body;
+
+  if (!email || !type) {
+    return res.status(400).json({
+      success: false,
+      message: 'Please provide email and verification type.'
+    });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'No user registered with this email address.'
+      });
+    }
+
+    // Generate a new 6-digit OTP
+    const otp = generateOTP();
+    user.otpCode = otp;
+    user.otpExpire = Date.now() + 5 * 60 * 1000; // 5 mins
+    user.otpType = type;
+    user.otpAttempts = 0;
+
+    await user.save({ validateBeforeSave: false });
+
+    // Send corresponding email
+    if (type === 'verification') {
+      sendVerificationOTPEmail(user.name, user.email, otp).catch(console.error);
+    } else if (type === 'forgot') {
+      sendForgotPasswordOTPEmail(user.name, user.email, otp).catch(console.error);
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'A new 6-digit security code has been sent successfully.',
+      otp // Sandbox fallback for development simplicity
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Server error regenerating security code.'
+    });
+  }
+});
+
+/**
  * @route   POST /api/auth/google
- * @desc    Authenticate Google user
+ * @desc    Authenticate Google user (Auto-verifies profile)
  * @access  Public
  */
 router.post('/google', async (req, res) => {
@@ -159,19 +365,29 @@ router.post('/google', async (req, res) => {
     let user = await User.findOne({ email });
 
     if (user) {
-      // Connect Google ID if not already connected
+      let isModified = false;
       if (!user.googleId) {
         user.googleId = googleId;
+        isModified = true;
+      }
+      if (!user.isVerified) {
+        user.isVerified = true;
+        isModified = true;
+      }
+      if (isModified) {
         await user.save();
       }
     } else {
-      // Register new user with Google identity SSO
+      // Register new user with Google identity SSO (automatically set isVerified = true)
       user = await User.create({
         name: name || 'Google User',
         email,
         googleId,
-        role: 'user'
+        role: 'user',
+        isVerified: true
       });
+      // Send Welcome email asynchronously
+      sendWelcomeEmail(user.name, user.email).catch(console.error);
     }
 
     sendTokenResponse(user, 200, res);
@@ -186,7 +402,7 @@ router.post('/google', async (req, res) => {
 
 /**
  * @route   POST /api/auth/forgot-password
- * @desc    Generate password reset token & simulate email notification
+ * @desc    Generate password reset OTP and trigger email
  * @access  Public
  */
 router.post('/forgot-password', async (req, res) => {
@@ -202,30 +418,23 @@ router.post('/forgot-password', async (req, res) => {
       });
     }
 
-    // Generate reset token
-    const resetToken = crypto.randomBytes(20).toString('hex');
-
-    // Hash token and set it in the User Schema with 15-minute expiration
-    user.resetPasswordToken = crypto
-      .createHash('sha256')
-      .update(resetToken)
-      .digest('hex');
-
-    user.resetPasswordExpire = Date.now() + 15 * 60 * 1000; // 15 mins
+    // Generate 6-digit OTP
+    const otp = generateOTP();
+    user.otpCode = otp;
+    user.otpExpire = Date.now() + 5 * 60 * 1000; // 5 minutes
+    user.otpType = 'forgot';
+    user.otpAttempts = 0;
 
     await user.save({ validateBeforeSave: false });
 
-    // Build absolute password reset URL
-    const resetUrl = `${req.protocol}://${req.get('host')}/api/auth/reset-password/${resetToken}`;
-
-    // Under real-world usage, send email via Nodemailer. For sandbox, log to console and return url:
-    console.log(`[PASSWORD RESET LINK]: ${resetUrl}`);
+    // Send Forgot Password OTP Email
+    sendForgotPasswordOTPEmail(user.name, user.email, otp).catch(console.error);
 
     res.status(200).json({
       success: true,
-      message: 'A password reset token was generated. Verify email inbox (or backend logs).',
-      // For sandbox verification simplicity, we return the resetToken so frontend can execute directly:
-      resetToken
+      message: 'A 6-digit security code has been sent to your email address.',
+      email: user.email,
+      otp // Sandbox fallback for development simplicity
     });
   } catch (error) {
     res.status(500).json({
@@ -237,7 +446,7 @@ router.post('/forgot-password', async (req, res) => {
 
 /**
  * @route   PUT /api/auth/reset-password/:resetToken
- * @desc    Reset password
+ * @desc    Reset password (called after successful forgot OTP verification)
  * @access  Public
  */
 router.put('/reset-password/:resetToken', async (req, res) => {

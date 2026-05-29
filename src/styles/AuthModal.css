@@ -473,3 +473,56 @@
 [data-theme="dark"] .forgot-success-state p {
   color: #a1a1aa;
 }
+
+/* OTP Verification Styles */
+.auth-modal .otp-modal-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #1a1a1a;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 6px;
+}
+
+.auth-modal .otp-modal-subtitle {
+  font-size: 13px;
+  color: #666666;
+  text-align: center;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+[data-theme="dark"] .auth-modal .otp-modal-title {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .auth-modal .otp-modal-subtitle {
+  color: #a1a1aa;
+}
+
+.auth-modal .otp-resend-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+.auth-modal .otp-cooldown-text {
+  color: #888888;
+  font-weight: 500;
+}
+
+.auth-modal .otp-resend-link {
+  background: none;
+  border: none;
+  color: #ff4d4d;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+}
+
+.auth-modal .otp-resend-link:hover {
+  color: #e03e3e;
+}

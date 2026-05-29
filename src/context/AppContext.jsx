@@ -109,13 +109,18 @@ export const AppProvider = ({ children }) => {
       });
       const data = await res.json();
       if (!data.success) {
+        // If unverified, return detailed verified status to trigger OTP verification modal
+        if (data.isVerified === false) {
+          showToastRef.current?.(data.message, 'warning');
+          return { success: false, isVerified: false, email: data.email, otp: data.otp };
+        }
         showToastRef.current?.(data.message || 'Login failed', 'error');
         return false;
       }
       localStorage.setItem('eshop_token', data.token);
       setCurrentUser(data.user);
       showToastRef.current?.(`Welcome back, ${data.user.role === 'admin' ? 'Store Owner' : data.user.name}!`, 'success');
-      return true;
+      return { success: true };
     } catch (err) {
       showToastRef.current?.('Server connection error. Please try again.', 'error');
       return false;
@@ -134,10 +139,8 @@ export const AppProvider = ({ children }) => {
         showToastRef.current?.(data.message || 'Registration failed', 'error');
         return false;
       }
-      localStorage.setItem('eshop_token', data.token);
-      setCurrentUser(data.user);
-      showToastRef.current?.(`Welcome, ${data.user.name}! Account created successfully.`, 'success');
-      return true;
+      showToastRef.current?.(data.message || 'OTP sent successfully!', 'success');
+      return { success: true, isVerified: false, email: data.email, otp: data.otp };
     } catch (err) {
       showToastRef.current?.('Server connection error. Please try again.', 'error');
       return false;
@@ -178,11 +181,58 @@ export const AppProvider = ({ children }) => {
         showToastRef.current?.(data.message || 'Forgot password failed', 'error');
         return null;
       }
-      showToastRef.current?.('Reset token generated. Check your console logs!', 'success');
-      return data.resetToken;
+      showToastRef.current?.(data.message || 'OTP sent successfully!', 'success');
+      return { success: true, email: data.email, otp: data.otp };
     } catch (err) {
       showToastRef.current?.('Server connection error. Please try again.', 'error');
       return null;
+    }
+  }, []);
+
+  const handleVerifyOTP = useCallback(async (email, otp, type) => {
+    try {
+      const res = await fetch(`${API_URL}/verify-otp`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, otp, type })
+      });
+      const data = await res.json();
+      if (!data.success) {
+        showToastRef.current?.(data.message || 'OTP verification failed', 'error');
+        return { success: false, message: data.message };
+      }
+      
+      if (type === 'verification') {
+        localStorage.setItem('eshop_token', data.token);
+        setCurrentUser(data.user);
+        showToastRef.current?.(`Welcome, ${data.user.name}! Account verified and logged in.`, 'success');
+      } else {
+        showToastRef.current?.('OTP verified successfully! Please enter your new password.', 'success');
+      }
+      return { success: true, resetToken: data.resetToken };
+    } catch (err) {
+      showToastRef.current?.('Server connection error. Please try again.', 'error');
+      return { success: false, message: 'Server connection error.' };
+    }
+  }, []);
+
+  const handleResendOTP = useCallback(async (email, type) => {
+    try {
+      const res = await fetch(`${API_URL}/resend-otp`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, type })
+      });
+      const data = await res.json();
+      if (!data.success) {
+        showToastRef.current?.(data.message || 'Failed to resend code', 'error');
+        return { success: false };
+      }
+      showToastRef.current?.(data.message || 'Verification code resent successfully!', 'success');
+      return { success: true, otp: data.otp };
+    } catch (err) {
+      showToastRef.current?.('Server connection error. Please try again.', 'error');
+      return { success: false };
     }
   }, []);
 
@@ -361,6 +411,8 @@ export const AppProvider = ({ children }) => {
     handleRegister,
     handleGoogleLogin,
     handleForgotPassword,
+    handleVerifyOTP,
+    handleResendOTP,
     handleResetPassword,
     handleSignOut,
     openAuthModal,
@@ -395,7 +447,7 @@ export const AppProvider = ({ children }) => {
     dismissToast,
   }), [
     isDark, toggleDarkMode,
-    currentUser, authLoading, authModal, handleLogin, handleRegister, handleGoogleLogin, handleForgotPassword, handleResetPassword, handleSignOut, openAuthModal, closeAuthModal,
+    currentUser, authLoading, authModal, handleLogin, handleRegister, handleGoogleLogin, handleForgotPassword, handleVerifyOTP, handleResendOTP, handleResetPassword, handleSignOut, openAuthModal, closeAuthModal,
     cartItems, cartCount, addToCart, removeFromCart, updateQuantity, clearCart,
     favoriteItems, toggleFavorite, isFavorite,
     compareItems, toggleCompare, removeFromCompare, isComparing,
