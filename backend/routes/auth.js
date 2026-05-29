@@ -70,8 +70,8 @@ router.post('/register', async (req, res) => {
     });
 
     // Send Welcome Email and Verification OTP Email asynchronously
-    sendWelcomeEmail(user.name, user.email).catch(console.error);
-    sendVerificationOTPEmail(user.name, user.email, otp).catch(console.error);
+    await sendWelcomeEmail(user.name, user.email).catch(console.error);
+    await sendVerificationOTPEmail(user.name, user.email, otp).catch(console.error);
 
     res.status(201).json({
       success: true,
@@ -135,7 +135,7 @@ router.post('/login', async (req, res) => {
       await user.save({ validateBeforeSave: false });
 
       // Send Verification OTP Email
-      sendVerificationOTPEmail(user.name, user.email, otp).catch(console.error);
+      await sendVerificationOTPEmail(user.name, user.email, otp).catch(console.error);
 
       return res.status(200).json({
         success: false,
@@ -147,7 +147,7 @@ router.post('/login', async (req, res) => {
     }
 
     // Send Login Alert email asynchronously
-    sendLoginAlertEmail(user, req).catch(console.error);
+    await sendLoginAlertEmail(user, req).catch(console.error);
 
     sendTokenResponse(user, 200, res);
   } catch (error) {
@@ -292,9 +292,9 @@ router.post('/resend-otp', async (req, res) => {
 
     // Send corresponding email
     if (type === 'verification') {
-      sendVerificationOTPEmail(user.name, user.email, otp).catch(console.error);
+      await sendVerificationOTPEmail(user.name, user.email, otp).catch(console.error);
     } else if (type === 'forgot') {
-      sendForgotPasswordOTPEmail(user.name, user.email, otp).catch(console.error);
+      await sendForgotPasswordOTPEmail(user.name, user.email, otp).catch(console.error);
     }
 
     res.status(200).json({
@@ -387,7 +387,7 @@ router.post('/google', async (req, res) => {
         isVerified: true
       });
       // Send Welcome email asynchronously
-      sendWelcomeEmail(user.name, user.email).catch(console.error);
+      await sendWelcomeEmail(user.name, user.email).catch(console.error);
     }
 
     sendTokenResponse(user, 200, res);
@@ -428,7 +428,7 @@ router.post('/forgot-password', async (req, res) => {
     await user.save({ validateBeforeSave: false });
 
     // Send Forgot Password OTP Email
-    sendForgotPasswordOTPEmail(user.name, user.email, otp).catch(console.error);
+    await sendForgotPasswordOTPEmail(user.name, user.email, otp).catch(console.error);
 
     res.status(200).json({
       success: true,
