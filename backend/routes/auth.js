@@ -7,7 +7,8 @@ const {
   sendWelcomeEmail,
   sendVerificationOTPEmail,
   sendForgotPasswordOTPEmail,
-  sendLoginAlertEmail
+  sendLoginAlertEmail,
+  sendOrderConfirmationEmail
 } = require('../utils/emailService');
 
 const router = express.Router();
@@ -514,6 +515,45 @@ router.get('/me', protect, async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Could not fetch user details.'
+    });
+  }
+});
+
+/**
+ * @route   POST /api/auth/order-confirmation
+ * @desc    Send order confirmation invoice email
+ * @access  Public
+ */
+router.post('/order-confirmation', async (req, res) => {
+  const { name, email, orderId, total, paymentMethod, deliveryEstimate, items } = req.body;
+
+  if (!email || !orderId || !total || !items) {
+    return res.status(400).json({
+      success: false,
+      message: 'Please provide all required order details.'
+    });
+  }
+
+  try {
+    await sendOrderConfirmationEmail({
+      name: name || 'Customer',
+      email,
+      orderId,
+      total,
+      paymentMethod: paymentMethod || 'Payment Card',
+      deliveryEstimate: deliveryEstimate || '5 business days',
+      items
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'Order confirmation email sent successfully!'
+    });
+  } catch (error) {
+    console.error('Error sending order confirmation email:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to send order confirmation email.'
     });
   }
 });

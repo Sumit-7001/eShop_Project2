@@ -336,9 +336,118 @@ const sendLoginAlertEmail = async (user, req) => {
   return await sendEmail({ to: email, subject, html, text });
 };
 
+/**
+ * ── ORDER CONFIRMATION EMAIL TEMPLATE ─────────────────────────────────────
+ */
+const sendOrderConfirmationEmail = async ({ name, email, orderId, total, paymentMethod, deliveryEstimate, items }) => {
+  const subject = `Order Confirmed! 🛍️ Invoice for Order ${orderId}`;
+  
+  const itemsHtml = items.map(item => `
+    <tr>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #eeeeee;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <img src="${item.image}" alt="${item.title}" style="width: 40px; height: 40px; border-radius: 8px; object-fit: cover;" />
+          <div>
+            <div style="font-weight: 700; color: #1a1a1a; font-size: 14px;">${item.title}</div>
+            <div style="font-size: 12px; color: #888888;">Qty: ${item.quantity}</div>
+          </div>
+        </div>
+      </td>
+      <td style="padding: 12px 15px; border-bottom: 1px solid #eeeeee; text-align: right; font-weight: 700; color: #1a1a1a;">
+        $${(item.price * item.quantity).toLocaleString()}
+      </td>
+    </tr>
+  `).join('');
+
+  const html = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Order Confirmation</title>
+        <style>
+          body { font-family: 'Inter', Helvetica, Arial, sans-serif; background-color: #f4f4f7; color: #333333; margin: 0; padding: 0; }
+          .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; margin-top: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+          .header { background: #ffffff; padding: 30px; text-align: center; border-bottom: 1px solid #f0f0f5; }
+          .content { padding: 40px 30px; }
+          .order-card { background-color: #f9f9fc; border-radius: 12px; padding: 20px; margin-bottom: 24px; }
+          .order-details-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+          .order-details-table td { padding: 6px 0; font-size: 14px; }
+          .order-details-table td.label { color: #666666; font-weight: 500; }
+          .order-details-table td.value { color: #1a1a1a; font-weight: 700; text-align: right; }
+          .receipt-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+          .receipt-table th { padding: 12px 15px; background-color: #f4f4f6; text-align: left; font-size: 13px; font-weight: 700; color: #555555; }
+          .footer { background-color: #f9f9fc; padding: 30px; text-align: center; font-size: 12px; color: #888888; border-top: 1px solid #f0f0f5; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <div style="display:inline-flex; align-items:center; justify-content:center;">
+              ${BRAND_LOGO_ICON}
+              ${BRAND_LOGO_TEXT}
+            </div>
+          </div>
+          <div class="content">
+            <h2 style="font-size: 22px; font-weight: 800; color: #1a1a1a; margin-top: 0; text-align: center;">Order Placed Successfully! 🎉</h2>
+            <p style="text-align: center; color: #666666; margin-bottom: 30px;">Hi ${name}, thank you for your order! We are preparing your shipment. Below is your detailed receipt invoice.</p>
+            
+            <div class="order-card">
+              <h4 style="margin-top:0; margin-bottom: 12px; font-size: 15px; font-weight: 800; color: #ff4d4d; text-transform: uppercase;">Order Details</h4>
+              <table class="order-details-table">
+                <tr>
+                  <td class="label">Order ID</td>
+                  <td class="value">${orderId}</td>
+                </tr>
+                <tr>
+                  <td class="label">Payment Method</td>
+                  <td class="value">${paymentMethod}</td>
+                </tr>
+                <tr>
+                  <td class="label">Est. Delivery</td>
+                  <td class="value">${deliveryEstimate}</td>
+                </tr>
+                <tr style="border-top: 1px solid #e4e4e7; height: 10px;"><td colspan="2"></td></tr>
+                <tr>
+                  <td class="label" style="font-size: 15px; font-weight: 800; color: #1a1a1a;">Total Paid</td>
+                  <td class="value" style="font-size: 18px; font-weight: 800; color: #ff4d4d;">$${total.toLocaleString()}</td>
+                </tr>
+              </table>
+            </div>
+
+            <h4 style="font-size: 15px; font-weight: 800; color: #1a1a1a; margin-bottom: 12px;">Items Ordered</h4>
+            <table class="receipt-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th style="text-align: right; width: 100px;">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${itemsHtml}
+              </tbody>
+            </table>
+            
+            <p style="color: #888888; font-size: 12px; text-align: center; margin-top: 30px;">If you have any questions or would like to modify your order, please contact support.</p>
+          </div>
+          <div class="footer">
+            <p>&copy; 2026 eShop. All rights reserved.</p>
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
+
+  const text = `Order Confirmation: Your order ${orderId} has been placed successfully. Total: $${total.toLocaleString()}. Est. Delivery: ${deliveryEstimate}.`;
+
+  return await sendEmail({ to: email, subject, html, text });
+};
+
 module.exports = {
   sendWelcomeEmail,
   sendVerificationOTPEmail,
   sendForgotPasswordOTPEmail,
-  sendLoginAlertEmail
+  sendLoginAlertEmail,
+  sendOrderConfirmationEmail
 };

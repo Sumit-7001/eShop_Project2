@@ -198,13 +198,36 @@ const Checkout = () => {
         year: 'numeric'
       });
 
-      setPlacedOrderDetails({
+      const orderDetails = {
         orderId,
         deliveryEstimate: formattedDelivery,
         total: total,
         paymentMethod: formData.paymentMethod === 'card' ? 'Credit Card' : formData.paymentMethod === 'paypal' ? 'PayPal' : 'Cash on Delivery',
         email: formData.email
-      });
+      };
+
+      setPlacedOrderDetails(orderDetails);
+
+      // Send Real Order Confirmation Invoice Email via Google SMTP backend API
+      const API_URL = import.meta.env.VITE_API_URL || 'https://backend-teal-eta-97.vercel.app/api/auth';
+      fetch(`${API_URL}/order-confirmation`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          orderId,
+          total,
+          paymentMethod: orderDetails.paymentMethod,
+          deliveryEstimate: formattedDelivery,
+          items: cartItems.map(item => ({
+            title: item.title,
+            price: item.price,
+            quantity: item.quantity,
+            image: item.image
+          }))
+        })
+      }).catch(err => console.error('Failed to trigger order confirmation email:', err));
 
       setIsSubmitting(false);
       setOrderSuccess(true);
