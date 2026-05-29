@@ -1,81 +1,55 @@
-const nodemailer = require('nodemailer');
+// ── Email via Resend HTTP API (works on Vercel — no SMTP ports needed) ────────
+const sendEmail = async ({ to, subject, html, text, otp = null }) => {
+  const apiKey = process.env.RESEND_API_KEY;
+  const fromEmail = process.env.FROM_EMAIL || 'onboarding@resend.dev';
+  const fromName = 'eShop';
 
-// Initialize SMTP Transporter
-const getTransporter = () => {
-  // Check if SMTP settings are fully configured and do not contain placeholder values
-  const hasSMTP = 
-    process.env.SMTP_HOST && 
-    process.env.SMTP_USER && 
-    process.env.SMTP_USER !== 'your_smtp_username_here' &&
-    process.env.SMTP_PASS && 
-    process.env.SMTP_PASS !== 'your_smtp_password_here';
+  // ── Use Resend API if key is configured ────────────────────────────────────
+  if (apiKey && apiKey !== 'your_resend_api_key_here') {
+    try {
+      const response = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          from: `${fromName} <${fromEmail}>`,
+          to: [to],
+          subject,
+          html,
+          text: text || subject
+        })
+      });
 
-  if (hasSMTP) {
-    const port = parseInt(process.env.SMTP_PORT) || 587;
-    return nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: port,
-      secure: port === 465,       // true for SSL (465), false for TLS (587)
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS
-      },
-      tls: {
-        rejectUnauthorized: false  // Allow self-signed certs (helps on restricted networks)
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || `Resend API error: ${response.status}`);
       }
-    });
+
+      console.log(`✅ [EMAIL SENT] ID: ${data.id} → ${to}`);
+      return true;
+    } catch (error) {
+      console.error('❌ [EMAIL ERROR]:', error.message);
+    }
   }
-  
-  // Return null to signify fallback sandbox console logger
-  return null;
+
+  // ── FALLBACK: Console log (dev mode / no API key) ──────────────────────────
+  console.log('\n' + '='.repeat(80));
+  console.log(`✉️  [EMAIL FALLBACK - No RESEND_API_KEY configured]`);
+  console.log(`👉  TO:      ${to}`);
+  console.log(`👉  SUBJECT: ${subject}`);
+  if (otp) console.log(`🔥  OTP CODE: ${otp}`);
+  console.log('='.repeat(80) + '\n');
+  return true;
 };
 
-// Global brand style constants
 const BRAND_COLOR = '#ff4d4d';
 const BRAND_LOGO_ICON = `<span style="background:#ff4d4d;color:#ffffff;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;font-size:20px;font-weight:900;text-align:center;line-height:36px;font-family:'Outfit',sans-serif;margin-right:8px;">e</span>`;
 const BRAND_LOGO_TEXT = `<span style="color:#1a1a1a;font-family:'Outfit',sans-serif;font-size:24px;font-weight:900;">Shop</span>`;
 
-/**
- * Send Email helper
- * Handles Nodemailer dispatch or dynamic fallback logging
- */
-const sendEmail = async ({ to, subject, html, text, otp = null }) => {
-  const transporter = getTransporter();
-  const fromEmail = process.env.FROM_EMAIL || 'noreply@eshop.com';
 
-  if (transporter) {
-    try {
-      const mailOptions = {
-        from: `"eShop Brand" <${fromEmail}>`,
-        to,
-        subject,
-        text: text || subject,
-        html
-      };
-      const info = await transporter.sendMail(mailOptions);
-      console.log(`[SMTP EMAIL SENT] Message ID: ${info.messageId} to ${to}`);
-      return true;
-    } catch (error) {
-      console.error('[SMTP EMAIL ERROR] Failed to send email via SMTP. Falling back to console logging.', error);
-    }
-  }
-
-  // FALLBACK SANDBOX CONSOLE LOGGING (Beautiful visual logger for development simplicity)
-  console.log('\n' + '='.repeat(80));
-  console.log(`✉️  [SANDBOX OUTBOUND EMAIL FALLBACK - SMTP NOT CONFIGURED]`);
-  console.log(`👉  TO:      ${to}`);
-  console.log(`👉  SUBJECT: ${subject}`);
-  if (otp) {
-    console.log(`🔥  [GENERATE 6-DIGIT OTP]: ${otp}`);
-  }
-  console.log('-'.repeat(80));
-  console.log(`[TEXT PREVIEW]: ${text || 'HTML Email Sent'}`);
-  console.log('-'.repeat(80));
-  // Print HTML structure in simplified raw block for debugging
-  console.log(html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').substring(0, 300) + '... (truncated)');
-  console.log('='.repeat(80) + '\n');
-  return true;
-};
 
 /**
  * ── WELCOME EMAIL TEMPLATE ───────────────────────────────────────────────

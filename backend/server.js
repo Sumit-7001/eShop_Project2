@@ -1,88 +1,70 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const nodemailer = require('nodemailer');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/auth');
 
-// Load environment variables from .env file
+// Load environment variables
 dotenv.config();
-
-// Connect to MongoDB
-connectDB();
 
 const app = express();
 
-// Enable CORS
+// ── DB Middleware (per-request connection for serverless) ─────────────────────
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error('DB connection failed:', err.message);
+    res.status(500).json({ success: false, message: 'Database connection failed.' });
+  }
+});
+
+// ── CORS ─────────────────────────────────────────────────────────────────────
 app.use(cors({
-  origin: true,
-  credentials: true
+  origin: [
+    'http://localhost:5173',
+    'https://e-shop-project-six.vercel.app',
+    'https://e-shop-project.vercel.app',
+    process.env.CLIENT_URL
+  ].filter(Boolean),
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // Body parser
 app.use(express.json());
 
-// Mount routers
+// ── Routes ───────────────────────────────────────────────────────────────────
 app.use('/api/auth', authRoutes);
 
-// ── SMTP Connection Test Endpoint (Development) ───────────────────────────────
-app.get('/api/test-email', async (req, res) => {
-  try {
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT) || 587,
-      secure: false,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS
-      }
-    });
-
-    // Verify SMTP connection first
-    await transporter.verify();
-    console.log('✅ [SMTP] Connection verified!');
-
-    // Send real test email to self
-    const info = await transporter.sendMail({
-      from: `"eShop Test" <${process.env.SMTP_USER}>`,
-      to: process.env.SMTP_USER,
-      subject: '✅ eShop SMTP Test - Email Working!',
-      html: `<h2>🎉 Gmail SMTP is working!</h2><p>Your eShop email system is correctly configured.</p><p>Time: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</p>`
-    });
-
-    console.log('✅ [SMTP] Test email sent! ID:', info.messageId);
-    res.json({ success: true, message: 'Test email sent! Check your inbox.', messageId: info.messageId });
-  } catch (error) {
-    console.error('❌ [SMTP ERROR]:', error.message);
-    res.status(500).json({ success: false, error: error.message, code: error.code });
-  }
-});
-
-// Base test endpoint
+// Health check endpoint
 app.get('/', (req, res) => {
-  res.json({ message: 'eShop eCommerce Auth API is running smoothly!' });
+  res.json({ message: '✅ eShop API is running!', status: 'ok' });
 });
 
-// Centralized error handling middleware
+// ── Error Handling ───────────────────────────────────────────────────────────
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(err.statusCode || 500).json({
     success: false,
-    message: err.message || 'Internal Server Error. Please contact admin.'
+    message: err.message || 'Internal Server Error'
   });
 });
 
-// Route not found fallback
 app.use((req, res) => {
-  res.status(404).json({
-    success: false,
-    message: `API Route not found: ${req.originalUrl}`
+  res.status(404).json({ success: false, message: `Route not found: ${req.originalUrl}` });
+});
+
+// ── Start (local dev only) ───────────────────────────────────────────────────
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 5001;
+  app.listen(PORT, () => {
+    console.log(`✅ Server running on port ${PORT}`);
+    console.log(`📧 SMTP: ${process.env.SMTP_HOST}:${process.env.SMTP_PORT}`);
   });
-});
+}
 
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`✅ Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
-  console.log(`📧 SMTP: ${process.env.SMTP_HOST}:${process.env.SMTP_PORT} | User: ${process.env.SMTP_USER}`);
-});
+// Export for Vercel serverless
+module.exports = app;
