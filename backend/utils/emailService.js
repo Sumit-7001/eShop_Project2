@@ -1,10 +1,46 @@
-// ── Email via Resend HTTP API (works on Vercel — no SMTP ports needed) ────────
+const nodemailer = require('nodemailer');
+
+// ── Email dispatch engine (Supports Nodemailer SMTP and Resend HTTP API) ────────
 const sendEmail = async ({ to, subject, html, text, otp = null }) => {
+  const smtpHost = process.env.SMTP_HOST || 'smtp.gmail.com';
+  const smtpPort = parseInt(process.env.SMTP_PORT || '465');
+  const smtpUser = process.env.SMTP_USER || 'sahoosumit7001@gmail.com';
+  const smtpPass = process.env.SMTP_PASS || process.env.SMTP_PASSWORD;
   const apiKey = process.env.RESEND_API_KEY;
   const fromEmail = process.env.FROM_EMAIL || 'onboarding@resend.dev';
   const fromName = 'eShop';
 
-  // ── Use Resend API if key is configured ────────────────────────────────────
+  // ── 1. Use Nodemailer SMTP if Password is configured (RECOMMENDED FOR FREE UNIVERSAL DELIVERY) ──
+  if (smtpPass && smtpPass !== 'your_smtp_app_password_here') {
+    try {
+      const transporter = nodemailer.createTransport({
+        host: smtpHost,
+        port: smtpPort,
+        secure: smtpPort === 465,
+        auth: {
+          user: smtpUser,
+          pass: smtpPass
+        }
+      });
+
+      const mailOptions = {
+        from: `"${fromName}" <${smtpUser}>`,
+        to,
+        subject,
+        html,
+        text: text || subject
+      };
+
+      const info = await transporter.sendMail(mailOptions);
+      console.log(`✅ [EMAIL SENT VIA SMTP] MessageID: ${info.messageId} → ${to}`);
+      return true;
+    } catch (error) {
+      console.error('❌ [SMTP EMAIL ERROR]:', error.message);
+      // Let it fall back to Resend API if SMTP fails
+    }
+  }
+
+  // ── 2. Use Resend API if key is configured ────────────────────────────────────
   if (apiKey && apiKey !== 'your_resend_api_key_here') {
     try {
       const response = await fetch('https://api.resend.com/emails', {
@@ -28,16 +64,16 @@ const sendEmail = async ({ to, subject, html, text, otp = null }) => {
         throw new Error(data.message || `Resend API error: ${response.status}`);
       }
 
-      console.log(`✅ [EMAIL SENT] ID: ${data.id} → ${to}`);
+      console.log(`✅ [EMAIL SENT VIA RESEND] ID: ${data.id} → ${to}`);
       return true;
     } catch (error) {
-      console.error('❌ [EMAIL ERROR]:', error.message);
+      console.error('❌ [RESEND EMAIL ERROR]:', error.message);
     }
   }
 
-  // ── FALLBACK: Console log (dev mode / no API key) ──────────────────────────
+  // ── 3. FALLBACK: Console log (dev mode / no SMTP or Resend API key) ──────────
   console.log('\n' + '='.repeat(80));
-  console.log(`✉️  [EMAIL FALLBACK - No RESEND_API_KEY configured]`);
+  console.log(`✉️  [EMAIL FALLBACK - No SMTP or RESEND_API_KEY configured]`);
   console.log(`👉  TO:      ${to}`);
   console.log(`👉  SUBJECT: ${subject}`);
   if (otp) console.log(`🔥  OTP CODE: ${otp}`);
