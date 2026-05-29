@@ -266,7 +266,40 @@
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
+  .navbar {
+    padding: 12px 0;
+  }
+  .navbar-content {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .logo {
+    order: 1;
+    font-size: 24px;
+  }
+  .nav-actions {
+    order: 2;
+    gap: 8px !important;
+  }
+  .search-bar-wrapper {
+    order: 3;
+    flex: 1 1 100%;
+    width: 100%;
+    margin-top: 2px;
+    max-width: none;
+  }
+  
+  .navbar.sticky .navbar-content {
+    gap: 8px;
+  }
+  
+  .navbar.sticky {
+    padding: 8px 0;
+  }
+}
+
+@media (max-width: 480px) {
   .top-bar-content {
     flex-direction: column;
     gap: 8px;
@@ -274,18 +307,29 @@
   .top-bar-left {
     display: none; /* Hide decorative icons on very small screens to save space */
   }
-  .nav-actions {
-    gap: 10px;
-  }
   .logo-text {
-    display: none; /* Hide text, keep only 'e' icon to save space if needed, or keep text and reduce font */
+    display: none; /* Hide text, keep only 'e' icon to save space */
   }
   .logo {
     font-size: 22px;
   }
+  .nav-icon-btn {
+    width: 34px !important;
+    height: 34px !important;
+  }
   .nav-icon-btn svg {
-    width: 18px;
-    height: 18px;
+    width: 16px !important;
+    height: 16px !important;
+  }
+  .nav-actions {
+    gap: 6px !important;
+  }
+  .cart-count, .wishlist-count, .compare-count {
+    width: 14px;
+    height: 14px;
+    font-size: 8px;
+    top: -2px;
+    right: -2px;
   }
 }
 

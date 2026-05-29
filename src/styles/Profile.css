@@ -54,6 +54,8 @@
 .avatar-circle {
   width: 80px;
   height: 80px;
+  flex-shrink: 0;
+  aspect-ratio: 1 / 1;
   background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
   color: white;
   font-size: 32px;
@@ -1215,4 +1217,116 @@
 @keyframes fadeTabIn {
   from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Unified Mobile Responsiveness Upgrades ────────────────────────────────── */
+@media (max-width: 768px) {
+  .profile-page {
+    padding: 20px 0 60px;
+  }
+  .profile-container {
+    padding: 0 16px;
+    gap: 16px;
+  }
+  .user-profile-badge-card {
+    padding: 20px 16px;
+    border-radius: 20px;
+  }
+  .sidebar-navigation-menu {
+    border-radius: 20px;
+    padding: 12px;
+  }
+  .profile-content-card {
+    border-radius: 24px;
+    padding: 24px 20px;
+    min-height: auto;
+  }
+  .detail-field-card {
+    padding: 14px 16px;
+    border-radius: 14px;
+  }
+  .add-address-form-box {
+    padding: 18px;
+    border-radius: 16px;
+  }
+  .saved-addresses-grid-list {
+    gap: 12px;
+  }
+  .address-profile-card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+  .order-history-card {
+    border-radius: 20px;
+  }
+  .order-card-top-summary {
+    padding: 12px 18px;
+  }
+  .order-card-items-preview {
+    padding: 12px 18px;
+  }
+  .order-card-footer-billing {
+    padding: 12px 18px;
+  }
+  .tracking-header-card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+  .logistics-tracking-logs-card {
+    padding: 18px;
+    border-radius: 16px;
+  }
+  .tracking-shipping-details-card {
+    padding: 18px;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 0 12px;
+    gap: 12px;
+  }
+  .profile-content-card {
+    border-radius: 20px;
+    padding: 20px 14px;
+  }
+  .tab-title {
+    font-size: 17px;
+    margin-bottom: 16px;
+  }
+  .tab-header-row {
+    margin-bottom: 16px;
+  }
+  .detail-field-card {
+    padding: 12px;
+    gap: 10px;
+  }
+  .detail-card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+  .detail-label {
+    font-size: 10px;
+  }
+  .detail-value {
+    font-size: 13px;
+  }
+  .menu-nav-item {
+    padding: 10px 14px;
+    font-size: 13.5px;
+  }
+  .add-address-trigger-btn {
+    padding: 8px 14px;
+    font-size: 12px;
+    width: 100%;
+    justify-content: center;
+    margin-top: 8px;
+  }
+  .tab-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
 }
