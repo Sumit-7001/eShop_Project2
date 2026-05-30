@@ -77,8 +77,7 @@ router.post('/register', async (req, res) => {
     res.status(201).json({
       success: true,
       message: 'Registration successful! A 6-digit security code has been sent to your email address.',
-      email: user.email,
-      otp // Sandbox fallback for development simplicity
+      email: user.email
     });
   } catch (error) {
     res.status(500).json({
@@ -142,8 +141,7 @@ router.post('/login', async (req, res) => {
         success: false,
         isVerified: false,
         message: 'Please verify your email address to activate your account. A 6-digit security code has been sent to your email address.',
-        email: user.email,
-        otp // Sandbox fallback for development simplicity
+        email: user.email
       });
     }
 
@@ -300,8 +298,7 @@ router.post('/resend-otp', async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: 'A new 6-digit security code has been sent successfully.',
-      otp // Sandbox fallback for development simplicity
+      message: 'A new 6-digit security code has been sent successfully.'
     });
   } catch (error) {
     res.status(500).json({
@@ -434,8 +431,7 @@ router.post('/forgot-password', async (req, res) => {
     res.status(200).json({
       success: true,
       message: 'A 6-digit security code has been sent to your email address.',
-      email: user.email,
-      otp // Sandbox fallback for development simplicity
+      email: user.email
     });
   } catch (error) {
     res.status(500).json({

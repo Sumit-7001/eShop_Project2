@@ -28,7 +28,6 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
   const [otpType, setOtpType] = useState('verification');
   const [otpEmail, setOtpEmail] = useState('');
   const [cooldown, setCooldown] = useState(0);
-  const [sandboxOtp, setSandboxOtp] = useState('');
 
   // Form fields
   const [loginData, setLoginData] = useState({ identifier: '', password: '' });
@@ -58,7 +57,6 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
       setOtpValue('');
       setOtpEmail('');
       setCooldown(0);
-      setSandboxOtp('');
     }
   }, [isOpen, initialMode]);
 
@@ -183,7 +181,6 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
         setOtpType('verification');
         setCooldown(60);
         setOtpValue('');
-        setSandboxOtp(result.otp || '');
         setMode(MODES.VERIFY_OTP);
       }
     }
@@ -204,7 +201,6 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
       setOtpType('verification');
       setCooldown(60);
       setOtpValue('');
-      setSandboxOtp(result.otp || '');
       setMode(MODES.VERIFY_OTP);
     }
   };
@@ -225,7 +221,6 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
       setOtpType('forgot');
       setCooldown(60);
       setOtpValue('');
-      setSandboxOtp(result.otp || '');
       setMode(MODES.VERIFY_OTP);
     }
   };
@@ -268,10 +263,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
   const handleResendOTPClick = async () => {
     if (cooldown > 0) return;
     setCooldown(60);
-    const result = await handleResendOTP(otpEmail, otpType);
-    if (result && result.otp) {
-      setSandboxOtp(result.otp);
-    }
+    await handleResendOTP(otpEmail, otpType);
   };
 
   const handleGoogleClick = async () => {
@@ -590,17 +582,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
                 <span style={{ fontWeight: '700', color: 'var(--text-dark)' }}>{otpEmail}</span>
               </p>
 
-              {sandboxOtp && (
-                <div className="sandbox-otp-banner">
-                  <span className="sandbox-otp-icon">💡</span>
-                  <div className="sandbox-otp-content">
-                    <p className="sandbox-otp-title">Sandbox / Unverified Email Mode</p>
-                    <p className="sandbox-otp-desc">
-                      Since your email may not be verified in Resend, use this code: <strong>{sandboxOtp}</strong>
-                    </p>
-                  </div>
-                </div>
-              )}
+
 
               <div className={`form-group ${errors.otpValue ? 'has-error' : ''}`}>
                 <input
