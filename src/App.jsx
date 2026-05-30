@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AppProvider, useApp } from './context/AppContext';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
@@ -55,10 +55,12 @@ const AdminRoute = () => {
 // ── App Shell ──────────────────────────────────────────────────────────────
 const AppShell = () => {
   const { authModal, closeAuthModal, handleLogin } = useApp();
+  const location = useLocation();
+  const isAdminPath = location.pathname.startsWith('/admin');
 
   return (
     <div className="App">
-      <Header />
+      {!isAdminPath && <Header />}
 
       <Suspense fallback={<PageLoader count={8} />}>
         <Routes>
@@ -99,7 +101,7 @@ const AppShell = () => {
         </Routes>
       </Suspense>
 
-      <Footer />
+      {!isAdminPath && <Footer />}
 
       {/* Global Auth Modal */}
       <AuthModal
