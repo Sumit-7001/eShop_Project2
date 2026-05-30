@@ -497,10 +497,27 @@ export const AppProvider = ({ children }) => {
   const isComparing = useCallback((id) => compareItems.some(item => item.id === id), [compareItems]);
 
   // ── Products (Admin CRUD) ──────────────────────────────────────────────────
-  const [smartphonesState, setSmartphonesState] = useState(smartphones);
-  const [watchesState, setWatchesState] = useState(watches);
-  const [furnitureState, setFurnitureState] = useState(furniture);
-  const [kidsState, setKidsState] = useState(kids);
+  const [smartphonesState, setSmartphonesState] = useState(() => loadFromStorage('eshop_smartphones', smartphones));
+  const [watchesState, setWatchesState] = useState(() => loadFromStorage('eshop_watches', watches));
+  const [furnitureState, setFurnitureState] = useState(() => loadFromStorage('eshop_furniture', furniture));
+  const [kidsState, setKidsState] = useState(() => loadFromStorage('eshop_kids', kids));
+
+  useEffect(() => {
+    saveToStorage('eshop_smartphones', smartphonesState);
+  }, [smartphonesState]);
+
+  useEffect(() => {
+    saveToStorage('eshop_watches', watchesState);
+  }, [watchesState]);
+
+  useEffect(() => {
+    saveToStorage('eshop_furniture', furnitureState);
+  }, [furnitureState]);
+
+  useEffect(() => {
+    saveToStorage('eshop_kids', kidsState);
+  }, [kidsState]);
+
 
   const addProduct = useCallback((newProduct) => {
     const productWithId = {

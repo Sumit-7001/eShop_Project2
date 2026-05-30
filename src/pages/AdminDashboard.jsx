@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import {
   LayoutDashboard, BarChart3, Package, ShoppingBag,
@@ -109,7 +109,7 @@ const StatCard = ({ icon: Icon, label, value, change, changeType, color, gradien
 );
 
 // Revenue Bar Chart
-const RevenueBarChart = ({ data }) => {
+const RevenueBarChart = ({ data, cSym = '$' }) => {
   const max = Math.max(...data.map(d => d.revenue));
   return (
     <div className="revenue-bar-chart">
@@ -119,9 +119,9 @@ const RevenueBarChart = ({ data }) => {
             <div
               className="bar-fill"
               style={{ height: `${(d.revenue / max) * 100}%` }}
-              title={`$${d.revenue.toLocaleString()}`}
+              title={`${cSym}${d.revenue.toLocaleString()}`}
             >
-              <span className="bar-tooltip">${(d.revenue / 1000).toFixed(1)}k</span>
+              <span className="bar-tooltip">{cSym}{(d.revenue / 1000).toFixed(1)}k</span>
             </div>
           </div>
           <span className="bar-label">{d.month}</span>
@@ -230,7 +230,7 @@ const StarRating = ({ rating }) => (
 );
 
 // Product Form Modal
-const ProductFormModal = ({ isOpen, onClose, onSubmit, initialData, title }) => {
+const ProductFormModal = ({ isOpen, onClose, onSubmit, initialData = null, title, cSym = '$' }) => {
   const [form, setForm] = useState(initialData || {
     title: '', price: '', oldPrice: '', category: 'smartphones',
     image: '', sale: false, description: '', stock: ''
@@ -259,12 +259,12 @@ const ProductFormModal = ({ isOpen, onClose, onSubmit, initialData, title }) => 
           </div>
           <div className="mf-row">
             <div className="mf-group">
-              <label>Price ($) *</label>
+              <label>Price ({cSym}) *</label>
               <input type="number" step="0.01" value={form.price} onChange={e => update('price', e.target.value)}
                 placeholder="999" required />
             </div>
             <div className="mf-group">
-              <label>Old Price ($)</label>
+              <label>Old Price ({cSym})</label>
               <input type="number" step="0.01" value={form.oldPrice} onChange={e => update('oldPrice', e.target.value)}
                 placeholder="1199" />
             </div>
@@ -342,17 +342,52 @@ const AdminDashboard = ({
   const [notifications, setNotifications] = useState(3);
   const [selectedPeriod, setSelectedPeriod] = useState('year');
 
-  const [storeSettings, setStoreSettings] = useState({
-    name: 'eShop Global Inc.',
-    email: 'contact@eshop.com',
-    phone: '+91 9876543210',
-    address: 'Salt Lake Sector V, Kolkata, India',
-    currency: 'USD ($)',
-    maintenance: false,
-    taxRate: '18',
-    shippingFee: '9.99',
-    freeShippingThreshold: '100',
+  const [storeSettings, setStoreSettings] = useState(() => {
+    try {
+      const saved = localStorage.getItem('eshop_store_settings');
+      return saved ? JSON.parse(saved) : {
+        name: 'eShop Global Inc.',
+        email: 'contact@eshop.com',
+        phone: '+91 9876543210',
+        address: 'Salt Lake Sector V, Kolkata, India',
+        currency: 'USD ($)',
+        maintenance: false,
+        taxRate: '18',
+        shippingFee: '9.99',
+        freeShippingThreshold: '100',
+      };
+    } catch {
+      return {
+        name: 'eShop Global Inc.',
+        email: 'contact@eshop.com',
+        phone: '+91 9876543210',
+        address: 'Salt Lake Sector V, Kolkata, India',
+        currency: 'USD ($)',
+        maintenance: false,
+        taxRate: '18',
+        shippingFee: '9.99',
+        freeShippingThreshold: '100',
+      };
+    }
   });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('eshop_store_settings', JSON.stringify(storeSettings));
+    } catch (e) {
+      console.error(e);
+    }
+  }, [storeSettings]);
+
+  const getCurrencySymbol = () => {
+    const curr = storeSettings.currency || 'USD ($)';
+    if (curr.includes('$')) return '$';
+    if (curr.includes('€')) return '€';
+    if (curr.includes('₹')) return '₹';
+    if (curr.includes('£')) return '£';
+    return '$';
+  };
+  const cSym = getCurrencySymbol();
 
   // ── Derived State ─────────────────────────────────────────────────────────
   const allProducts = useMemo(() => [
@@ -489,7 +524,7 @@ const AdminDashboard = ({
     <div className="panel-overview">
       {/* Stat Cards */}
       <div className="stat-cards-grid">
-        <StatCard icon={DollarSign} label="Total Revenue" value={`$${totalRevenue.toLocaleString()}`}
+        <StatCard icon={DollarSign} label="Total Revenue" value={`${cSym}${totalRevenue.toLocaleString()}`}
           change="+12.4%" changeType="up" gradient="grad-red" />
         <StatCard icon={ShoppingBag} label="Total Orders" value={totalOrders}
           change="+8.1%" changeType="up" gradient="grad-purple" />
@@ -568,7 +603,7 @@ const AdminDashboard = ({
                 <tr key={order.id}>
                   <td><strong className="order-id">{order.id}</strong></td>
                   <td>{order.customer}</td>
-                  <td><strong>${order.amount.toLocaleString()}</strong></td>
+                  <td><strong>{cSym}{order.amount.toLocaleString()}</strong></td>
                   <td><StatusBadge status={order.status} /></td>
                   <td className="text-muted">{order.date}</td>
                 </tr>
@@ -594,10 +629,10 @@ const AdminDashboard = ({
 
       {/* Summary Cards */}
       <div className="stat-cards-grid analytics-summary">
-        <StatCard icon={DollarSign} label="Revenue (YTD)" value="$148,560" change="+22.4%" changeType="up" gradient="grad-red" />
+        <StatCard icon={DollarSign} label="Revenue (YTD)" value={`${cSym}148,560`} change="+22.4%" changeType="up" gradient="grad-red" />
         <StatCard icon={ShoppingBag} label="Orders (YTD)" value="2,893" change="+15.2%" changeType="up" gradient="grad-purple" />
         <StatCard icon={Users} label="New Customers" value="342" change="+9.8%" changeType="up" gradient="grad-blue" />
-        <StatCard icon={TrendingUp} label="Avg Order Value" value="$51.35" change="+5.3%" changeType="up" gradient="grad-emerald" />
+        <StatCard icon={TrendingUp} label="Avg Order Value" value={`${cSym}51.35`} change="+5.3%" changeType="up" gradient="grad-emerald" />
       </div>
 
       {/* Charts Row */}
@@ -610,19 +645,19 @@ const AdminDashboard = ({
               <span className="cl-dot" style={{ background: '#ff4d4d' }} />Revenue
             </div>
           </div>
-          <RevenueBarChart data={MONTHLY_REVENUE} />
+          <RevenueBarChart data={MONTHLY_REVENUE} cSym={cSym} />
           <div className="chart-summary-row">
             <div className="chart-summary-item">
               <span>Peak Month</span>
-              <strong>December — $52,400</strong>
+              <strong>December — {cSym}52,400</strong>
             </div>
             <div className="chart-summary-item">
               <span>Lowest Month</span>
-              <strong>January — $18,400</strong>
+              <strong>January — {cSym}18,400</strong>
             </div>
             <div className="chart-summary-item">
               <span>Average</span>
-              <strong>$34,717 / month</strong>
+              <strong>{cSym}34,717 / month</strong>
             </div>
           </div>
         </div>
@@ -640,7 +675,7 @@ const AdminDashboard = ({
                   <span className="cat-dot" style={{ background: d.color }} />
                   <span>{d.category}</span>
                 </div>
-                <strong>${d.amount.toLocaleString()}</strong>
+                <strong>{cSym}{d.amount.toLocaleString()}</strong>
               </div>
             ))}
           </div>
@@ -736,8 +771,8 @@ const AdminDashboard = ({
                   <td><span className="cat-chip">{product.category}</span></td>
                   <td>
                     <div className="price-cell">
-                      <strong>${product.price}</strong>
-                      {product.oldPrice && <span className="old-price">${product.oldPrice}</span>}
+                      <strong>{cSym}{product.price}</strong>
+                      {product.oldPrice && <span className="old-price">{cSym}{product.oldPrice}</span>}
                     </div>
                   </td>
                   <td>
@@ -837,7 +872,7 @@ const AdminDashboard = ({
                     </div>
                   </td>
                   <td><span className="order-items-text">{order.items}</span></td>
-                  <td><strong>${order.amount.toLocaleString()}</strong></td>
+                  <td><strong>{cSym}{order.amount.toLocaleString()}</strong></td>
                   <td><span className="payment-chip">{order.payment}</span></td>
                   <td><StatusBadge status={order.status} /></td>
                   <td>
@@ -953,7 +988,7 @@ const AdminDashboard = ({
                   </td>
                   <td><RoleBadge role={user.role} /></td>
                   <td><strong>{user.orders}</strong></td>
-                  <td><strong>${user.spent.toLocaleString()}</strong></td>
+                  <td><strong>{cSym}{user.spent.toLocaleString()}</strong></td>
                   <td><UserStatusBadge status={user.status} /></td>
                   <td className="text-muted">{user.joined}</td>
                   <td>
@@ -1070,7 +1105,7 @@ const AdminDashboard = ({
                     </div>
                   </td>
                   <td><span className="cat-chip">{p.category}</span></td>
-                  <td><strong>${p.price}</strong></td>
+                  <td><strong>{cSym}{p.price}</strong></td>
                   <td>
                     {p.sale
                       ? <span className="admin-badge badge-sale">On Sale</span>
@@ -1201,12 +1236,12 @@ const AdminDashboard = ({
                 onChange={e => setStoreSettings(s => ({ ...s, taxRate: e.target.value }))} />
             </div>
             <div className="sf-group">
-              <label>Shipping Fee ($)</label>
+              <label>Shipping Fee ({cSym})</label>
               <input type="number" value={storeSettings.shippingFee} step="0.01"
                 onChange={e => setStoreSettings(s => ({ ...s, shippingFee: e.target.value }))} />
             </div>
             <div className="sf-group">
-              <label>Free Shipping Threshold ($)</label>
+              <label>Free Shipping Threshold ({cSym})</label>
               <input type="number" value={storeSettings.freeShippingThreshold} step="1"
                 onChange={e => setStoreSettings(s => ({ ...s, freeShippingThreshold: e.target.value }))} />
             </div>
@@ -1373,6 +1408,7 @@ const AdminDashboard = ({
           onClose={() => setAddModal(false)}
           onSubmit={handleAddProduct}
           title="Add New Product"
+          cSym={cSym}
         />
 
         {/* Edit Product Modal */}
@@ -1391,6 +1427,7 @@ const AdminDashboard = ({
             stock: editProduct.stock || 50,
           } : null}
           title="Edit Product"
+          cSym={cSym}
         />
 
         {/* Delete Confirm */}
