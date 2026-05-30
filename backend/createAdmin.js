@@ -7,6 +7,17 @@
 
 require('dotenv').config({ path: __dirname + '/.env' });
 
+const dns = require('dns');
+
+// Use Google DNS servers to resolve MongoDB SRV hostnames reliably on Windows/certain ISPs
+if (typeof dns.setServers === 'function') {
+  try {
+    dns.setServers(['8.8.8.8', '8.8.4.4']);
+  } catch (err) {
+    console.warn('⚠️ Failed to set custom DNS servers:', err.message);
+  }
+}
+
 const mongoose = require('mongoose');
 const bcrypt    = require('bcryptjs');
 const User      = require('./models/User');

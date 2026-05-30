@@ -2092,11 +2092,39 @@
   }
 
   .brand-text, .nav-label, .sb-user-info, .visit-store-btn { display: none; }
-  .admin-sidebar-v2.open { width: 240px; }
-  .admin-sidebar-v2.open .brand-text,
-  .admin-sidebar-v2.open .nav-label,
-  .admin-sidebar-v2.open .sb-user-info,
-  .admin-sidebar-v2.open .visit-store-btn { display: flex; }
+  
+  .admin-sidebar-v2 {
+    transform: translateX(-100%);
+    width: 260px !important;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: none;
+    height: 100%;
+    bottom: 0;
+  }
+
+  .admin-sidebar-v2.open { 
+    transform: translateX(0);
+    box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+  }
+  
+  /* Show all text when sidebar is open on mobile */
+  .admin-sidebar-v2 .brand-text,
+  .admin-sidebar-v2 .nav-label,
+  .admin-sidebar-v2 .sb-user-info { display: block; }
+  .admin-sidebar-v2 .visit-store-btn { display: flex; }
+
+  /* Topbar should take full width on mobile since sidebar is hidden */
+  .admin-main-v2 {
+    margin-left: 0 !important;
+  }
+
+  .sidebar-mobile-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(15, 23, 42, 0.5);
+    z-index: 150;
+    animation: fadeIn 0.2s ease;
+  }
 
   .overview-grid-2col { grid-template-columns: 1fr; }
   .settings-grid { grid-template-columns: 1fr; }

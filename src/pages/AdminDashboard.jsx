@@ -12,7 +12,7 @@ import {
   Layers, Shield, Zap, Moon, Sun, Menu, XCircle, ChevronRight,
   PackageCheck, Clock, Truck, CheckCircle2, ReceiptText, Sliders
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/AdminDashboard.css';
 
 // ─── Portal wrapper — renders modals directly into <body> so
@@ -68,6 +68,104 @@ const CATEGORY_SALES = [
   { category: 'Furniture', sales: 18, color: '#3b82f6', amount: 27000 },
   { category: 'Kids', sales: 12, color: '#10b981', amount: 18000 },
 ];
+
+// ── Period-based Analytics Data ─────────────────────────────────────────────
+const PERIOD_DATA = {
+  week: {
+    stats: {
+      revenue: '$3,240', revenueChange: '+8.2%',
+      orders: '62', ordersChange: '+5.4%',
+      customers: '18', customersChange: '+12.0%',
+      avgOrder: '$52.26', avgOrderChange: '+2.7%',
+    },
+    chartData: [
+      { month: 'Mon', revenue: 420 },
+      { month: 'Tue', revenue: 380 },
+      { month: 'Wed', revenue: 510 },
+      { month: 'Thu', revenue: 620 },
+      { month: 'Fri', revenue: 780 },
+      { month: 'Sat', revenue: 340 },
+      { month: 'Sun', revenue: 190 },
+    ],
+    chartTitle: 'Daily Revenue (This Week)',
+    peakLabel: 'Friday — $780',
+    lowLabel: 'Sunday — $190',
+    avgLabel: '$463 / day',
+    categories: [
+      { category: 'Smartphones', sales: 48, color: '#ff4d4d', amount: 1556 },
+      { category: 'Watches', sales: 22, color: '#8b5cf6', amount: 713 },
+      { category: 'Furniture', sales: 19, color: '#3b82f6', amount: 616 },
+      { category: 'Kids', sales: 11, color: '#10b981', amount: 356 },
+    ],
+  },
+  month: {
+    stats: {
+      revenue: '$34,200', revenueChange: '+11.3%',
+      orders: '267', ordersChange: '+7.8%',
+      customers: '42', customersChange: '+6.5%',
+      avgOrder: '$53.18', avgOrderChange: '+3.2%',
+    },
+    chartData: [
+      { month: 'Wk 1', revenue: 7200 },
+      { month: 'Wk 2', revenue: 9400 },
+      { month: 'Wk 3', revenue: 8600 },
+      { month: 'Wk 4', revenue: 9000 },
+    ],
+    chartTitle: 'Weekly Revenue (This Month)',
+    peakLabel: 'Week 2 — $9,400',
+    lowLabel: 'Week 1 — $7,200',
+    avgLabel: '$8,550 / week',
+    categories: [
+      { category: 'Smartphones', sales: 43, color: '#ff4d4d', amount: 14706 },
+      { category: 'Watches', sales: 27, color: '#8b5cf6', amount: 9234 },
+      { category: 'Furniture', sales: 17, color: '#3b82f6', amount: 5814 },
+      { category: 'Kids', sales: 13, color: '#10b981', amount: 4446 },
+    ],
+  },
+  quarter: {
+    stats: {
+      revenue: '$86,700', revenueChange: '+18.6%',
+      orders: '679', ordersChange: '+12.4%',
+      customers: '98', customersChange: '+8.9%',
+      avgOrder: '$51.84', avgOrderChange: '+4.1%',
+    },
+    chartData: [
+      { month: 'Mar', revenue: 19800 },
+      { month: 'Apr', revenue: 28600 },
+      { month: 'May', revenue: 34200 },
+      { month: 'Jun', revenue: 25400 },
+    ],
+    chartTitle: 'Monthly Revenue (This Quarter)',
+    peakLabel: 'May — $34,200',
+    lowLabel: 'March — $19,800',
+    avgLabel: '$27,000 / month',
+    categories: [
+      { category: 'Smartphones', sales: 44, color: '#ff4d4d', amount: 38148 },
+      { category: 'Watches', sales: 26, color: '#8b5cf6', amount: 22542 },
+      { category: 'Furniture', sales: 18, color: '#3b82f6', amount: 15606 },
+      { category: 'Kids', sales: 12, color: '#10b981', amount: 10404 },
+    ],
+  },
+  year: {
+    stats: {
+      revenue: '$148,560', revenueChange: '+22.4%',
+      orders: '2,893', ordersChange: '+15.2%',
+      customers: '342', customersChange: '+9.8%',
+      avgOrder: '$51.35', avgOrderChange: '+5.3%',
+    },
+    chartData: MONTHLY_REVENUE,
+    chartTitle: 'Monthly Revenue (Full Year)',
+    peakLabel: 'December — $52,400',
+    lowLabel: 'January — $18,400',
+    avgLabel: '$34,717 / month',
+    categories: [
+      { category: 'Smartphones', sales: 45, color: '#ff4d4d', amount: 67800 },
+      { category: 'Watches', sales: 25, color: '#8b5cf6', amount: 37500 },
+      { category: 'Furniture', sales: 18, color: '#3b82f6', amount: 27000 },
+      { category: 'Kids', sales: 12, color: '#10b981', amount: 18000 },
+    ],
+  },
+};
 
 const FEEDBACKS = [
   { id: 1, author: 'Sohan Roy', avatar: 'SR', rating: 5, date: 'May 27, 2026', comment: 'Excellent delivery speed and superb packaging! Truly impressed with the quality.', product: 'iPhone 15 Pro Max', status: 'Approved' },
@@ -237,8 +335,13 @@ const ProductFormModal = ({ isOpen, onClose, onSubmit, initialData = null, title
   });
 
   React.useEffect(() => {
-    if (initialData) setForm(initialData);
-  }, [initialData]);
+    if (isOpen) {
+      setForm(initialData || {
+        title: '', price: '', oldPrice: '', category: 'smartphones',
+        image: '', sale: false, description: '', stock: ''
+      });
+    }
+  }, [isOpen, initialData]);
 
   const update = (field, val) => setForm(f => ({ ...f, [field]: val }));
 
@@ -324,6 +427,7 @@ const AdminDashboard = ({
   onDeleteProduct,
   onUpdateProduct
 }) => {
+  const navigate = useNavigate();
   const [activePanel, setActivePanel] = useState('overview');
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -456,6 +560,8 @@ const AdminDashboard = ({
       image: form.image,
       sale: form.sale,
       description: form.description,
+      stock: parseInt(form.stock) || 0,
+      category: form.category,
     });
     setEditModal(false);
     setEditProduct(null);
@@ -615,7 +721,10 @@ const AdminDashboard = ({
     </div>
   );
 
-  const renderAnalytics = () => (
+  const renderAnalytics = () => {
+    const pd = PERIOD_DATA[selectedPeriod];
+    const { stats, chartData, chartTitle, peakLabel, lowLabel, avgLabel, categories } = pd;
+    return (
     <div className="panel-analytics">
       {/* Period Selector */}
       <div className="period-selector">
@@ -629,10 +738,10 @@ const AdminDashboard = ({
 
       {/* Summary Cards */}
       <div className="stat-cards-grid analytics-summary">
-        <StatCard icon={DollarSign} label="Revenue (YTD)" value={`${cSym}148,560`} change="+22.4%" changeType="up" gradient="grad-red" />
-        <StatCard icon={ShoppingBag} label="Orders (YTD)" value="2,893" change="+15.2%" changeType="up" gradient="grad-purple" />
-        <StatCard icon={Users} label="New Customers" value="342" change="+9.8%" changeType="up" gradient="grad-blue" />
-        <StatCard icon={TrendingUp} label="Avg Order Value" value={`${cSym}51.35`} change="+5.3%" changeType="up" gradient="grad-emerald" />
+        <StatCard icon={DollarSign} label="Revenue" value={stats.revenue} change={stats.revenueChange} changeType="up" gradient="grad-red" />
+        <StatCard icon={ShoppingBag} label="Orders" value={stats.orders} change={stats.ordersChange} changeType="up" gradient="grad-purple" />
+        <StatCard icon={Users} label="New Customers" value={stats.customers} change={stats.customersChange} changeType="up" gradient="grad-blue" />
+        <StatCard icon={TrendingUp} label="Avg Order Value" value={stats.avgOrder} change={stats.avgOrderChange} changeType="up" gradient="grad-emerald" />
       </div>
 
       {/* Charts Row */}
@@ -640,24 +749,24 @@ const AdminDashboard = ({
         {/* Bar Chart */}
         <div className="panel-card chart-card-large">
           <div className="card-title-row">
-            <h4><BarChart2 size={16} /> Monthly Revenue</h4>
+            <h4><BarChart2 size={16} /> {chartTitle}</h4>
             <div className="chart-legend">
               <span className="cl-dot" style={{ background: '#ff4d4d' }} />Revenue
             </div>
           </div>
-          <RevenueBarChart data={MONTHLY_REVENUE} cSym={cSym} />
+          <RevenueBarChart data={chartData} />
           <div className="chart-summary-row">
             <div className="chart-summary-item">
-              <span>Peak Month</span>
-              <strong>December — {cSym}52,400</strong>
+              <span>Peak</span>
+              <strong>{peakLabel}</strong>
             </div>
             <div className="chart-summary-item">
-              <span>Lowest Month</span>
-              <strong>January — {cSym}18,400</strong>
+              <span>Lowest</span>
+              <strong>{lowLabel}</strong>
             </div>
             <div className="chart-summary-item">
               <span>Average</span>
-              <strong>{cSym}34,717 / month</strong>
+              <strong>{avgLabel}</strong>
             </div>
           </div>
         </div>
@@ -667,9 +776,9 @@ const AdminDashboard = ({
           <div className="card-title-row">
             <h4><PieChart size={16} /> Sales by Category</h4>
           </div>
-          <DonutChart data={CATEGORY_SALES} />
+          <DonutChart data={categories} />
           <div className="category-revenue-list">
-            {CATEGORY_SALES.map((d, i) => (
+            {categories.map((d, i) => (
               <div key={i} className="cat-rev-row">
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <span className="cat-dot" style={{ background: d.color }} />
@@ -689,9 +798,9 @@ const AdminDashboard = ({
         </div>
         <div className="channels-grid">
           {[
-            { label: 'Direct Storefront', pct: 74, color: '#ff4d4d' },
-            { label: 'Affiliate Sellers', pct: 18, color: '#8b5cf6' },
-            { label: 'Email Campaigns', pct: 8, color: '#10b981' },
+            { label: 'Direct Storefront', pct: selectedPeriod === 'week' ? 71 : selectedPeriod === 'month' ? 72 : selectedPeriod === 'quarter' ? 73 : 74, color: '#ff4d4d' },
+            { label: 'Affiliate Sellers', pct: selectedPeriod === 'week' ? 21 : selectedPeriod === 'month' ? 20 : selectedPeriod === 'quarter' ? 19 : 18, color: '#8b5cf6' },
+            { label: 'Email Campaigns', pct: selectedPeriod === 'week' ? 8 : selectedPeriod === 'month' ? 8 : selectedPeriod === 'quarter' ? 8 : 8, color: '#10b981' },
           ].map((ch, i) => (
             <div key={i} className="channel-item">
               <div className="channel-meta">
@@ -706,7 +815,8 @@ const AdminDashboard = ({
         </div>
       </div>
     </div>
-  );
+    );
+  };
 
   const renderProducts = () => (
     <div className="panel-products">
@@ -788,7 +898,7 @@ const AdminDashboard = ({
                         title="Edit">
                         <Edit2 size={14} />
                       </button>
-                      <button className="action-btn action-view" title="View">
+                      <button className="action-btn action-view" title="View" onClick={() => navigate(`/product/${product.id}`)}>
                         <Eye size={14} />
                       </button>
                       <button className="action-btn action-delete"
@@ -1068,10 +1178,16 @@ const AdminDashboard = ({
                 <span className="threshold-text">Threshold: {item.threshold} units</span>
               </div>
               <div className="inv-alert-actions">
-                <button className="btn-primary-sm">
+                <button className="btn-primary-sm" onClick={() => {
+                  const prod = allProducts.find(p => p.title === item.title);
+                  if (prod) { setEditProduct(prod); setEditModal(true); }
+                }}>
                   <Plus size={13} /> Restock
                 </button>
-                <button className="btn-ghost-sm">
+                <button className="btn-ghost-sm" onClick={() => {
+                  const prod = allProducts.find(p => p.title === item.title);
+                  if (prod) navigate(`/product/${prod.id}`);
+                }}>
                   <Eye size={13} /> View
                 </button>
               </div>
@@ -1293,10 +1409,18 @@ const AdminDashboard = ({
     setCategoryFilter('all');
     setOrderFilter('all');
     setUserFilter('all');
+    if (window.innerWidth <= 900) {
+      setSidebarOpen(false);
+    }
   };
 
   return (
     <div className="admin-root">
+      {/* Mobile Sidebar Overlay */}
+      {sidebarOpen && window.innerWidth <= 900 && (
+        <div className="sidebar-mobile-overlay" onClick={() => setSidebarOpen(false)}></div>
+      )}
+
       {/* Sidebar */}
       <aside className={`admin-sidebar-v2 ${sidebarOpen ? 'open' : 'collapsed'}`}>
         <div className="sidebar-brand-v2">

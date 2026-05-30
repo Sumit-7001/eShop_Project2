@@ -1,4 +1,14 @@
 const mongoose = require('mongoose');
+const dns = require('dns');
+
+// Use Google DNS servers to resolve MongoDB SRV hostnames reliably on Windows/certain ISPs
+if (typeof dns.setServers === 'function') {
+  try {
+    dns.setServers(['8.8.8.8', '8.8.4.4']);
+  } catch (err) {
+    console.warn('⚠️ Failed to set custom DNS servers:', err.message);
+  }
+}
 
 // Cache connection across serverless function invocations
 let cached = global.mongoose;

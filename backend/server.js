@@ -75,9 +75,20 @@ app.use((req, res) => {
 // ── Start (local dev only) ───────────────────────────────────────────────────
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 5001;
-  app.listen(PORT, () => {
+  const server = app.listen(PORT, () => {
     console.log(`✅ Server running on port ${PORT}`);
     console.log(`📧 SMTP: ${process.env.SMTP_HOST}:${process.env.SMTP_PORT}`);
+  });
+
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.error(`❌ Port ${PORT} is already in use.`);
+      console.error(`   Run this command to free it: taskkill /F /IM node.exe`);
+      console.error(`   Then restart the server.`);
+      process.exit(1);
+    } else {
+      throw err;
+    }
   });
 }
 
