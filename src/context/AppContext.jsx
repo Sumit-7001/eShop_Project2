@@ -71,8 +71,13 @@ export const AppProvider = ({ children }) => {
   const [authLoading, setAuthLoading] = useState(true);
   const [authModal, setAuthModal] = useState({ isOpen: false, mode: 'login' });
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api/auth';
-  const BASE_API_URL = API_URL.replace('/api/auth', '/api') || 'http://localhost:5001/api';
+  const API_URL = import.meta.env.VITE_API_URL || (
+    typeof window !== 'undefined' && 
+    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+      ? 'http://localhost:5001/api/auth'
+      : 'https://backend-teal-eta-97.vercel.app/api/auth'
+  );
+  const BASE_API_URL = API_URL.replace('/api/auth', '/api');
 
   // Auto-verify session on mount
   useEffect(() => {
