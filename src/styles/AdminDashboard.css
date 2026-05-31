@@ -2212,3 +2212,55 @@
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
+/* ─── ERP Print Stylesheet ─── */
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+  #invoice-print-section, #invoice-print-section *,
+  #reports-print-section, #reports-print-section * {
+    visibility: visible !important;
+  }
+  #invoice-print-section, #reports-print-section {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    z-index: 9999999 !important;
+  }
+  .no-print {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  .admin-overlay {
+    background: #ffffff !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+    position: absolute !important;
+  }
+}
+
+/* ─── Extra ERP CSS Styles ─── */
+.erp-tabs-nav::-webkit-scrollbar {
+  height: 4px;
+}
+.erp-tabs-nav::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+.erp-tab-btn {
+  transition: all 0.2s ease;
+}
+.erp-tab-btn:hover {
+  background: var(--card-bg-hover) !important;
+}
+.erp-tab-btn.active:hover {
+  background: var(--primary-color) !important;
+}
