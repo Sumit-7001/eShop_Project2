@@ -124,3 +124,11 @@ section {
   display: block;
   width: 100%;
 }
+/* --- Global Mobile Responsiveness Patch --- */
+@media (max-width: 768px) {
+  body, html { overflow-x: hidden; width: 100%; }
+  img, video, canvas, svg { max-width: 100%; height: auto; }
+  table, .table-wrap { display: block; width: 100%; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+  .container { padding-left: 15px; padding-right: 15px; }
+}
+

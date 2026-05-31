@@ -430,7 +430,7 @@ const AdminDashboard = ({
   const navigate = useNavigate();
   const [activePanel, setActivePanel] = useState('overview');
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth > 900);
   const [addModal, setAddModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [editProduct, setEditProduct] = useState(null);
@@ -482,6 +482,18 @@ const AdminDashboard = ({
       console.error(e);
     }
   }, [storeSettings]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 900) {
+        setSidebarOpen(false);
+      } else {
+        setSidebarOpen(true);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const getCurrencySymbol = () => {
     const curr = storeSettings.currency || 'USD ($)';
