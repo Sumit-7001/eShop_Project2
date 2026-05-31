@@ -2088,7 +2088,7 @@
 
 @media (max-width: 900px) {
   :root {
-    --sidebar-width: var(--sidebar-collapsed);
+    --sidebar-width: 0px; /* main content stretches to 100% width on tablet/mobile */
   }
 
   .brand-text, .nav-label, .sb-user-info, .visit-store-btn { display: none; }
@@ -2126,20 +2126,89 @@
     animation: fadeIn 0.2s ease;
   }
 
+  /* Under 900px, when sidebar is "collapsed" or not open, it is fully hidden off-screen */
+  .admin-sidebar-v2.collapsed {
+    transform: translateX(-100%);
+    width: 260px !important; /* maintain drawer size */
+  }
+
+  /* Sidebar Glassmorphism Backdrop Overlay for Mobile */
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 17, 23, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 150;
+    animation: fadeIn 0.25s ease-out;
+  }
+
   .overview-grid-2col { grid-template-columns: 1fr; }
   .settings-grid { grid-template-columns: 1fr; }
   .stat-cards-grid { grid-template-columns: repeat(2, 1fr); }
   .mf-row { flex-direction: column; }
 }
 
+@media (max-width: 768px) {
+  .chart-summary-row {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .feedback-summary {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+}
+
 @media (max-width: 640px) {
   .admin-content { padding: 16px; }
   .admin-topbar { padding: 0 16px; }
   .topbar-search { display: none; }
+  .breadcrumb { display: none !important; } /* hide breadcrumb to save space */
+  .topbar-user span { display: none !important; } /* hide Store Owner text, keep avatar/chevron */
+  
   .stat-cards-grid { grid-template-columns: 1fr; }
   .order-stats-row { flex-wrap: wrap; }
   .order-stat-chip { min-width: calc(33% - 10px); }
   .user-stats-row { grid-template-columns: repeat(2, 1fr); }
   .inv-summary-grid { grid-template-columns: 1fr 1fr; }
   .content-title { font-size: 20px; }
+  
+  /* Squeeze layout cards text a bit so they fit nicely */
+  .admin-stat-card {
+    padding: 16px;
+  }
+  .stat-value {
+    font-size: 20px;
+  }
+
+  /* Responsive toolbars and inputs */
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .toolbar-filters {
+    justify-content: space-between;
+    width: 100%;
+  }
+  .search-wrap {
+    max-width: 100%;
+  }
+  
+  /* Table Actions */
+  .action-btns {
+    justify-content: flex-start;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

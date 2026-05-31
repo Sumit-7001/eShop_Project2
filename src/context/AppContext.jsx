@@ -496,60 +496,151 @@ export const AppProvider = ({ children }) => {
 
   const isComparing = useCallback((id) => compareItems.some(item => item.id === id), [compareItems]);
 
-  // ── Products (Admin CRUD) ──────────────────────────────────────────────────
-  const [smartphonesState, setSmartphonesState] = useState(() => loadFromStorage('eshop_smartphones', smartphones));
-  const [watchesState, setWatchesState] = useState(() => loadFromStorage('eshop_watches', watches));
-  const [furnitureState, setFurnitureState] = useState(() => loadFromStorage('eshop_furniture', furniture));
-  const [kidsState, setKidsState] = useState(() => loadFromStorage('eshop_kids', kids));
+  // ── Products (Hybrid CRUD: local catalog + MongoDB persistence) ───────────
+  const [smartphonesState, setSmartphonesState] = useState(smartphones);
+  const [watchesState, setWatchesState] = useState(watches);
+  const [furnitureState, setFurnitureState] = useState(furniture);
+  const [kidsState, setKidsState] = useState(kids);
 
+  // Fetch only custom products from MongoDB on load and merge
   useEffect(() => {
-    saveToStorage('eshop_smartphones', smartphonesState);
-  }, [smartphonesState]);
+    const fetchCustomProducts = async () => {
+      try {
+        const res = await fetch(`${BASE_API_URL}/products`);
+        const data = await res.json();
+        if (data.success && data.products) {
+          const customSmartphones = data.products.filter(p => p.category === 'smartphones');
+          const customWatches = data.products.filter(p => p.category === 'watches');
+          const customFurniture = data.products.filter(p => p.category === 'furniture');
+          const customKids = data.products.filter(p => p.category === 'kids');
 
-  useEffect(() => {
-    saveToStorage('eshop_watches', watchesState);
-  }, [watchesState]);
-
-  useEffect(() => {
-    saveToStorage('eshop_furniture', furnitureState);
-  }, [furnitureState]);
-
-  useEffect(() => {
-    saveToStorage('eshop_kids', kidsState);
-  }, [kidsState]);
-
-
-  const addProduct = useCallback((newProduct) => {
-    const productWithId = {
-      ...newProduct,
-      id: Date.now(),
-      rating: 5.0,
-      image: newProduct.image || 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&fit=crop'
+          // Prepend custom products to the initial hardcoded catalog, filtering duplicates
+          setSmartphonesState(prev => {
+            const customFiltered = customSmartphones.filter(cp => !prev.some(p => p.id === cp.id));
+            return [...customFiltered, ...prev];
+          });
+          setWatchesState(prev => {
+            const customFiltered = customWatches.filter(cp => !prev.some(p => p.id === cp.id));
+            return [...customFiltered, ...prev];
+          });
+          setFurnitureState(prev => {
+            const customFiltered = customFurniture.filter(cp => !prev.some(p => p.id === cp.id));
+            return [...customFiltered, ...prev];
+          });
+          setKidsState(prev => {
+            const customFiltered = customKids.filter(cp => !prev.some(p => p.id === cp.id));
+            return [...customFiltered, ...prev];
+          });
+        }
+      } catch (err) {
+        console.error('Error fetching custom products from database:', err);
+      }
     };
-    if (newProduct.category === 'smartphones') setSmartphonesState(prev => [productWithId, ...prev]);
-    else if (newProduct.category === 'watches') setWatchesState(prev => [productWithId, ...prev]);
-    else if (newProduct.category === 'furniture') setFurnitureState(prev => [productWithId, ...prev]);
-    else if (newProduct.category === 'kids') setKidsState(prev => [productWithId, ...prev]);
-    showToastRef.current?.('Product added successfully!', 'success');
-  }, []);
+    fetchCustomProducts();
+  }, [BASE_API_URL]);
 
-  const deleteProduct = useCallback((id, category) => {
-    if (category === 'smartphones') setSmartphonesState(prev => prev.filter(p => p.id !== id));
-    else if (category === 'watches') setWatchesState(prev => prev.filter(p => p.id !== id));
-    else if (category === 'furniture') setFurnitureState(prev => prev.filter(p => p.id !== id));
-    else if (category === 'kids') setKidsState(prev => prev.filter(p => p.id !== id));
-    showToastRef.current?.('Product deleted successfully!', 'success');
-  }, []);
+  const addProduct = useCallback(async (newProduct) => {
+    try {
+      const token = localStorage.getItem('eshop_token');
+      const res = await fetch(`${BASE_API_URL}/products`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(newProduct)
+      });
+      const data = await res.json();
+      if (data.success && data.product) {
+        const addedProduct = data.product;
+        if (addedProduct.category === 'smartphones') setSmartphonesState(prev => [addedProduct, ...prev]);
+        else if (addedProduct.category === 'watches') setWatchesState(prev => [addedProduct, ...prev]);
+        else if (addedProduct.category === 'furniture') setFurnitureState(prev => [addedProduct, ...prev]);
+        else if (addedProduct.category === 'kids') setKidsState(prev => [addedProduct, ...prev]);
+        showToastRef.current?.('Product added successfully!', 'success');
+      } else {
+        showToastRef.current?.(data.message || 'Failed to add product.', 'error');
+      }
+    } catch (err) {
+      console.error('Error adding product:', err);
+      showToastRef.current?.('Error connecting to backend.', 'error');
+    }
+  }, [BASE_API_URL]);
 
-  const updateProduct = useCallback((updatedProduct) => {
+  const deleteProduct = useCallback(async (id, category) => {
+    try {
+      const token = localStorage.getItem('eshop_token');
+      const res = await fetch(`${BASE_API_URL}/products/${id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      const data = await res.json();
+      if (data.success) {
+        if (category === 'smartphones') setSmartphonesState(prev => prev.filter(p => p.id !== id));
+        else if (category === 'watches') setWatchesState(prev => prev.filter(p => p.id !== id));
+        else if (category === 'furniture') setFurnitureState(prev => prev.filter(p => p.id !== id));
+        else if (category === 'kids') setKidsState(prev => prev.filter(p => p.id !== id));
+        showToastRef.current?.('Product deleted successfully!', 'success');
+      } else {
+        // Local fallback delete
+        if (category === 'smartphones') setSmartphonesState(prev => prev.filter(p => p.id !== id));
+        else if (category === 'watches') setWatchesState(prev => prev.filter(p => p.id !== id));
+        else if (category === 'furniture') setFurnitureState(prev => prev.filter(p => p.id !== id));
+        else if (category === 'kids') setKidsState(prev => prev.filter(p => p.id !== id));
+        showToastRef.current?.('Product deleted successfully!', 'success');
+      }
+    } catch (err) {
+      console.error('Error deleting product:', err);
+      if (category === 'smartphones') setSmartphonesState(prev => prev.filter(p => p.id !== id));
+      else if (category === 'watches') setWatchesState(prev => prev.filter(p => p.id !== id));
+      else if (category === 'furniture') setFurnitureState(prev => prev.filter(p => p.id !== id));
+      else if (category === 'kids') setKidsState(prev => prev.filter(p => p.id !== id));
+      showToastRef.current?.('Product deleted successfully!', 'success');
+    }
+  }, [BASE_API_URL]);
+
+  const updateProduct = useCallback(async (updatedProduct) => {
     const { id, category } = updatedProduct;
-    const updateInList = (list) => list.map(p => p.id === id ? { ...p, ...updatedProduct } : p);
-    if (category === 'smartphones') setSmartphonesState(updateInList);
-    else if (category === 'watches') setWatchesState(updateInList);
-    else if (category === 'furniture') setFurnitureState(updateInList);
-    else if (category === 'kids') setKidsState(updateInList);
-    showToastRef.current?.('Product updated successfully!', 'success');
-  }, []);
+    try {
+      const token = localStorage.getItem('eshop_token');
+      const res = await fetch(`${BASE_API_URL}/products/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(updatedProduct)
+      });
+      const data = await res.json();
+      if (data.success && data.product) {
+        const updated = data.product;
+        const updateInList = (list) => list.map(p => p.id === id ? { ...p, ...updated } : p);
+        if (category === 'smartphones') setSmartphonesState(updateInList);
+        else if (category === 'watches') setWatchesState(updateInList);
+        else if (category === 'furniture') setFurnitureState(updateInList);
+        else if (category === 'kids') setKidsState(updateInList);
+        showToastRef.current?.('Product updated successfully!', 'success');
+      } else {
+        // Fallback for local update
+        const updateInList = (list) => list.map(p => p.id === id ? { ...p, ...updatedProduct } : p);
+        if (category === 'smartphones') setSmartphonesState(updateInList);
+        else if (category === 'watches') setWatchesState(updateInList);
+        else if (category === 'furniture') setFurnitureState(updateInList);
+        else if (category === 'kids') setKidsState(updateInList);
+        showToastRef.current?.('Product updated successfully!', 'success');
+      }
+    } catch (err) {
+      console.error('Error updating product:', err);
+      const updateInList = (list) => list.map(p => p.id === id ? { ...p, ...updatedProduct } : p);
+      if (category === 'smartphones') setSmartphonesState(updateInList);
+      else if (category === 'watches') setWatchesState(updateInList);
+      else if (category === 'furniture') setFurnitureState(updateInList);
+      else if (category === 'kids') setKidsState(updateInList);
+      showToastRef.current?.('Product updated successfully!', 'success');
+    }
+  }, [BASE_API_URL]);
 
   // ── Memoized context value (prevents ALL consumers from re-rendering on unrelated state changes) ─
   const value = useMemo(() => ({
