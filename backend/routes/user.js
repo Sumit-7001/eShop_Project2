@@ -1,6 +1,6 @@
 const express = require('express');
 const User = require('../models/User');
-const { protect } = require('../middleware/auth');
+const { protect, admin } = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -94,6 +94,24 @@ router.delete('/profile/addresses/:addressId', protect, async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Server error deleting address.' });
+  }
+});
+
+/**
+ * @route   GET /api/users
+ * @desc    Retrieve all users (Admin only)
+ * @access  Private/Admin
+ */
+router.get('/', protect, admin, async (req, res) => {
+  try {
+    const users = await User.find({}).select('-password').sort({ createdAt: -1 });
+    res.status(200).json({
+      success: true,
+      users
+    });
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ success: false, message: 'Server error retrieving users.' });
   }
 });
 

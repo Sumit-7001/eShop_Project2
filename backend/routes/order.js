@@ -1,7 +1,7 @@
 const express = require('express');
 const Order = require('../models/Order');
-const { protect } = require('../middleware/auth');
-const { sendOrderConfirmationEmail } = require('../utils/emailService');
+const { protect, admin } = require('../middleware/auth');
+const { sendOrderConfirmationEmail, sendOrderStatusUpdateEmail } = require('../utils/emailService');
 
 const router = express.Router();
 
@@ -166,6 +166,82 @@ router.get('/:orderId', protect, async (req, res) => {
   } catch (error) {
     console.error('Error tracking order:', error);
     res.status(500).json({ success: false, message: 'Server error tracking order.' });
+  }
+});
+
+/**
+ * @route   GET /api/orders
+ * @desc    Retrieve all orders (Admin only)
+ * @access  Private/Admin
+ */
+router.get('/', protect, admin, async (req, res) => {
+  try {
+    const orders = await Order.find({}).populate('user', 'name email').sort({ createdAt: -1 });
+    res.status(200).json({
+      success: true,
+      orders
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Server error retrieving orders.' });
+  }
+});
+
+/**
+ * @route   PUT /api/orders/:orderId/status
+ * @desc    Update order status and append status log (Admin only)
+ * @access  Private/Admin
+ */
+router.put('/:orderId/status', protect, admin, async (req, res) => {
+  const { status, message } = req.body;
+
+  if (!status) {
+    return res.status(400).json({ success: false, message: 'Please provide status.' });
+  }
+
+  try {
+    const order = await Order.findOne({ orderId: req.params.orderId });
+
+    if (!order) {
+      return res.status(404).json({ success: false, message: 'Order not found.' });
+    }
+
+    order.status = status;
+    order.statusLog.push({
+      status,
+      message: message || `Your order status has been updated to ${status}.`
+    });
+
+    await order.save();
+
+    // Populate user to get name and email for dispatching order update email
+    const populatedOrder = await Order.findById(order._id).populate('user', 'name email');
+
+    // Trigger status update email delivery with visual progress timeline
+    const statusMessage = message || `Your order has been updated to ${status}.`;
+    
+    // Retrieve email / name with fallbacks
+    const customerEmail = populatedOrder.user?.email || populatedOrder.shippingAddress?.email || 'customer@eshop.com';
+    const customerName = populatedOrder.user?.name || populatedOrder.shippingAddress?.name || 'Customer';
+
+    await sendOrderStatusUpdateEmail({
+      name: customerName,
+      email: customerEmail,
+      orderId: order.orderId,
+      status: order.status,
+      total: order.total,
+      paymentMethod: order.paymentMethod,
+      estimatedDelivery: order.estimatedDelivery,
+      statusMessage: statusMessage
+    }).catch(console.error);
+
+    res.status(200).json({
+      success: true,
+      message: 'Order status updated successfully!',
+      order
+    });
+  } catch (error) {
+    console.error('Error updating order status:', error);
+    res.status(500).json({ success: false, message: 'Server error updating order status.' });
   }
 });
 

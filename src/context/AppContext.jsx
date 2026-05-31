@@ -394,6 +394,72 @@ export const AppProvider = ({ children }) => {
     }
   }, [BASE_API_URL]);
 
+  const fetchAdminOrders = useCallback(async () => {
+    const token = localStorage.getItem('eshop_token');
+    if (!token) return [];
+    try {
+      const res = await fetch(`${BASE_API_URL}/orders`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const data = await res.json();
+      if (data.success && data.orders) {
+        return data.orders;
+      }
+      return [];
+    } catch (err) {
+      console.error('Error fetching admin orders:', err);
+      return [];
+    }
+  }, [BASE_API_URL]);
+
+  const fetchAdminUsers = useCallback(async () => {
+    const token = localStorage.getItem('eshop_token');
+    if (!token) return [];
+    try {
+      const res = await fetch(`${BASE_API_URL}/users`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const data = await res.json();
+      if (data.success && data.users) {
+        return data.users;
+      }
+      return [];
+    } catch (err) {
+      console.error('Error fetching admin users:', err);
+      return [];
+    }
+  }, [BASE_API_URL]);
+
+  const updateAdminOrderStatus = useCallback(async (orderId, status) => {
+    const token = localStorage.getItem('eshop_token');
+    if (!token) {
+      showToastRef.current?.('Unauthorized action.', 'error');
+      return false;
+    }
+    try {
+      const res = await fetch(`${BASE_API_URL}/orders/${orderId}/status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ status })
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToastRef.current?.('Order status updated successfully!', 'success');
+        return true;
+      } else {
+        showToastRef.current?.(data.message || 'Failed to update order status.', 'error');
+        return false;
+      }
+    } catch (err) {
+      console.error('Error updating order status:', err);
+      showToastRef.current?.('Server connection error.', 'error');
+      return false;
+    }
+  }, [BASE_API_URL]);
+
   const handleSignOut = useCallback(() => {
     setCurrentUser(null);
     localStorage.removeItem('eshop_token');
@@ -668,6 +734,9 @@ export const AppProvider = ({ children }) => {
     createOrder,
     fetchUserOrders,
     fetchOrderTracking,
+    fetchAdminOrders,
+    fetchAdminUsers,
+    updateAdminOrderStatus,
     // cart
     cartItems,
     cartCount,
@@ -699,7 +768,7 @@ export const AppProvider = ({ children }) => {
   }), [
     isDark, toggleDarkMode,
     currentUser, authLoading, authModal, handleLogin, handleRegister, handleGoogleLogin, handleForgotPassword, handleVerifyOTP, handleResendOTP, handleResetPassword, handleSignOut, openAuthModal, closeAuthModal,
-    fetchUserProfile, saveAddress, deleteAddress, createOrder, fetchUserOrders, fetchOrderTracking,
+    fetchUserProfile, saveAddress, deleteAddress, createOrder, fetchUserOrders, fetchOrderTracking, fetchAdminOrders, fetchAdminUsers, updateAdminOrderStatus,
     cartItems, cartCount, addToCart, removeFromCart, updateQuantity, clearCart,
     favoriteItems, toggleFavorite, isFavorite,
     compareItems, toggleCompare, removeFromCompare, isComparing,

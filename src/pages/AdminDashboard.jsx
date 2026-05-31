@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import { useApp } from '../context/AppContext';
 import {
   LayoutDashboard, BarChart3, Package, ShoppingBag,
   Users, Settings, Plus, Trash2, Edit2,
@@ -283,8 +284,10 @@ const DonutChart = ({ data }) => {
 const StatusBadge = ({ status }) => {
   const map = {
     'Pending': 'badge-pending',
+    'Placed': 'badge-pending',
     'Processing': 'badge-processing',
     'Shipped': 'badge-shipped',
+    'Out for Delivery': 'badge-shipped',
     'Delivered': 'badge-delivered',
     'Cancelled': 'badge-cancelled',
   };
@@ -441,6 +444,89 @@ const AdminDashboard = ({
   const [userFilter, setUserFilter] = useState('all');
   const [orders, setOrders] = useState(MOCK_ORDERS);
   const [users, setUsers] = useState(MOCK_USERS);
+
+  const { fetchAdminOrders, fetchAdminUsers, updateAdminOrderStatus } = useApp();
+
+  useEffect(() => {
+    const loadRealData = async () => {
+      try {
+        const [realOrders, realUsers] = await Promise.all([
+          fetchAdminOrders(),
+          fetchAdminUsers()
+        ]);
+
+        if (realOrders && realOrders.length > 0) {
+          const mappedOrders = realOrders.map(order => {
+            const customerName = order.user?.name || order.shippingAddress?.name || 'Guest';
+            const customerEmail = order.user?.email || 'N/A';
+            const formattedDate = new Date(order.createdAt).toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric'
+            });
+            const itemsString = order.items && order.items.length > 0
+              ? order.items.map(item => `${item.title} x${item.quantity}`).join(', ')
+              : 'N/A';
+            const cityState = order.shippingAddress
+              ? `${order.shippingAddress.city}, ${order.shippingAddress.state}`
+              : 'N/A';
+
+            return {
+              id: order.orderId,
+              customer: customerName,
+              email: customerEmail,
+              date: formattedDate,
+              amount: order.total,
+              status: order.status === 'Placed' ? 'Pending' : order.status,
+              items: itemsString,
+              payment: order.paymentMethod,
+              address: cityState
+            };
+          });
+          setOrders(mappedOrders);
+        }
+
+        if (realUsers && realUsers.length > 0) {
+          const mappedUsers = realUsers.map((user, idx) => {
+            const formattedDate = new Date(user.createdAt).toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric'
+            });
+            
+            const shortId = user._id ? `USR-${user._id.substring(user._id.length - 4).toUpperCase()}` : `USR-0${idx + 1}`;
+            const primaryAddr = user.savedAddresses && user.savedAddresses[0];
+            const userPhone = primaryAddr?.phone || 'N/A';
+            const userLocation = primaryAddr ? `${primaryAddr.city}, ${primaryAddr.country || 'India'}` : 'India';
+
+            // Filter real orders belonging to this user
+            const userOrders = realOrders ? realOrders.filter(o => o.user?._id === user._id || o.user === user._id) : [];
+            const ordersCount = userOrders.length;
+            const totalSpent = userOrders.reduce((acc, o) => acc + (o.total || 0), 0);
+
+            return {
+              id: shortId,
+              name: user.name,
+              email: user.email,
+              phone: userPhone,
+              role: user.role === 'admin' ? 'admin' : 'customer',
+              status: user.isVerified ? 'active' : 'inactive',
+              orders: ordersCount,
+              spent: totalSpent,
+              joined: formattedDate,
+              location: userLocation
+            };
+          });
+          setUsers(mappedUsers);
+        }
+      } catch (err) {
+        console.error('Error loading real admin data:', err);
+      }
+    };
+
+    loadRealData();
+  }, [fetchAdminOrders, fetchAdminUsers]);
+
   const [feedbacks, setFeedbacks] = useState(FEEDBACKS);
   const [inventory, setInventory] = useState(LOW_STOCK);
   const [notifications, setNotifications] = useState(3);
@@ -542,7 +628,12 @@ const AdminDashboard = ({
     return list;
   }, [users, userFilter, searchQuery]);
 
-  const totalRevenue = 148560;
+  const totalRevenue = useMemo(() => {
+    const realSum = orders.reduce((acc, o) => acc + (o.status !== 'Cancelled' ? o.amount : 0), 0);
+    // If it's only the mock orders, show the mock total, else show the real total
+    const isOnlyMock = orders.length === 6 && orders.every(o => typeof o.id === 'string' && o.id.startsWith('ORD-90'));
+    return isOnlyMock ? 148560 : realSum;
+  }, [orders]);
   const totalOrders = orders.length;
   const pendingOrders = orders.filter(o => o.status === 'Pending' || o.status === 'Processing').length;
   const totalCustomers = users.filter(u => u.role === 'customer').length;
@@ -587,8 +678,53 @@ const AdminDashboard = ({
     }
   };
 
-  const updateOrderStatus = (id, status) => {
+  const updateOrderStatus = async (id, status) => {
+    // Instantly update local state for snappy UI (optimistic update)
     setOrders(prev => prev.map(o => o.id === id ? { ...o, status } : o));
+    
+    // Call backend to persist in MongoDB
+    try {
+      let backendStatus = status;
+      if (status === 'Pending') backendStatus = 'Placed';
+      
+      const success = await updateAdminOrderStatus(id, backendStatus);
+      if (!success) {
+        // Fetch fresh data if backend update failed to revert state
+        const freshOrders = await fetchAdminOrders();
+        if (freshOrders && freshOrders.length > 0) {
+          const mappedOrders = freshOrders.map(order => {
+            const customerName = order.user?.name || order.shippingAddress?.name || 'Guest';
+            const customerEmail = order.user?.email || 'N/A';
+            const formattedDate = new Date(order.createdAt).toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric'
+            });
+            const itemsString = order.items && order.items.length > 0
+              ? order.items.map(item => `${item.title} x${item.quantity}`).join(', ')
+              : 'N/A';
+            const cityState = order.shippingAddress
+              ? `${order.shippingAddress.city}, ${order.shippingAddress.state}`
+              : 'N/A';
+
+            return {
+              id: order.orderId,
+              customer: customerName,
+              email: customerEmail,
+              date: formattedDate,
+              amount: order.total,
+              status: order.status === 'Placed' ? 'Pending' : order.status,
+              items: itemsString,
+              payment: order.paymentMethod,
+              address: cityState
+            };
+          });
+          setOrders(mappedOrders);
+        }
+      }
+    } catch (err) {
+      console.error('Error updating order status on backend:', err);
+    }
   };
 
   const toggleUserStatus = (id) => {
@@ -1003,8 +1139,10 @@ const AdminDashboard = ({
                         onChange={e => updateOrderStatus(order.id, e.target.value)}
                         className="status-selector">
                         <option value="Pending">Pending</option>
+                        <option value="Placed">Placed</option>
                         <option value="Processing">Processing</option>
                         <option value="Shipped">Shipped</option>
+                        <option value="Out for Delivery">Out for Delivery</option>
                         <option value="Delivered">Delivered</option>
                         <option value="Cancelled">Cancelled</option>
                       </select>
