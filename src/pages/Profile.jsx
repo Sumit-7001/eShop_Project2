@@ -150,7 +150,11 @@ const Profile = () => {
 
   // Tracking Progress Mapping
   const statusSteps = ['Placed', 'Processing', 'Shipped', 'Out for Delivery', 'Delivered'];
-  const getStatusStepIndex = (status) => statusSteps.indexOf(status);
+  const getStatusStepIndex = (status) => {
+    let checkStatus = status;
+    if (status === 'Pending') checkStatus = 'Placed';
+    return statusSteps.indexOf(checkStatus);
+  };
 
   return (
     <div className="profile-page">
