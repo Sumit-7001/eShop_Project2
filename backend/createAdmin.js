@@ -24,7 +24,7 @@ const User      = require('./models/User');
 
 // ── Admin credentials — change as needed ──────────────────
 const ADMIN_NAME     = 'Store Owner';
-const ADMIN_EMAIL    = 'admin@eshop.com';
+const ADMIN_EMAIL    = 'admin@MarketHub.com';
 const ADMIN_PASSWORD = 'Admin@123';   // min 6 chars
 // ──────────────────────────────────────────────────────────
 

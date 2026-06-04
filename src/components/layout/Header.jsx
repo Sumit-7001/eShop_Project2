@@ -114,7 +114,7 @@ const Header = memo(() => {
                       </div>
                       <div className="dropdown-user-details">
                         <h4 className="dropdown-user-name">{currentUser.name}</h4>
-                        <p className="dropdown-user-email">{currentUser.email || 'Welcome to eShop'}</p>
+                        <p className="dropdown-user-email">{currentUser.email || 'Welcome to MarketHub'}</p>
                       </div>
                     </div>
                     
@@ -187,9 +187,12 @@ const Header = memo(() => {
       {/* Main Navbar */}
       <nav className={`navbar ${isSticky ? 'sticky' : ''}`}>
         <div className="container navbar-content">
-          <Link to="/" className="logo" aria-label="eShop Home">
-            <span className="logo-icon">e</span>
-            <span className="logo-text">Shop</span>
+          <Link to="/" className="logo" aria-label="MarketHub Home">
+            <img src="/markethub_logo.png" alt="M" className="logo-icon" style={{ background: 'transparent', padding: 0, objectFit: 'contain' }} />
+            <span className="logo-text" style={{ fontWeight: '900', letterSpacing: '-0.5px' }}>
+              <span style={{ color: 'var(--text-dark)' }}>Market</span>
+              <span style={{ color: 'var(--primary-color)' }}>Hub</span>
+            </span>
           </Link>
 
           {/* Search Bar */}

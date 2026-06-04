@@ -641,8 +641,8 @@ const AdminDashboard = ({
     try {
       const saved = localStorage.getItem('eshop_store_settings');
       return saved ? JSON.parse(saved) : {
-        name: 'eShop Global Inc.',
-        email: 'contact@eshop.com',
+        name: 'MarketHub Global Inc.',
+        email: 'contact@markethub.com',
         phone: '+91 9876543210',
         address: 'Salt Lake Sector V, Kolkata, India',
         currency: 'USD ($)',
@@ -653,8 +653,8 @@ const AdminDashboard = ({
       };
     } catch {
       return {
-        name: 'eShop Global Inc.',
-        email: 'contact@eshop.com',
+        name: 'MarketHub Global Inc.',
+        email: 'contact@markethub.com',
         phone: '+91 9876543210',
         address: 'Salt Lake Sector V, Kolkata, India',
         currency: 'USD ($)',
@@ -3026,8 +3026,8 @@ const AdminDashboard = ({
           <div className="invoice-paper" style={{ padding: '40px', boxShadow: 'none' }}>
             <div style={{ textAlign: 'center', marginBottom: '30px' }}>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--primary-color)' }}>
-                <CartIcon size={28} />
-                <h2 style={{ fontSize: '24px', fontWeight: 'bold' }}>eShop Global Inc.</h2>
+                <img src="/markethub_logo.png" alt="M" style={{ width: 28, height: 28, objectFit: 'contain', background: 'transparent' }} />
+                <h2 style={{ fontSize: '24px', fontWeight: 'bold' }}>MarketHub Global Inc.</h2>
               </div>
               <h1 style={{ fontSize: '20px', letterSpacing: '1px', marginTop: '10px', color: 'var(--text-muted)' }}>ANNUAL FINANCIAL STATEMENT</h1>
               <p className="text-muted" style={{ fontSize: '12px' }}>Posting Period: Jan 1, 2026 - Dec 31, 2026</p>
@@ -3221,10 +3221,8 @@ const AdminDashboard = ({
       {/* Sidebar */}
       <aside className={`admin-sidebar-v2 ${sidebarOpen ? 'open' : 'collapsed'}`}>
         <div className="sidebar-brand-v2">
-          <div className="brand-icon">
-            <CartIcon size={20} />
-          </div>
-          {sidebarOpen && <span className="brand-text">eShop Admin</span>}
+          <img src="/markethub_logo.png" alt="M" style={{ width: 36, height: 36, objectFit: 'contain', background: 'transparent', flexShrink: 0 }} />
+          {sidebarOpen && <span className="brand-text">MarketHub Admin</span>}
         </div>
 
         <nav className="sidebar-nav">
@@ -3325,7 +3323,7 @@ const AdminDashboard = ({
       <Portal>
         {/* Commercial Invoice Print Modal */}
         {selectedInvoiceOrder && (
-          <div className="admin-overlay no-print" onClick={() => setSelectedInvoiceOrder(null)} style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', zIndex: '9999' }}>
+          <div className="admin-overlay" onClick={() => setSelectedInvoiceOrder(null)} style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', zIndex: '9999' }}>
             <div className="admin-modal invoice-modal" id="invoice-print-section" onClick={e => e.stopPropagation()} style={{ maxWidth: '800px', width: '90%', padding: '24px', background: '#ffffff', borderRadius: '12px', color: '#1e293b' }}>
               <div className="modal-head no-print" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', borderBottom: '1px solid #e2e8f0', paddingBottom: '12px' }}>
                 <h3 style={{ fontSize: '18px', fontWeight: 'bold' }}>Commercial Invoice</h3>
@@ -3342,8 +3340,8 @@ const AdminDashboard = ({
               <div className="invoice-paper" style={{ background: '#ffffff', color: '#1e293b', fontFamily: 'Inter, sans-serif' }}>
                 <div className="invoice-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '15px' }}>
                   <div className="invoice-logo" style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--primary-color)' }}>
-                    <CartIcon size={28} />
-                    <h2 style={{ fontSize: '20px', fontWeight: 'bold' }}>eShop Global Inc.</h2>
+                    <img src="/markethub_logo.png" alt="M" style={{ width: 28, height: 28, objectFit: 'contain', background: 'transparent' }} />
+                    <h2 style={{ fontSize: '20px', fontWeight: 'bold' }}>MarketHub Global Inc.</h2>
                   </div>
                   <div className="invoice-meta" style={{ textAlign: 'right', fontSize: '12px' }}>
                     <h1 style={{ fontSize: '24px', fontWeight: 'bold', margin: '0 0 6px 0', color: 'var(--primary-color)', letterSpacing: '1px' }}>INVOICE</h1>
@@ -3364,10 +3362,10 @@ const AdminDashboard = ({
                   </div>
                   <div className="address-col" style={{ flex: '1', minWidth: '200px', textAlign: 'right' }}>
                     <h3 style={{ fontSize: '14px', fontWeight: 'bold', color: 'var(--primary-color)', marginBottom: '8px' }}>Shipped From:</h3>
-                    <strong>eShop Central Fulfillment Hub</strong>
+                    <strong>MarketHub Central Fulfillment Hub</strong>
                     <p style={{ margin: '4px 0' }}>Salt Lake Sector V</p>
                     <p style={{ margin: '4px 0' }}>Kolkata, West Bengal, 721151</p>
-                    <p style={{ margin: '4px 0' }}>contact@eshop.com</p>
+                    <p style={{ margin: '4px 0' }}>contact@markethub.com</p>
                   </div>
                 </div>
 
@@ -3430,7 +3428,7 @@ const AdminDashboard = ({
                 </div>
 
                 <div className="invoice-footer" style={{ marginTop: '40px', borderTop: '1px solid #e2e8f0', paddingTop: '15px', fontSize: '11px', color: 'var(--text-muted)', textAlign: 'center', position: 'relative' }}>
-                  <p>Thank you for your business! For queries, contact support at contact@eshop.com</p>
+                  <p>Thank you for your business! For queries, contact support at contact@markethub.com</p>
                   <div className="watermark" style={{ position: 'absolute', right: '10px', top: '10px', fontSize: '32px', fontWeight: 'bold', color: '#10b98120', border: '3px solid #10b98120', padding: '4px 12px', transform: 'rotate(-12deg)', borderRadius: '6px' }}>PAID</div>
                 </div>
               </div>

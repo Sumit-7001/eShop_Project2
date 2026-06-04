@@ -296,11 +296,11 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
           <X size={18} />
         </button>
 
-        {/* eShop Brand Logo at top */}
+        {/* MarketHub Brand Logo at top */}
         <div className="modal-logo-wrapper">
           <div className="modal-logo">
-            <span className="logo-icon">e</span>
-            <span className="logo-text">Shop</span>
+            <img src="/favicon.png" alt="M" style={{ width: '36px', height: '36px', borderRadius: '10px', marginRight: '8px', objectFit: 'cover' }} />
+            <span className="logo-text">MarketHub</span>
           </div>
         </div>
 
@@ -478,7 +478,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
               </button>
 
               <div className="auth-terms-text">
-                Signing up for an <span className="font-semibold text-slate-900 dark:text-white">eShop</span> account means you agree to the <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a>.
+                Signing up for a <span className="font-semibold text-slate-900 dark:text-white">MarketHub</span> account means you agree to the <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a>.
               </div>
 
               <p className="auth-switch-text">
