@@ -65,7 +65,7 @@ const Cart = () => {
                         </div>
                       </Link>
                     </td>
-                    <td data-label="Price"><div className="cart-price">${item.price.toLocaleString()}</div></td>
+                    <td data-label="Price"><div className="cart-price">₹{item.price.toLocaleString()}</div></td>
                     <td data-label="Tax(%)"><div className="cart-tax">-</div></td>
                     <td data-label="Quantity">
                       <div className="cart-quantity-selector">
@@ -84,7 +84,7 @@ const Cart = () => {
                         </button>
                       </div>
                     </td>
-                    <td data-label="Subtotal"><div className="cart-subtotal">${(item.price * item.quantity).toLocaleString()}</div></td>
+                    <td data-label="Subtotal"><div className="cart-subtotal">₹{(item.price * item.quantity).toLocaleString()}</div></td>
                     <td data-label="Actions">
                       <div className="cart-actions">
                         <Trash2 
@@ -106,11 +106,11 @@ const Cart = () => {
               <h3>Cart Total</h3>
               <div className="total-row">
                 <span>Subtotal</span>
-                <span>${subtotal.toLocaleString()}</span>
+                <span>₹{subtotal.toLocaleString()}</span>
               </div>
               <div className="total-row grand-total">
                 <span>Total</span>
-                <span>${total.toLocaleString()}</span>
+                <span>₹{total.toLocaleString()}</span>
               </div>
               <Link to="/checkout" className="checkout-btn">Go To Checkout</Link>
             </div>

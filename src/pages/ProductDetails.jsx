@@ -174,7 +174,7 @@ const ProductDetails = () => {
             {smartphonesState.some(p => p.id === product.id) && <p className="product-subtitle">Premium Smartphone Experience</p>}
             
             <div className="price-rating-row">
-              <div className="large-price">${price.toLocaleString()}</div>
+              <div className="large-price">₹{price.toLocaleString()}</div>
               <div className="product-rating-box">
                 <div className="stars">
                   {[...Array(5)].map((_, i) => (
@@ -196,7 +196,7 @@ const ProductDetails = () => {
               <ul className="offers-list">
                 <li className="offer-item">
                   <Tag size={14} className="offer-tag-icon" />
-                  <span><strong>Bank Offer:</strong> 10% instant discount on SBI Credit Cards, up to $50 on orders above $250. <span className="tnc-link">T&C</span></span>
+                  <span><strong>Bank Offer:</strong> 10% instant discount on SBI Credit Cards, up to ₹50 on orders above ₹250. <span className="tnc-link">T&C</span></span>
                 </li>
                 <li className="offer-item">
                   <Tag size={14} className="offer-tag-icon" />
@@ -204,11 +204,11 @@ const ProductDetails = () => {
                 </li>
                 <li className="offer-item">
                   <Tag size={14} className="offer-tag-icon" />
-                  <span><strong>Special Price:</strong> Get extra $15 off on select premium digital payments. <span className="tnc-link">T&C</span></span>
+                  <span><strong>Special Price:</strong> Get extra ₹15 off on select premium digital payments. <span className="tnc-link">T&C</span></span>
                 </li>
                 <li className="offer-item">
                   <Tag size={14} className="offer-tag-icon" />
-                  <span><strong>No Cost EMI:</strong> Interest-free EMI plans starting from $30/month. <span className="tnc-link">T&C</span></span>
+                  <span><strong>No Cost EMI:</strong> Interest-free EMI plans starting from ₹30/month. <span className="tnc-link">T&C</span></span>
                 </li>
               </ul>
             </div>
@@ -359,7 +359,7 @@ const ProductDetails = () => {
                   <img src="https://cdn-icons-png.flaticon.com/512/1554/1554401.png" width="20" alt="COD" />
                 </div>
                 <span>COD</span>
-                <p>Cash on Delivery is eligible for orders above $10 and below $500000</p>
+                <p>Cash on Delivery is eligible for orders above ₹10 and below ₹500000</p>
               </div>
               <div className="trust-item">
                 <div style={{ background: '#f0f0f0', padding: '10px', borderRadius: '50%' }}>
@@ -407,7 +407,7 @@ const ProductDetails = () => {
                   </div>
                   <div className="fbt-info">
                     <span className="fbt-item-name">{title}</span>
-                    <span className="fbt-item-price">${price.toLocaleString()}</span>
+                    <span className="fbt-item-price">₹{price.toLocaleString()}</span>
                   </div>
                 </div>
                 
@@ -432,7 +432,7 @@ const ProductDetails = () => {
                   </div>
                   <div className="fbt-info">
                     <span className="fbt-item-name">{fbtAccessory.title}</span>
-                    <span className="fbt-item-price">${fbtAccessory.price}</span>
+                    <span className="fbt-item-price">₹{fbtAccessory.price}</span>
                   </div>
                 </div>
               </div>
@@ -445,7 +445,7 @@ const ProductDetails = () => {
                 </div>
                 <div className="fbt-summary-row grand-total">
                   <span className="summary-lbl">Bundle Total:</span>
-                  <span className="summary-val">${(price + (fbtChecked ? fbtAccessory.price : 0)).toLocaleString()}</span>
+                  <span className="summary-val">₹{(price + (fbtChecked ? fbtAccessory.price : 0)).toLocaleString()}</span>
                 </div>
                 <button onClick={handleAddFbtToCart} className="fbt-add-btn">
                   <ShoppingCart size={16} /> Add Bundle to Cart

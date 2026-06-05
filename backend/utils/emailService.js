@@ -360,7 +360,7 @@ const sendOrderConfirmationEmail = async ({ name, email, orderId, total, payment
         </div>
       </td>
       <td style="padding: 12px 15px; border-bottom: 1px solid #eeeeee; text-align: right; font-weight: 700; color: #1a1a1a;">
-        $${(item.price * item.quantity).toLocaleString()}
+        ₹${(item.price * item.quantity).toLocaleString()}
       </td>
     </tr>
   `).join('');
@@ -417,7 +417,7 @@ const sendOrderConfirmationEmail = async ({ name, email, orderId, total, payment
                 <tr style="border-top: 1px solid #e4e4e7; height: 10px;"><td colspan="2"></td></tr>
                 <tr>
                   <td class="label" style="font-size: 15px; font-weight: 800; color: #1a1a1a;">Total Paid</td>
-                  <td class="value" style="font-size: 18px; font-weight: 800; color: #ff4d4d;">$${total.toLocaleString()}</td>
+                  <td class="value" style="font-size: 18px; font-weight: 800; color: #ff4d4d;">₹${total.toLocaleString()}</td>
                 </tr>
               </table>
             </div>
@@ -445,7 +445,7 @@ const sendOrderConfirmationEmail = async ({ name, email, orderId, total, payment
     </html>
   `;
 
-  const text = `Order Confirmation: Your order ${orderId} has been placed successfully. Total: $${total.toLocaleString()}. Est. Delivery: ${deliveryEstimate}.`;
+  const text = `Order Confirmation: Your order ${orderId} has been placed successfully. Total: ₹${total.toLocaleString()}. Est. Delivery: ${deliveryEstimate}.`;
 
   return await sendEmail({ to: email, subject, html, text });
 };
@@ -539,7 +539,7 @@ const sendOrderStatusUpdateEmail = async ({ name, email, orderId, status, total,
             <p style="color: #666666; line-height: 1.6;">Good news! The status of your order <strong>${orderId}</strong> has been updated. Here is what is currently happening with your package:</p>
             
             <div style="background-color: #f0fdf4; border-left: 4px solid #10b981; padding: 15px; border-radius: 4px; font-size: 14px; font-weight: 500; color: #14532d; margin-bottom: 25px; line-height: 1.5;">
-              📢 ${statusMessage || `Your order is currently ${status.toLowerCase()}.`}
+              📢 ${statusMessage || `Your order is currently ₹{status.toLowerCase()}.`}
             </div>
 
             <!-- --- Premium Timeline Visual Progress --- -->
@@ -633,7 +633,7 @@ const sendOrderStatusUpdateEmail = async ({ name, email, orderId, status, total,
                 <tr style="border-top: 1px solid #e4e4e7; height: 10px;"><td colspan="2"></td></tr>
                 <tr>
                   <td class="label" style="font-size: 14px; font-weight: 800; color: #1a1a1a;">Total Value</td>
-                  <td class="value" style="font-size: 16px; font-weight: 800; color: #1a1a1a;">$${total.toLocaleString()}</td>
+                  <td class="value" style="font-size: 16px; font-weight: 800; color: #1a1a1a;">₹${total.toLocaleString()}</td>
                 </tr>
               </table>
             </div>

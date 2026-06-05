@@ -5,6 +5,7 @@ import FilterSidebar from '../components/products/FilterSidebar';
 import ProductTopBar from '../components/products/ProductTopBar';
 import ProductCard from '../components/common/ProductCard';
 import { useApp } from '../context/AppContext';
+import { applyFilters } from '../utils/filterHelpers';
 import {
   fashion, electronics, digitalProduct, homeAppliances,
   vegetables, decor, books
@@ -29,6 +30,7 @@ const CategoryProducts = () => {
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [viewMode, setViewMode] = useState('grid');
+  const [selectedFilters, setSelectedFilters] = useState({ attributes: {}, brands: [], categories: [] });
 
   const categoryMap = useMemo(() => ({
     smartphones:       { title: 'Smartphones & Basic Mobiles', data: smartphonesState },
@@ -47,14 +49,18 @@ const CategoryProducts = () => {
   const currentCategory = categoryMap[slug] || { title: 'Products', data: [] };
 
   const sortedProducts = useMemo(() => {
-    const products = [...currentCategory.data];
+    let products = [...currentCategory.data];
+
+    products = applyFilters(products, selectedFilters);
+
+    // Sort
     switch (sortBy) {
       case 'price-low-high': return products.sort((a, b) => a.price - b.price);
       case 'price-high-low': return products.sort((a, b) => b.price - a.price);
       case 'newest':         return products.sort((a, b) => b.id - a.id);
       default:               return products;
     }
-  }, [currentCategory.data, sortBy]);
+  }, [currentCategory.data, sortBy, selectedFilters]);
 
   const displayedProducts = sortedProducts.slice(0, itemsPerPage);
 
@@ -76,7 +82,12 @@ const CategoryProducts = () => {
             <div className="filter-overlay" onClick={() => setIsMobileFilterOpen(false)} />
           )}
 
-          <FilterSidebar isOpen={isMobileFilterOpen} onClose={() => setIsMobileFilterOpen(false)} />
+          <FilterSidebar 
+            isOpen={isMobileFilterOpen} 
+            onClose={() => setIsMobileFilterOpen(false)} 
+            selectedFilters={selectedFilters}
+            onFilterChange={setSelectedFilters}
+          />
 
           <main className="products-main-content">
             <ProductTopBar
@@ -103,6 +114,11 @@ const CategoryProducts = () => {
                   onToggleCompare={toggleCompare}
                 />
               ))}
+              {displayedProducts.length === 0 && (
+                <div style={{ padding: '20px', gridColumn: '1 / -1', textAlign: 'center' }}>
+                  <p>No products found matching your filters.</p>
+                </div>
+              )}
             </div>
           </main>
         </div>

@@ -52,7 +52,7 @@ const Checkout = () => {
   // Calculate Prices
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   
-  // Base shipping is $10, free if subtotal is over $150 or if FREESHIP promo is active
+  // Base shipping is ₹10, free if subtotal is over ₹150 or if FREESHIP promo is active
   const baseShipping = subtotal >= 150 ? 0 : 10;
   const shipping = appliedPromo?.code === 'FREESHIP' ? 0 : baseShipping;
 
@@ -657,7 +657,7 @@ const Checkout = () => {
                         <p className="review-item-subtitle">{item.subtitle || 'Premium Quality'}</p>
                         <span className="review-item-qty-tag">Qty: {item.quantity}</span>
                       </div>
-                      <div className="review-item-price">${(item.price * item.quantity).toLocaleString()}</div>
+                      <div className="review-item-price">₹{(item.price * item.quantity).toLocaleString()}</div>
                     </div>
                   ))}
                 </div>
@@ -689,7 +689,7 @@ const Checkout = () => {
                 <div className="review-bill-card">
                   <div className="review-bill-row">
                     <span>Subtotal</span>
-                    <span>${subtotal.toLocaleString()}</span>
+                    <span>₹{subtotal.toLocaleString()}</span>
                   </div>
                   
                   <div className="review-bill-row">
@@ -700,13 +700,13 @@ const Checkout = () => {
                   {discount > 0 && (
                     <div className="review-bill-row discount-row">
                       <span>Discount ({appliedPromo?.code})</span>
-                      <span>-${discount.toLocaleString()}</span>
+                      <span>-₹{discount.toLocaleString()}</span>
                     </div>
                   )}
 
                   <div className="review-bill-row grand-total">
                     <span>Total Amount</span>
-                    <span>${total.toLocaleString()}</span>
+                    <span>₹{total.toLocaleString()}</span>
                   </div>
                 </div>
 
@@ -746,7 +746,7 @@ const Checkout = () => {
               </div>
               <div>
                 <span>Amount Paid:</span>
-                <strong>${placedOrderDetails.total.toLocaleString()}</strong>
+                <strong>₹{placedOrderDetails.total.toLocaleString()}</strong>
               </div>
               <div>
                 <span>Payment Method:</span>

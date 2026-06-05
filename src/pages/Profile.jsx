@@ -499,7 +499,7 @@ const Profile = () => {
                             <img src={item.image} alt={item.title} className="order-preview-img" />
                             <div className="order-preview-info">
                               <h5 className="order-preview-name">{item.title}</h5>
-                              <span className="order-preview-qty-price">Qty: {item.quantity} × ${item.price}</span>
+                              <span className="order-preview-qty-price">Qty: {item.quantity} × ₹{item.price}</span>
                             </div>
                           </div>
                         ))}
@@ -507,7 +507,7 @@ const Profile = () => {
 
                       <div className="order-card-footer-billing">
                         <span>Total Invoice Amount:</span>
-                        <strong className="order-footer-total">${order.total.toLocaleString()}</strong>
+                        <strong className="order-footer-total">₹{order.total.toLocaleString()}</strong>
                       </div>
                     </div>
                   ))}

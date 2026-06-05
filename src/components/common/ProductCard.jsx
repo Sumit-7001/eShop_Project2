@@ -63,8 +63,8 @@ const ProductCard = ({
         </Link>
         <div className="product-price-row">
           <div className="price-container">
-            <span className="current-price">${price}</span>
-            {oldPrice && <span className="old-price">${oldPrice}</span>}
+            <span className="current-price">₹{price}</span>
+            {oldPrice && <span className="old-price">₹{oldPrice}</span>}
           </div>
           <button className="add-to-cart-btn" onClick={(e) => {
             e.preventDefault();

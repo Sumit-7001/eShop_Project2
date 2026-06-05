@@ -129,7 +129,7 @@ const SearchBar = () => {
                 <p className="search-result-title">{product.title}</p>
                 <span className="search-result-meta">
                   <span className="search-result-category">{product.category}</span>
-                  <span className="search-result-price">${product.price}</span>
+                  <span className="search-result-price">₹{product.price}</span>
                 </span>
               </div>
             </div>

@@ -75,10 +75,10 @@ const CATEGORY_SALES = [
 const PERIOD_DATA = {
   week: {
     stats: {
-      revenue: '$3,240', revenueChange: '+8.2%',
+      revenue: '₹3,240', revenueChange: '+8.2%',
       orders: '62', ordersChange: '+5.4%',
       customers: '18', customersChange: '+12.0%',
-      avgOrder: '$52.26', avgOrderChange: '+2.7%',
+      avgOrder: '₹52.26', avgOrderChange: '+2.7%',
     },
     chartData: [
       { month: 'Mon', revenue: 420 },
@@ -90,9 +90,9 @@ const PERIOD_DATA = {
       { month: 'Sun', revenue: 190 },
     ],
     chartTitle: 'Daily Revenue (This Week)',
-    peakLabel: 'Friday — $780',
-    lowLabel: 'Sunday — $190',
-    avgLabel: '$463 / day',
+    peakLabel: 'Friday — ₹780',
+    lowLabel: 'Sunday — ₹190',
+    avgLabel: '₹463 / day',
     categories: [
       { category: 'Smartphones', sales: 48, color: '#ff4d4d', amount: 1556 },
       { category: 'Watches', sales: 22, color: '#8b5cf6', amount: 713 },
@@ -102,10 +102,10 @@ const PERIOD_DATA = {
   },
   month: {
     stats: {
-      revenue: '$34,200', revenueChange: '+11.3%',
+      revenue: '₹34,200', revenueChange: '+11.3%',
       orders: '267', ordersChange: '+7.8%',
       customers: '42', customersChange: '+6.5%',
-      avgOrder: '$53.18', avgOrderChange: '+3.2%',
+      avgOrder: '₹53.18', avgOrderChange: '+3.2%',
     },
     chartData: [
       { month: 'Wk 1', revenue: 7200 },
@@ -114,9 +114,9 @@ const PERIOD_DATA = {
       { month: 'Wk 4', revenue: 9000 },
     ],
     chartTitle: 'Weekly Revenue (This Month)',
-    peakLabel: 'Week 2 — $9,400',
-    lowLabel: 'Week 1 — $7,200',
-    avgLabel: '$8,550 / week',
+    peakLabel: 'Week 2 — ₹9,400',
+    lowLabel: 'Week 1 — ₹7,200',
+    avgLabel: '₹8,550 / week',
     categories: [
       { category: 'Smartphones', sales: 43, color: '#ff4d4d', amount: 14706 },
       { category: 'Watches', sales: 27, color: '#8b5cf6', amount: 9234 },
@@ -126,10 +126,10 @@ const PERIOD_DATA = {
   },
   quarter: {
     stats: {
-      revenue: '$86,700', revenueChange: '+18.6%',
+      revenue: '₹86,700', revenueChange: '+18.6%',
       orders: '679', ordersChange: '+12.4%',
       customers: '98', customersChange: '+8.9%',
-      avgOrder: '$51.84', avgOrderChange: '+4.1%',
+      avgOrder: '₹51.84', avgOrderChange: '+4.1%',
     },
     chartData: [
       { month: 'Mar', revenue: 19800 },
@@ -138,9 +138,9 @@ const PERIOD_DATA = {
       { month: 'Jun', revenue: 25400 },
     ],
     chartTitle: 'Monthly Revenue (This Quarter)',
-    peakLabel: 'May — $34,200',
-    lowLabel: 'March — $19,800',
-    avgLabel: '$27,000 / month',
+    peakLabel: 'May — ₹34,200',
+    lowLabel: 'March — ₹19,800',
+    avgLabel: '₹27,000 / month',
     categories: [
       { category: 'Smartphones', sales: 44, color: '#ff4d4d', amount: 38148 },
       { category: 'Watches', sales: 26, color: '#8b5cf6', amount: 22542 },
@@ -150,16 +150,16 @@ const PERIOD_DATA = {
   },
   year: {
     stats: {
-      revenue: '$148,560', revenueChange: '+22.4%',
+      revenue: '₹148,560', revenueChange: '+22.4%',
       orders: '2,893', ordersChange: '+15.2%',
       customers: '342', customersChange: '+9.8%',
-      avgOrder: '$51.35', avgOrderChange: '+5.3%',
+      avgOrder: '₹51.35', avgOrderChange: '+5.3%',
     },
     chartData: MONTHLY_REVENUE,
     chartTitle: 'Monthly Revenue (Full Year)',
-    peakLabel: 'December — $52,400',
-    lowLabel: 'January — $18,400',
-    avgLabel: '$34,717 / month',
+    peakLabel: 'December — ₹52,400',
+    lowLabel: 'January — ₹18,400',
+    avgLabel: '₹34,717 / month',
     categories: [
       { category: 'Smartphones', sales: 45, color: '#ff4d4d', amount: 67800 },
       { category: 'Watches', sales: 25, color: '#8b5cf6', amount: 37500 },
@@ -177,7 +177,7 @@ const FEEDBACKS = [
 ];
 
 const RECENT_ACTIVITY = [
-  { type: 'order', icon: ShoppingBag, color: '#3b82f6', message: 'New order ORD-9025 from Dev Kar — $2,149', time: '5 mins ago' },
+  { type: 'order', icon: ShoppingBag, color: '#3b82f6', message: 'New order ORD-9025 from Dev Kar — ₹2,149', time: '5 mins ago' },
   { type: 'user', icon: Users, color: '#10b981', message: 'New customer Priya Sharma registered', time: '22 mins ago' },
   { type: 'product', icon: Package, color: '#8b5cf6', message: 'Stock updated: Google Pixel 8 Pro → 12 units', time: '2 hrs ago' },
   { type: 'review', icon: Star, color: '#f59e0b', message: 'New 5★ review from Anita Bose on Apple Watch', time: '4 hrs ago' },

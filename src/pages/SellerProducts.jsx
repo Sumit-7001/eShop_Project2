@@ -6,6 +6,7 @@ import ProductTopBar from '../components/products/ProductTopBar';
 import ProductCard from '../components/common/ProductCard';
 import { sellers } from '../data/dummyData';
 import { useApp } from '../context/AppContext';
+import { applyFilters } from '../utils/filterHelpers';
 import '../styles/CategoryProducts.css';
 
 const SellerProducts = () => {
@@ -15,12 +16,16 @@ const SellerProducts = () => {
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [viewMode, setViewMode] = useState('grid');
+  const [selectedFilters, setSelectedFilters] = useState({ attributes: {}, brands: [], categories: [] });
   
   const seller = sellers.find(s => s.id === parseInt(id));
 
   const sortedProducts = useMemo(() => {
     if (!seller) return [];
-    const products = [...seller.products];
+    let products = [...seller.products];
+
+    products = applyFilters(products, selectedFilters);
+
     switch (sortBy) {
       case 'price-low-high':
         return products.sort((a, b) => a.price - b.price);
@@ -31,7 +36,7 @@ const SellerProducts = () => {
       default:
         return products;
     }
-  }, [seller, sortBy]);
+  }, [seller, sortBy, selectedFilters]);
 
   const displayedProducts = sortedProducts.slice(0, itemsPerPage);
 
@@ -66,6 +71,8 @@ const SellerProducts = () => {
           <FilterSidebar 
             isOpen={isMobileFilterOpen} 
             onClose={() => setIsMobileFilterOpen(false)} 
+            selectedFilters={selectedFilters}
+            onFilterChange={setSelectedFilters}
           />
           
           <main className="products-main-content">
@@ -95,8 +102,8 @@ const SellerProducts = () => {
                   />
                 ))
               ) : (
-                <div className="no-products" style={{ textAlign: 'center', padding: '50px', width: '100%' }}>
-                  <p>No products found for this seller.</p>
+                <div className="no-products" style={{ textAlign: 'center', padding: '50px', width: '100%', gridColumn: '1 / -1' }}>
+                  <p>No products found matching your filters.</p>
                 </div>
               )}
             </div>

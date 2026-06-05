@@ -66,8 +66,8 @@ const Compare = () => {
 
                     {/* Second row - Price */}
                     <div className="compare-row-value compare-price-row">
-                      <span className="compare-curr-price">${item.price}</span>
-                      {item.oldPrice && <span className="compare-old-price">${item.oldPrice}</span>}
+                      <span className="compare-curr-price">₹{item.price}</span>
+                      {item.oldPrice && <span className="compare-old-price">₹{item.oldPrice}</span>}
                     </div>
 
                     {/* Third row - Rating */}

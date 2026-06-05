@@ -3,13 +3,16 @@ import { Link } from 'react-router-dom';
 import { X } from 'lucide-react';
 import '../../styles/CategoryProducts.css';
 import { brands, categories } from '../../data/dummyData';
+import { attributesData } from '../../utils/filterHelpers';
 
-const FilterSidebar = ({ isOpen, onClose }) => {
+const FilterSidebar = ({ isOpen, onClose, selectedFilters = { attributes: {}, brands: [], categories: [] }, onFilterChange }) => {
   const [expandedSections, setExpandedSections] = useState({
     attributes: true,
     brands: true,
     categories: true,
   });
+
+  const [expandedAttributes, setExpandedAttributes] = useState({});
 
   const toggleSection = (section) => {
     setExpandedSections(prev => ({
@@ -18,10 +21,58 @@ const FilterSidebar = ({ isOpen, onClose }) => {
     }));
   };
 
-  const attributes = [
-    'Battery Power', 'Color', 'Connectivity technologies', 
-    'Display Technology', 'Expandable Storage', 'Item Weight', 'Material Type'
-  ];
+  const toggleAttribute = (attrName) => {
+    setExpandedAttributes(prev => ({
+      ...prev,
+      [attrName]: !prev[attrName]
+    }));
+  };
+
+  const handleAttributeChange = (attrName, option) => {
+    if (!onFilterChange) return;
+    const currentAttrSelections = selectedFilters.attributes[attrName] || [];
+    const newAttrSelections = currentAttrSelections.includes(option)
+      ? currentAttrSelections.filter(opt => opt !== option)
+      : [...currentAttrSelections, option];
+
+    onFilterChange({
+      ...selectedFilters,
+      attributes: {
+        ...selectedFilters.attributes,
+        [attrName]: newAttrSelections
+      }
+    });
+  };
+
+  const handleBrandChange = (brandSlug) => {
+    if (!onFilterChange) return;
+    const newBrands = selectedFilters.brands.includes(brandSlug)
+      ? selectedFilters.brands.filter(b => b !== brandSlug)
+      : [...selectedFilters.brands, brandSlug];
+    
+    onFilterChange({
+      ...selectedFilters,
+      brands: newBrands
+    });
+  };
+
+  const handleCategoryChange = (categoryId) => {
+    if (!onFilterChange) return;
+    const newCategories = selectedFilters.categories.includes(categoryId)
+      ? selectedFilters.categories.filter(c => c !== categoryId)
+      : [...selectedFilters.categories, categoryId];
+    
+    onFilterChange({
+      ...selectedFilters,
+      categories: newCategories
+    });
+  };
+
+  const clearFilters = () => {
+    if (onFilterChange) {
+      onFilterChange({ attributes: {}, brands: [], categories: [] });
+    }
+  };
 
   return (
     <aside className={`filter-sidebar ${isOpen ? 'mobile-open' : ''}`}>
@@ -39,9 +90,32 @@ const FilterSidebar = ({ isOpen, onClose }) => {
         </div>
         {expandedSections.attributes && (
           <ul className="filter-list">
-            {attributes.map(attr => (
-              <li key={attr} className="filter-item expandable">
-                <span className="bullet">›</span> {attr}
+            {attributesData.map(attr => (
+              <li key={attr.name} className="filter-item-group">
+                <div 
+                  className="filter-item expandable" 
+                  onClick={() => toggleAttribute(attr.name)}
+                  style={{ cursor: 'pointer', display: 'flex', justifyContent: 'space-between', padding: '5px 0' }}
+                >
+                  <span><span className="bullet">›</span> {attr.name}</span>
+                  <span style={{ fontSize: '12px' }}>{expandedAttributes[attr.name] ? '▲' : '▼'}</span>
+                </div>
+                {expandedAttributes[attr.name] && (
+                  <ul className="sub-filter-list" style={{ paddingLeft: '15px', listStyle: 'none' }}>
+                    {attr.options.map(option => (
+                      <li key={option} className="checkbox-item" style={{ padding: '4px 0' }}>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '13px' }}>
+                          <input 
+                            type="checkbox" 
+                            checked={(selectedFilters.attributes[attr.name] || []).includes(option)}
+                            onChange={() => handleAttributeChange(attr.name, option)}
+                          />
+                          {option}
+                        </label>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             ))}
           </ul>
@@ -54,11 +128,17 @@ const FilterSidebar = ({ isOpen, onClose }) => {
           <span className={`arrow ${expandedSections.brands ? 'up' : 'down'}`}>▾</span>
         </div>
         {expandedSections.brands && (
-          <div className="brands-grid-small">
-            {brands.map(brand => (
-              <Link key={brand.id} to={`/brand/${brand.slug}`} className="brand-logo-small" title={brand.name}>
-                <img src={brand.logo} alt={brand.name} />
-              </Link>
+          <div className="brands-list" style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '10px' }}>
+            {brands.slice(0, 10).map(brand => (
+              <label key={brand.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '13px' }}>
+                <input 
+                  type="checkbox" 
+                  checked={selectedFilters.brands.includes(brand.slug)}
+                  onChange={() => handleBrandChange(brand.slug)}
+                />
+                <img src={brand.logo} alt={brand.name} style={{ width: '20px', height: '20px', objectFit: 'contain' }} />
+                {brand.name}
+              </label>
             ))}
           </div>
         )}
@@ -70,11 +150,18 @@ const FilterSidebar = ({ isOpen, onClose }) => {
           <span className={`arrow ${expandedSections.categories ? 'up' : 'down'}`}>▾</span>
         </div>
         {expandedSections.categories && (
-          <ul className="filter-list">
-            {categories.map(cat => (
-              <li key={cat.id} className="filter-item checkbox-item">
-                <input type="checkbox" id={`cat-${cat.id}`} />
-                <label htmlFor={`cat-${cat.id}`}>{cat.name}</label>
+          <ul className="filter-list" style={{ marginTop: '10px' }}>
+            {categories.slice(0, 10).map(cat => (
+              <li key={cat.id} className="filter-item checkbox-item" style={{ padding: '4px 0' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '13px' }}>
+                  <input 
+                    type="checkbox" 
+                    id={`cat-${cat.id}`}
+                    checked={selectedFilters.categories.includes(cat.id)}
+                    onChange={() => handleCategoryChange(cat.id)}
+                  />
+                  {cat.name}
+                </label>
               </li>
             ))}
           </ul>
@@ -82,8 +169,8 @@ const FilterSidebar = ({ isOpen, onClose }) => {
       </div>
 
       <div className="filter-actions">
-        <button className="btn-filter" onClick={onClose}>Filter</button>
-        <button className="btn-clear" onClick={onClose}>Clear</button>
+        <button className="btn-filter" onClick={onClose}>Apply Filters</button>
+        <button className="btn-clear" onClick={clearFilters}>Clear</button>
       </div>
     </aside>
   );

@@ -216,7 +216,7 @@ const Header = memo(() => {
                       >
                         <h4 className="fav-item-title">{item.title}</h4>
                       </Link>
-                      <div className="fav-item-price">${item.price}</div>
+                      <div className="fav-item-price">₹{item.price}</div>
                       <div className="fav-item-actions">
                         <button
                           className="fav-add-to-cart-btn"
