@@ -3,11 +3,19 @@ import { useParams, Link } from 'react-router-dom';
 import { 
   Star, ChevronRight, Minus, Plus, Heart, GitCompare, 
   Facebook, Twitter, Linkedin, MessageCircle, Share2,
-  Truck, ShieldCheck, RotateCcw, Store, ShoppingCart
+  Truck, ShieldCheck, RotateCcw, Store, ShoppingCart,
+  Tag, MapPin, Sparkles, ThumbsUp, ThumbsDown
 } from 'lucide-react';
 import ProductCard from '../components/common/ProductCard';
 import { useApp } from '../context/AppContext';
 import '../styles/ProductDetails.css';
+
+// Import local assets for Frequently Bought Together
+import speakerImg from '../assets/images/bluetooth_speaker.png';
+import sunglassesImg from '../assets/images/sunglasses.png';
+import airPurifierImg from '../assets/images/air_purifier.png';
+import teddyBearImg from '../assets/images/teddy_bear.png';
+import leatherBeltImg from '../assets/images/leather_belt.png';
 
 const ProductDetails = () => {
   const {
@@ -28,6 +36,10 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState('description');
   const [selectedImage, setSelectedImage] = useState(0);
+  const [pincode, setPincode] = useState('');
+  const [pincodeStatus, setPincodeStatus] = useState(null); // null, 'loading', 'valid', 'invalid'
+  const [deliveryDate, setDeliveryDate] = useState('');
+  const [fbtChecked, setFbtChecked] = useState(true);
 
   useEffect(() => {
     const mergedProducts = [
@@ -68,6 +80,60 @@ const ProductDetails = () => {
 
   const isCurrentFavorite = isFavorite(product.id);
   const isCurrentComparing = isComparing(product.id);
+
+  // Frequently Bought Together Accessory configuration
+  const getFbtAccessory = () => {
+    if (smartphonesState.find(p => p.id === product.id)) {
+      return { id: product.id + 1000, title: "Bluetooth Portable Speaker", price: 49, image: speakerImg };
+    }
+    if (watchesState.find(p => p.id === product.id)) {
+      return { id: product.id + 1000, title: "UV Protected Sunglasses", price: 29, image: sunglassesImg };
+    }
+    if (furnitureState.find(p => p.id === product.id)) {
+      return { id: product.id + 1000, title: "Smart Air Purifier", price: 199, image: airPurifierImg };
+    }
+    if (kidsState.find(p => p.id === product.id)) {
+      return { id: product.id + 1000, title: "Soft Teddy Bear Toy", price: 19, image: teddyBearImg };
+    }
+    return { id: product.id + 1000, title: "Leather Smart Belt", price: 15, image: leatherBeltImg };
+  };
+
+  const fbtAccessory = product ? getFbtAccessory() : null;
+
+  const handleCheckPincode = (e) => {
+    e.preventDefault();
+    if (!/^\d{6}$/.test(pincode)) {
+      setPincodeStatus('invalid');
+      return;
+    }
+    setPincodeStatus('loading');
+    setTimeout(() => {
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const delivery = new Date();
+      delivery.setDate(delivery.getDate() + 3);
+      const dayName = days[delivery.getDay()];
+      const dateNum = delivery.getDate();
+      const monthName = months[delivery.getMonth()];
+      
+      setDeliveryDate(`${dayName}, ${monthName} ${dateNum}`);
+      setPincodeStatus('valid');
+    }, 600);
+  };
+
+  const handleAddFbtToCart = () => {
+    addToCart(product, 1);
+    if (fbtChecked && fbtAccessory) {
+      const accessoryProduct = {
+        id: fbtAccessory.id,
+        title: fbtAccessory.title,
+        price: fbtAccessory.price,
+        image: fbtAccessory.image,
+        quantity: 1
+      };
+      addToCart(accessoryProduct, 1);
+    }
+  };
 
   return (
     <div className="product-details-page">
@@ -124,6 +190,29 @@ const ProductDetails = () => {
               </div>
             </div>
 
+            {/* Flipkart-style Available Offers */}
+            <div className="available-offers-container">
+              <h4 className="offers-title"><Tag size={16} /> Available Offers</h4>
+              <ul className="offers-list">
+                <li className="offer-item">
+                  <Tag size={14} className="offer-tag-icon" />
+                  <span><strong>Bank Offer:</strong> 10% instant discount on SBI Credit Cards, up to $50 on orders above $250. <span className="tnc-link">T&C</span></span>
+                </li>
+                <li className="offer-item">
+                  <Tag size={14} className="offer-tag-icon" />
+                  <span><strong>Bank Offer:</strong> 5% Unlimited Cashback on MarketHub Axis Bank Credit Card. <span className="tnc-link">T&C</span></span>
+                </li>
+                <li className="offer-item">
+                  <Tag size={14} className="offer-tag-icon" />
+                  <span><strong>Special Price:</strong> Get extra $15 off on select premium digital payments. <span className="tnc-link">T&C</span></span>
+                </li>
+                <li className="offer-item">
+                  <Tag size={14} className="offer-tag-icon" />
+                  <span><strong>No Cost EMI:</strong> Interest-free EMI plans starting from $30/month. <span className="tnc-link">T&C</span></span>
+                </li>
+              </ul>
+            </div>
+
             {smartphonesState.some(p => p.id === product.id) && (
               <div className="option-group">
                 <span className="option-label">Color</span>
@@ -176,6 +265,94 @@ const ProductDetails = () => {
               </div>
             </div>
 
+            {/* Pincode Delivery Checker */}
+            <div className="pincode-delivery-checker">
+              <span className="checker-label"><MapPin size={16} /> Delivery & Services Checker</span>
+              <form onSubmit={handleCheckPincode} className="pincode-input-wrapper">
+                <input 
+                  type="text" 
+                  placeholder="Enter Delivery Pincode (6-digit)" 
+                  value={pincode}
+                  onChange={(e) => setPincode(e.target.value.replace(/\D/g, ''))}
+                  maxLength={6}
+                  className="pincode-input"
+                />
+                <button type="submit" className="pincode-submit-btn">Check</button>
+              </form>
+              
+              {pincodeStatus === 'loading' && (
+                <p className="pincode-message loading">Checking availability...</p>
+              )}
+              {pincodeStatus === 'valid' && (
+                <div className="pincode-message success">
+                  <p className="delivery-date-text">Delivery by <strong>{deliveryDate}</strong> | <span className="free-tag">Free</span></p>
+                  <p className="cod-availability">✔ Cash on Delivery Available</p>
+                  <p className="replacement-availability">✔ 7 Days Replacement Policy</p>
+                </div>
+              )}
+              {pincodeStatus === 'invalid' && (
+                <p className="pincode-message error">❌ Please enter a valid 6-digit pincode (e.g. 110001)</p>
+              )}
+            </div>
+
+            {/* Product Highlights & Warranty */}
+            <div className="quick-highlights-section">
+              <h4 className="section-small-title"><Sparkles size={16} /> Key Highlights</h4>
+              <ul className="highlights-list">
+                {smartphonesState.some(p => p.id === product.id) && (
+                  <>
+                    <li>12 GB RAM | 256 GB ROM | Expandable up to 1 TB</li>
+                    <li>17.27 cm (6.8 inch) Quad HD+ Dynamic AMOLED 2X Display</li>
+                    <li>200MP + 50MP + 12MP + 10MP Quad Rear Camera | 12MP Front</li>
+                    <li>5000 mAh Li-Ion High-Capacity Battery</li>
+                    <li>Snapdragon 8 Gen 3 Deca-Core Processor</li>
+                  </>
+                )}
+                {watchesState.some(p => p.id === product.id) && (
+                  <>
+                    <li>1.43-inch Always-on AMOLED Display</li>
+                    <li>Heart Rate, SpO2, and Sleep Quality Tracking</li>
+                    <li>5ATM Water Resistant up to 50 Meters</li>
+                    <li>Up to 10 Days of Battery Life on Single Charge</li>
+                    <li>Built-in GPS and Bluetooth Calling support</li>
+                  </>
+                )}
+                {furnitureState.some(p => p.id === product.id) && (
+                  <>
+                    <li>Made from premium quality teak wood and durable steel frame</li>
+                    <li>Ergonomic and highly comfortable seating design</li>
+                    <li>Stain-resistant fabric upholstery, easy to clean</li>
+                    <li>Sturdy structure with a maximum load capacity of 150 kg</li>
+                    <li>Minimal assembly required with included kit</li>
+                  </>
+                )}
+                {kidsState.some(p => p.id === product.id) && (
+                  <>
+                    <li>Made from 100% safe, non-toxic, BPA-free materials</li>
+                    <li>Soft fabric finish with double reinforced stitching</li>
+                    <li>Stimulates cognitive growth and creative imagination</li>
+                    <li>ASTM and EN71 safety standards certified</li>
+                    <li>Suitable for kids of all ages (3 years and up)</li>
+                  </>
+                )}
+                {!smartphonesState.some(p => p.id === product.id) && 
+                 !watchesState.some(p => p.id === product.id) && 
+                 !furnitureState.some(p => p.id === product.id) && 
+                 !kidsState.some(p => p.id === product.id) && (
+                  <>
+                    <li>High quality materials and craftsmanship</li>
+                    <li>Premium look and feel with modern design elements</li>
+                    <li>Durable and highly reliable performance</li>
+                    <li>100% satisfaction guaranteed product</li>
+                  </>
+                )}
+              </ul>
+              <div className="warranty-services-summary">
+                <div className="service-bullet">🛡 1 Year Manufacturer Warranty</div>
+                <div className="service-bullet">🔁 7 Days Replacement Policy</div>
+              </div>
+            </div>
+
             <div className="trust-badges">
               <div className="trust-item">
                 <div style={{ background: '#f0f0f0', padding: '10px', borderRadius: '50%' }}>
@@ -216,6 +393,67 @@ const ProductDetails = () => {
             </div>
           </div>
         </div>
+
+        {/* Frequently Bought Together Bundle */}
+        {fbtAccessory && (
+          <div className="frequently-bought-together-section">
+            <h3 className="section-title-medium">Frequently Bought Together</h3>
+            <div className="fbt-container-box">
+              <div className="fbt-products-row">
+                {/* Main Product Card */}
+                <div className="fbt-product-item">
+                  <div className="fbt-img-wrapper">
+                    <img src={image} alt={title} className="fbt-img" />
+                  </div>
+                  <div className="fbt-info">
+                    <span className="fbt-item-name">{title}</span>
+                    <span className="fbt-item-price">${price.toLocaleString()}</span>
+                  </div>
+                </div>
+                
+                {/* Plus Connector */}
+                <div className="fbt-connector">+</div>
+                
+                {/* Accessory Card */}
+                <div className="fbt-product-item">
+                  <div className="fbt-checkbox-wrapper">
+                    <input 
+                      type="checkbox" 
+                      id="accessory-cb" 
+                      checked={fbtChecked} 
+                      onChange={(e) => setFbtChecked(e.target.checked)}
+                      className="fbt-checkbox"
+                    />
+                    <label htmlFor="accessory-cb" className="fbt-checkbox-label">
+                      <div className="fbt-img-wrapper">
+                        <img src={fbtAccessory.image} alt={fbtAccessory.title} className="fbt-img" />
+                      </div>
+                    </label>
+                  </div>
+                  <div className="fbt-info">
+                    <span className="fbt-item-name">{fbtAccessory.title}</span>
+                    <span className="fbt-item-price">${fbtAccessory.price}</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Price calculations & CTA */}
+              <div className="fbt-summary-card">
+                <div className="fbt-summary-row">
+                  <span className="summary-lbl">Items Count:</span>
+                  <span className="summary-val">{fbtChecked ? 2 : 1}</span>
+                </div>
+                <div className="fbt-summary-row grand-total">
+                  <span className="summary-lbl">Bundle Total:</span>
+                  <span className="summary-val">${(price + (fbtChecked ? fbtAccessory.price : 0)).toLocaleString()}</span>
+                </div>
+                <button onClick={handleAddFbtToCart} className="fbt-add-btn">
+                  <ShoppingCart size={16} /> Add Bundle to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Tabs */}
         <div className="product-tabs-section">
@@ -293,7 +531,114 @@ const ProductDetails = () => {
                 </div>
               </div>
             )}
-            {activeTab === 'reviews' && <p>No reviews yet.</p>}
+            {activeTab === 'reviews' && (
+              <div className="reviews-tab-container">
+                <div className="reviews-summary-row">
+                  <div className="overall-rating-card">
+                    <span className="big-rating-score">{rating} ★</span>
+                    <span className="rating-subtitle">Out of 5 Stars</span>
+                    <span className="total-ratings-count">3 Ratings & 3 Reviews</span>
+                  </div>
+                  <div className="rating-bars-container">
+                    <div className="rating-bar-row">
+                      <span className="star-num">5 ★</span>
+                      <div className="rating-bar-outer">
+                        <div className="rating-bar-inner" style={{ width: '80%' }}></div>
+                      </div>
+                      <span className="row-percentage">80%</span>
+                    </div>
+                    <div className="rating-bar-row">
+                      <span className="star-num">4 ★</span>
+                      <div className="rating-bar-outer">
+                        <div className="rating-bar-inner" style={{ width: '15%' }}></div>
+                      </div>
+                      <span className="row-percentage">15%</span>
+                    </div>
+                    <div className="rating-bar-row">
+                      <span className="star-num">3 ★</span>
+                      <div className="rating-bar-outer">
+                        <div className="rating-bar-inner" style={{ width: '5%' }}></div>
+                      </div>
+                      <span className="row-percentage">5%</span>
+                    </div>
+                    <div className="rating-bar-row">
+                      <span className="star-num">2 ★</span>
+                      <div className="rating-bar-outer">
+                        <div className="rating-bar-inner" style={{ width: '0%' }}></div>
+                      </div>
+                      <span className="row-percentage">0%</span>
+                    </div>
+                    <div className="rating-bar-row">
+                      <span className="star-num">1 ★</span>
+                      <div className="rating-bar-outer">
+                        <div className="rating-bar-inner" style={{ width: '0%' }}></div>
+                      </div>
+                      <span className="row-percentage">0%</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="reviews-list-container">
+                  <h4 className="reviews-list-header">Customer Feedback</h4>
+                  <div className="review-card-item">
+                    <div className="review-header">
+                      <span className="review-rating-badge green">5 ★</span>
+                      <span className="review-title">Simply superb product!</span>
+                    </div>
+                    <p className="review-body">
+                      Absolutely loved this item. The performance is top notch and build quality feels extremely premium. Would highly recommend this to anyone looking for a high-quality option.
+                    </p>
+                    <div className="review-footer">
+                      <span className="review-author">Aniket Sharma</span>
+                      <span className="verified-badge">✔ Verified Purchaser</span>
+                      <span className="review-date">May 12, 2026</span>
+                      <div className="review-votes">
+                        <button className="vote-btn"><ThumbsUp size={14} /> 124</button>
+                        <button className="vote-btn"><ThumbsDown size={14} /> 8</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="review-card-item">
+                    <div className="review-header">
+                      <span className="review-rating-badge green">5 ★</span>
+                      <span className="review-title">Best in class features</span>
+                    </div>
+                    <p className="review-body">
+                      Really good value for money. Using it daily for a few weeks now and haven't faced a single issue. Extremely satisfied with this purchase!
+                    </p>
+                    <div className="review-footer">
+                      <span className="review-author">Sneha Kapoor</span>
+                      <span className="verified-badge">✔ Verified Purchaser</span>
+                      <span className="review-date">Apr 28, 2026</span>
+                      <div className="review-votes">
+                        <button className="vote-btn"><ThumbsUp size={14} /> 93</button>
+                        <button className="vote-btn"><ThumbsDown size={14} /> 3</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="review-card-item">
+                    <div className="review-header">
+                      <span className="review-rating-badge yellow">4 ★</span>
+                      <span className="review-title">Great purchase, highly recommend</span>
+                    </div>
+                    <p className="review-body">
+                      Sleek design, works exactly as advertised. The delivery was fast and the packaging was robust. Only minor issue is user manual details could be slightly more detailed.
+                    </p>
+                    <div className="review-footer">
+                      <span className="review-author">Rajesh Kumar</span>
+                      <span className="verified-badge">✔ Verified Purchaser</span>
+                      <span className="review-date">Apr 15, 2026</span>
+                      <div className="review-votes">
+                        <button className="vote-btn"><ThumbsUp size={14} /> 45</button>
+                        <button className="vote-btn"><ThumbsDown size={14} /> 2</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
             {activeTab === 'sold' && <p>Sold by Super Market - Metro Merchants Mart.</p>}
             {activeTab === 'faqs' && <p>No FAQs available for this product.</p>}
           </div>

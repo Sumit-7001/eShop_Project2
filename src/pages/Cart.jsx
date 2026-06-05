@@ -55,13 +55,15 @@ const Cart = () => {
                 {cartItems.map((item) => (
                   <tr key={item.id}>
                     <td data-label="Product">
-                      <div className="cart-product-cell">
-                        <img src={item.image} alt={item.title} className="cart-product-img" />
-                        <div className="cart-product-info">
-                          <h4>{item.title}</h4>
-                          <p>{item.subtitle || 'Premium Quality'}</p>
+                      <Link to={`/product/${item.id >= 1000 ? item.id - 1000 : item.id}`} className="cart-product-link">
+                        <div className="cart-product-cell">
+                          <img src={item.image} alt={item.title} className="cart-product-img" />
+                          <div className="cart-product-info">
+                            <h4>{item.title}</h4>
+                            <p>{item.subtitle || 'Premium Quality'}</p>
+                          </div>
                         </div>
-                      </div>
+                      </Link>
                     </td>
                     <td data-label="Price"><div className="cart-price">${item.price.toLocaleString()}</div></td>
                     <td data-label="Tax(%)"><div className="cart-tax">-</div></td>
