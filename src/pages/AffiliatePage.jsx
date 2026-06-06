@@ -1,10 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { UserPlus, Share2, DollarSign, CheckCircle } from 'lucide-react';
 import '../styles/AffiliatePage.css';
 
 const AffiliatePage = () => {
   const { openAuthModal } = useApp();
+  const navigate = useNavigate();
 
   return (
     <div className="affiliate-page-wrapper">
@@ -35,7 +37,7 @@ const AffiliatePage = () => {
         <div className="container">
           <h2 className="section-title">How It Works</h2>
           <div className="steps-grid">
-            <div className="step-card">
+            <div className="step-card" onClick={() => openAuthModal('signup')} style={{ cursor: 'pointer' }}>
               <div className="step-icon">
                 <UserPlus size={40} />
               </div>
@@ -43,7 +45,7 @@ const AffiliatePage = () => {
               <p>Register for our affiliate program for free. It takes only a few minutes to get started.</p>
             </div>
             
-            <div className="step-card">
+            <div className="step-card" onClick={() => navigate('/categories')} style={{ cursor: 'pointer' }}>
               <div className="step-icon">
                 <Share2 size={40} />
               </div>
@@ -51,7 +53,7 @@ const AffiliatePage = () => {
               <p>Share your unique affiliate links on your website, blog, or social media channels.</p>
             </div>
             
-            <div className="step-card">
+            <div className="step-card" onClick={() => navigate('/profile')} style={{ cursor: 'pointer' }}>
               <div className="step-icon">
                 <DollarSign size={40} />
               </div>
