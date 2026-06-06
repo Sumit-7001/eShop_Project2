@@ -47,20 +47,35 @@ const ProductDetails = () => {
   const [pincodeStatus, setPincodeStatus] = useState(null); // null, 'loading', 'valid', 'invalid'
   const [deliveryDate, setDeliveryDate] = useState('');
   const [fbtChecked, setFbtChecked] = useState(true);
+  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedStorage, setSelectedStorage] = useState('128 GB');
+
+  useEffect(() => {
+    if (product) {
+       if (product.color) {
+         setSelectedColor(product.color.split(',')[0].trim());
+       } else if (product.category === 'smartphones') {
+         setSelectedColor('#ff4d4d');
+       }
+       if (product.category === 'smartphones') {
+         setSelectedStorage('128 GB');
+       }
+    }
+  }, [product]);
 
   useEffect(() => {
     const mergedProducts = [
-      ...smartphonesState,
-      ...watchesState,
-      ...furnitureState,
-      ...kidsState,
-      ...fashionState,
-      ...electronicsState,
-      ...digitalProductState,
-      ...homeAppliancesState,
-      ...vegetableState,
-      ...decorState,
-      ...booksState
+      ...smartphonesState.map(p => ({ ...p, category: 'smartphones' })),
+      ...watchesState.map(p => ({ ...p, category: 'watches' })),
+      ...furnitureState.map(p => ({ ...p, category: 'furniture' })),
+      ...kidsState.map(p => ({ ...p, category: 'kids' })),
+      ...fashionState.map(p => ({ ...p, category: 'fashion' })),
+      ...electronicsState.map(p => ({ ...p, category: 'electronics' })),
+      ...digitalProductState.map(p => ({ ...p, category: 'digital-product' })),
+      ...homeAppliancesState.map(p => ({ ...p, category: 'home-appliances' })),
+      ...vegetableState.map(p => ({ ...p, category: 'vegetable' })),
+      ...decorState.map(p => ({ ...p, category: 'decor' })),
+      ...booksState.map(p => ({ ...p, category: 'books' }))
     ];
     const foundProduct = mergedProducts.find(p => p.id === parseInt(id));
     setProduct(foundProduct);
@@ -248,9 +263,10 @@ const ProductDetails = () => {
                     return (
                       <div 
                         key={idx} 
-                        className={`color-circle ${idx === 0 ? 'active' : ''}`} 
+                        className={`color-circle ${selectedColor === trimmedColor ? 'active' : ''}`} 
                         style={{ backgroundColor: trimmedColor.toLowerCase() }}
                         title={trimmedColor}
+                        onClick={() => setSelectedColor(trimmedColor)}
                       ></div>
                     );
                   })}
@@ -260,8 +276,16 @@ const ProductDetails = () => {
               <div className="option-group">
                 <span className="option-label">Color</span>
                 <div className="color-options">
-                  <div className="color-circle active" style={{ backgroundColor: '#ff4d4d' }}></div>
-                  <div className="color-circle" style={{ backgroundColor: '#000' }}></div>
+                  <div 
+                    className={`color-circle ${selectedColor === '#ff4d4d' ? 'active' : ''}`} 
+                    style={{ backgroundColor: '#ff4d4d' }}
+                    onClick={() => setSelectedColor('#ff4d4d')}
+                  ></div>
+                  <div 
+                    className={`color-circle ${selectedColor === '#000' ? 'active' : ''}`} 
+                    style={{ backgroundColor: '#000' }}
+                    onClick={() => setSelectedColor('#000')}
+                  ></div>
                 </div>
               </div>
             ) : null}
@@ -270,8 +294,14 @@ const ProductDetails = () => {
               <div className="option-group">
                 <span className="option-label">Expandable Storage</span>
                 <div className="storage-options">
-                  <div className="storage-pill active">128 GB</div>
-                  <div className="storage-pill">256 GB</div>
+                  <div 
+                    className={`storage-pill ${selectedStorage === '128 GB' ? 'active' : ''}`}
+                    onClick={() => setSelectedStorage('128 GB')}
+                  >128 GB</div>
+                  <div 
+                    className={`storage-pill ${selectedStorage === '256 GB' ? 'active' : ''}`}
+                    onClick={() => setSelectedStorage('256 GB')}
+                  >256 GB</div>
                 </div>
               </div>
             )}
@@ -282,7 +312,7 @@ const ProductDetails = () => {
                 <div className="qty-input">{quantity}</div>
                 <button className="qty-btn" onClick={() => handleQuantity('plus')}><Plus size={16} /></button>
               </div>
-              <button className="add-cart-large" onClick={() => addToCart(product, quantity)}>
+              <button className="add-cart-large" onClick={() => addToCart({ ...product, selectedColor, selectedStorage }, quantity)}>
                 <ShoppingCart size={20} /> Add to Cart
               </button>
               <button 
