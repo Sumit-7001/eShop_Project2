@@ -515,6 +515,50 @@ export const AppProvider = ({ children }) => {
     saveToStorage('eshop_cart', []);
   }, []);
 
+  // ── Save For Later ─────────────────────────────────────────────────────────
+  const [savedForLaterItems, setSavedForLaterItems] = useState(() => loadFromStorage('eshop_saved_for_later', []));
+
+  useEffect(() => {
+    saveToStorage('eshop_saved_for_later', savedForLaterItems);
+  }, [savedForLaterItems]);
+
+  const moveToSavedForLater = useCallback((id) => {
+    setCartItems(prevCart => {
+      const itemToSave = prevCart.find(item => item.id === id);
+      if (itemToSave) {
+        setSavedForLaterItems(prevSaved => {
+          // If already in saved for later, don't duplicate, just update quantity or ignore
+          const existing = prevSaved.find(item => item.id === id);
+          if (existing) return prevSaved;
+          return [...prevSaved, itemToSave];
+        });
+        showToastRef.current?.(`"${itemToSave.title}" saved for later.`, 'info');
+      }
+      return prevCart.filter(item => item.id !== id);
+    });
+  }, []);
+
+  const moveToCartFromSaved = useCallback((id) => {
+    setSavedForLaterItems(prevSaved => {
+      const itemToMove = prevSaved.find(item => item.id === id);
+      if (itemToMove) {
+        setCartItems(prevCart => {
+          const existing = prevCart.find(item => item.id === id);
+          if (existing) {
+            return prevCart.map(item => item.id === id ? { ...item, quantity: item.quantity + itemToMove.quantity } : item);
+          }
+          return [...prevCart, itemToMove];
+        });
+        showToastRef.current?.(`"${itemToMove.title}" moved to cart.`, 'success');
+      }
+      return prevSaved.filter(item => item.id !== id);
+    });
+  }, []);
+
+  const removeFromSavedForLater = useCallback((id) => {
+    setSavedForLaterItems(prev => prev.filter(item => item.id !== id));
+  }, []);
+
   const cartCount = useMemo(
     () => cartItems.reduce((total, item) => total + item.quantity, 0),
     [cartItems]
@@ -786,6 +830,10 @@ export const AppProvider = ({ children }) => {
     removeFromCart,
     updateQuantity,
     clearCart,
+    savedForLaterItems,
+    moveToSavedForLater,
+    moveToCartFromSaved,
+    removeFromSavedForLater,
     // favorites
     favoriteItems,
     toggleFavorite,
