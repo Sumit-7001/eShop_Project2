@@ -23,7 +23,7 @@ const AffiliatePage = () => {
             <p>
               Join our Affiliate Program and start earning today. Promote thousands of high-quality products from top brands and earn generous commissions on every successful sale.
             </p>
-            <button className="cta-button" onClick={() => openAuthModal('register')}>
+            <button className="cta-button" onClick={() => openAuthModal('signup')}>
               Become an Affiliate
             </button>
           </div>
@@ -104,7 +104,7 @@ const AffiliatePage = () => {
         <div className="container text-center">
           <h2>Ready to start earning?</h2>
           <p>Join thousands of affiliates who are already making money with MarketHub.</p>
-          <button className="cta-button" onClick={() => openAuthModal('register')}>
+          <button className="cta-button" onClick={() => openAuthModal('signup')}>
             Join Now for Free
           </button>
         </div>
