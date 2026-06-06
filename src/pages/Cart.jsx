@@ -107,9 +107,10 @@ const Cart = () => {
               </table>
               </>
             ) : (
-              <div className="empty-cart-section">
+              <div className="empty-cart" style={{ padding: '40px 20px', borderBottom: '1px solid var(--admin-border-color)' }}>
+                <ShoppingBag size={50} color="var(--text-gray)" style={{ display: 'block', margin: '0 auto 15px', opacity: 0.5 }} />
                 <h2>Your cart is empty</h2>
-                <p>Looks like you haven't added anything to your cart yet.</p>
+                <p style={{ color: 'var(--text-gray)', marginBottom: '25px' }}>Looks like you haven't added anything to your cart yet.</p>
                 <Link to="/" className="continue-shopping">Continue Shopping</Link>
               </div>
             )}
