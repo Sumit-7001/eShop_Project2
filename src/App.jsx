@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AppProvider, useApp } from './context/AppContext';
 import Header from './components/layout/Header';
@@ -73,6 +73,11 @@ const AppShell = () => {
   const { authModal, closeAuthModal, handleLogin } = useApp();
   const location = useLocation();
   const isAdminPath = location.pathname.startsWith('/admin');
+
+  // ── Scroll to top on every route change ──────────────────────────────────
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [location.pathname]);
 
   return (
     <div className="App">
