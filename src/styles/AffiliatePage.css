@@ -60,7 +60,7 @@
 /* How It Works */
 .how-it-works {
   padding: 80px 0;
-  background: #fcfcfc;
+  background: var(--bg-light);
 }
 
 .steps-grid {
@@ -70,7 +70,7 @@
 }
 
 .step-card {
-  background: white;
+  background: var(--card-bg);
   padding: 40px 30px;
   border-radius: 15px;
   text-align: center;
@@ -109,7 +109,7 @@
 /* Benefits Section */
 .affiliate-benefits {
   padding: 80px 0;
-  background: white;
+  background: var(--bg-white);
 }
 
 .benefits-list {
@@ -146,7 +146,7 @@
 /* CTA Footer */
 .affiliate-cta-footer {
   padding: 80px 0;
-  background: #f9fafb;
+  background: var(--bg-light);
 }
 
 .affiliate-cta-footer h2 {

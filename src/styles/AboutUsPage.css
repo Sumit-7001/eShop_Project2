@@ -33,7 +33,7 @@
 /* Mission & Vision */
 .mission-vision {
   padding: 80px 0;
-  background: #fcfcfc;
+  background: var(--bg-light);
 }
 
 .mv-grid {
@@ -43,7 +43,7 @@
 }
 
 .mv-card {
-  background: white;
+  background: var(--card-bg);
   padding: 50px 40px;
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.05);
@@ -84,7 +84,7 @@
 /* Core Values */
 .core-values {
   padding: 80px 0;
-  background: white;
+  background: var(--bg-white);
 }
 
 .section-title {
@@ -107,8 +107,9 @@
 }
 
 .value-icon {
+  display: block;
+  margin: 0 auto 20px auto;
   color: var(--primary-color);
-  margin-bottom: 20px;
 }
 
 .value-item h3 {

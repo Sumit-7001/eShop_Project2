@@ -18,8 +18,9 @@
 }
 
 .hero-icon {
+  display: block;
+  margin: 0 auto 20px auto;
   color: var(--primary-color);
-  margin-bottom: 20px;
   opacity: 0.9;
 }
 
@@ -38,7 +39,7 @@
 
 .policy-content-section {
   padding: 80px 0;
-  background: #fcfcfc;
+  background: var(--bg-light);
 }
 
 .policy-grid {
@@ -49,17 +50,18 @@
 }
 
 .policy-card {
-  background: white;
+  background: var(--card-bg);
   padding: 40px 30px;
   border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  box-shadow: var(--shadow-soft);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid rgba(0,0,0,0.02);
+  border: 1px solid var(--admin-border-color);
+  text-align: center;
 }
 
 .policy-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  box-shadow: var(--shadow-hover);
 }
 
 .icon-wrapper {
@@ -71,7 +73,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 25px;
+  margin: 0 auto 25px auto;
 }
 
 .policy-card h3 {
