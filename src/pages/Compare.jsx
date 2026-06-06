@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import emptyCompareImg from '../assets/images/empty_compare.png';
+import emptyCompareImg from '../assets/images/empty_cart.png';
 import { useApp } from '../context/AppContext';
 import '../styles/Compare.css';
 
