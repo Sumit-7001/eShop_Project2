@@ -202,7 +202,7 @@
   text-decoration: none;
   box-sizing: border-box;
   width: 100%;
-  background-color: #ff9980; /* Coral/Peach from reference */
+  background-color: var(--primary-color);
   color: white;
   border: none;
   padding: 15px;
@@ -211,11 +211,14 @@
   font-size: 16px;
   cursor: pointer;
   margin-top: 10px;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
 }
 
 .checkout-btn:hover {
-  background-color: #ff8566;
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 77, 77, 0.4);
 }
 
 .empty-cart {

@@ -7,7 +7,10 @@ import '../styles/Cart.css';
 const Cart = () => {
   const { cartItems, removeFromCart, updateQuantity, clearCart, savedForLaterItems, moveToSavedForLater, moveToCartFromSaved, removeFromSavedForLater } = useApp();
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-  const total = subtotal; // Simplified, you can add tax logic here if needed
+  const shipping = subtotal > 0 ? 99 : 0;
+  const tax = subtotal > 0 ? Math.round(subtotal * 0.018) : 0;
+  const discount = subtotal > 1000 ? 500 : 0;
+  const total = subtotal > 0 ? subtotal + shipping + tax - discount : 0;
 
   if (cartItems.length === 0 && savedForLaterItems.length === 0) {
     return (
@@ -107,9 +110,10 @@ const Cart = () => {
               </table>
               </>
             ) : (
-              <div className="empty-cart-section">
+              <div className="empty-cart" style={{ padding: '40px 20px', borderBottom: '1px solid var(--admin-border-color)' }}>
+                <ShoppingBag size={50} color="var(--text-gray)" style={{ display: 'block', margin: '0 auto 15px', opacity: 0.5 }} />
                 <h2>Your cart is empty</h2>
-                <p>Looks like you haven't added anything to your cart yet.</p>
+                <p style={{ color: 'var(--text-gray)', marginBottom: '25px' }}>Looks like you haven't added anything to your cart yet.</p>
                 <Link to="/" className="continue-shopping">Continue Shopping</Link>
               </div>
             )}
@@ -173,9 +177,25 @@ const Cart = () => {
             <div className="cart-sidebar">
             <div className="cart-total-card">
               <h3>Cart Total</h3>
-              <div className="total-row">
+              <div className="total-row" style={{ fontWeight: '700', color: 'var(--text-dark)', borderBottom: '1px solid var(--admin-border-color)', paddingBottom: '15px' }}>
+                <span>Details</span>
+                <span>Amount</span>
+              </div>
+              <div className="total-row" style={{ marginTop: '15px' }}>
                 <span>Subtotal</span>
                 <span>₹{subtotal.toLocaleString()}</span>
+              </div>
+              <div className="total-row">
+                <span>Shipping</span>
+                <span>₹{shipping.toLocaleString()}</span>
+              </div>
+              <div className="total-row">
+                <span>Tax</span>
+                <span>₹{tax.toLocaleString()}</span>
+              </div>
+              <div className="total-row">
+                <span>Discount</span>
+                <span>-₹{discount.toLocaleString()}</span>
               </div>
               <div className="total-row grand-total">
                 <span>Total</span>
