@@ -30,6 +30,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import Profile from './pages/Profile';
 import PolicyPage from './pages/PolicyPage';
 import AffiliatePage from './pages/AffiliatePage';
+import ReturnPolicyPage from './pages/ReturnPolicyPage';
 
 
 // ── Protected Admin Route ──────────────────────────────────────────────────
@@ -88,7 +89,7 @@ const AppShell = () => {
           <Route path="/compare"                   element={<Compare />} />
           <Route path="/cart"                      element={<Cart />} />
           <Route path="/affiliate"                 element={<AffiliatePage />} />
-          <Route path="/return-policy"             element={<PolicyPage title="Return Policy" content={["If you are not entirely satisfied with your purchase, we're here to help.", "You have 30 calendar days to return an item from the date you received it. To be eligible for a return, your item must be unused and in the same condition that you received it."]} />} />
+          <Route path="/return-policy"             element={<ReturnPolicyPage />} />
           <Route path="/shipping-policy"           element={<PolicyPage title="Shipping Policy" content={["All orders are processed within 2-3 business days. Orders are not shipped or delivered on weekends or holidays.", "If we are experiencing a high volume of orders, shipments may be delayed by a few days. Please allow additional days in transit for delivery."]} />} />
           <Route path="/privacy-policy"            element={<PolicyPage title="Privacy Policy" content={["Your privacy is important to us. It is MarketHub's policy to respect your privacy regarding any information we may collect from you across our website.", "We only ask for personal information when we truly need it to provide a service to you."]} />} />
           <Route path="/terms-conditions"          element={<PolicyPage title="Terms & Conditions" content={["By accessing this website we assume you accept these terms and conditions. Do not continue to use MarketHub if you do not agree to take all of the terms and conditions stated on this page.", "The following terminology applies to these Terms and Conditions, Privacy Statement and Disclaimer Notice and all Agreements."]} />} />
