@@ -87,6 +87,7 @@ const CategoryProducts = () => {
             onClose={() => setIsMobileFilterOpen(false)} 
             selectedFilters={selectedFilters}
             onFilterChange={setSelectedFilters}
+            currentCategorySlug={slug}
           />
 
           <main className="products-main-content">
