@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 import '../../styles/Footer.css';
 
@@ -38,21 +39,21 @@ const Footer = () => {
         <div className="footer-links">
           <h3>Useful Links</h3>
           <ul>
-            <li><a href="#">Become a Seller</a></li>
-            <li><a href="#">Become an Affiliate User</a></li>
-            <li><a href="#">Return Policy</a></li>
-            <li><a href="#">Shipping Policy</a></li>
-            <li><a href="#">Products</a></li>
+            <li><Link to="/sellers">Become a Seller</Link></li>
+            <li><Link to="/affiliate">Become an Affiliate User</Link></li>
+            <li><Link to="/return-policy">Return Policy</Link></li>
+            <li><Link to="/shipping-policy">Shipping Policy</Link></li>
+            <li><Link to="/categories">Products</Link></li>
           </ul>
         </div>
 
         <div className="footer-links">
           <h3>About Us</h3>
           <ul>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contact Us</a></li>
-            <li><a href="#">Terms & Conditions</a></li>
-            <li><a href="#">Privacy Policy</a></li>
+            <li><Link to="/about">About Us</Link></li>
+            <li><Link to="/contact">Contact Us</Link></li>
+            <li><Link to="/terms-conditions">Terms & Conditions</Link></li>
+            <li><Link to="/privacy-policy">Privacy Policy</Link></li>
           </ul>
         </div>
       </div>
