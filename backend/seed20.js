@@ -11,8 +11,8 @@ const newProductsList = [
   {
     id: 201,
     title: 'Nothing Phone (2a)',
-    price: 349,
-    oldPrice: 399,
+    price: 34900,
+    oldPrice: 39900,
     rating: 4.6,
     image: 'https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=400',
     sale: true,
@@ -22,8 +22,8 @@ const newProductsList = [
   {
     id: 202,
     title: 'Google Pixel 8a',
-    price: 499,
-    oldPrice: 549,
+    price: 49900,
+    oldPrice: 54900,
     rating: 4.7,
     image: 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=400',
     sale: true,
@@ -33,8 +33,8 @@ const newProductsList = [
   {
     id: 203,
     title: 'Samsung Galaxy A55',
-    price: 449,
-    oldPrice: 499,
+    price: 44900,
+    oldPrice: 49900,
     rating: 4.5,
     image: 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400',
     sale: false,
@@ -44,8 +44,8 @@ const newProductsList = [
   {
     id: 204,
     title: 'Sony Xperia 5 V',
-    price: 899,
-    oldPrice: 999,
+    price: 89900,
+    oldPrice: 99900,
     rating: 4.6,
     image: 'https://images.unsplash.com/photo-1523206489230-c012c64b2b48?w=400',
     sale: true,
@@ -55,8 +55,8 @@ const newProductsList = [
   {
     id: 205,
     title: 'Realme 12 Pro+',
-    price: 399,
-    oldPrice: 449,
+    price: 39900,
+    oldPrice: 44900,
     rating: 4.4,
     image: 'https://images.unsplash.com/photo-1598327106026-d9521da673d1?w=400',
     sale: true,
@@ -68,8 +68,8 @@ const newProductsList = [
   {
     id: 206,
     title: 'Apple Watch Ultra 2',
-    price: 799,
-    oldPrice: 849,
+    price: 79900,
+    oldPrice: 84900,
     rating: 4.9,
     image: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=400',
     sale: false,
@@ -79,8 +79,8 @@ const newProductsList = [
   {
     id: 207,
     title: 'Garmin Fenix 7 Pro',
-    price: 699,
-    oldPrice: 799,
+    price: 69900,
+    oldPrice: 79900,
     rating: 4.8,
     image: 'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=400',
     sale: true,
@@ -90,8 +90,8 @@ const newProductsList = [
   {
     id: 208,
     title: 'Fitbit Charge 6',
-    price: 159,
-    oldPrice: 179,
+    price: 15900,
+    oldPrice: 17900,
     rating: 4.5,
     image: 'https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=400',
     sale: true,
@@ -101,8 +101,8 @@ const newProductsList = [
   {
     id: 209,
     title: 'Withings Steel HR',
-    price: 179,
-    oldPrice: 199,
+    price: 17900,
+    oldPrice: 19900,
     rating: 4.4,
     image: 'https://images.unsplash.com/photo-1508057198894-247b23fe5ade?w=400',
     sale: false,
@@ -112,8 +112,8 @@ const newProductsList = [
   {
     id: 210,
     title: 'Fossil Heritage Automatic',
-    price: 299,
-    oldPrice: 349,
+    price: 29900,
+    oldPrice: 34900,
     rating: 4.7,
     image: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400',
     sale: true,
@@ -125,8 +125,8 @@ const newProductsList = [
   {
     id: 211,
     title: 'Industrial Wooden Desk',
-    price: 249,
-    oldPrice: 299,
+    price: 24900,
+    oldPrice: 29900,
     rating: 4.8,
     image: 'https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?w=400',
     sale: true,
@@ -136,8 +136,8 @@ const newProductsList = [
   {
     id: 212,
     title: 'Plush Accent Armchair',
-    price: 199,
-    oldPrice: 249,
+    price: 19900,
+    oldPrice: 24900,
     rating: 4.7,
     image: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=400',
     sale: true,
@@ -147,8 +147,8 @@ const newProductsList = [
   {
     id: 213,
     title: 'Minimalist Floating Shelf',
-    price: 39,
-    oldPrice: 49,
+    price: 3900,
+    oldPrice: 4900,
     rating: 4.5,
     image: 'https://images.unsplash.com/photo-1594620302200-9a762244a156?w=400',
     sale: false,
@@ -158,8 +158,8 @@ const newProductsList = [
   {
     id: 214,
     title: 'Modern Glass Coffee Table',
-    price: 179,
-    oldPrice: 229,
+    price: 17900,
+    oldPrice: 22900,
     rating: 4.6,
     image: 'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=400',
     sale: true,
@@ -169,8 +169,8 @@ const newProductsList = [
   {
     id: 215,
     title: 'Adjustable Bar Stools (Pair)',
-    price: 149,
-    oldPrice: 179,
+    price: 14900,
+    oldPrice: 17900,
     rating: 4.4,
     image: 'https://images.unsplash.com/photo-1505693395321-883724634266?w=400',
     sale: true,
@@ -182,8 +182,8 @@ const newProductsList = [
   {
     id: 216,
     title: 'Magnetic Building Tiles (100)',
-    price: 59,
-    oldPrice: 79,
+    price: 5900,
+    oldPrice: 7900,
     rating: 4.9,
     image: 'https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=400',
     sale: true,
@@ -193,8 +193,8 @@ const newProductsList = [
   {
     id: 217,
     title: 'Dinosaur Excavation Kit',
-    price: 24,
-    oldPrice: 34,
+    price: 2400,
+    oldPrice: 3400,
     rating: 4.8,
     image: 'https://images.unsplash.com/photo-1552084117-56a987666449?w=400',
     sale: false,
@@ -204,8 +204,8 @@ const newProductsList = [
   {
     id: 218,
     title: 'Remote Control Stunt Car',
-    price: 34,
-    oldPrice: 44,
+    price: 3400,
+    oldPrice: 4400,
     rating: 4.7,
     image: 'https://images.unsplash.com/photo-1558244661-d248897f7bc4?w=400',
     sale: true,
@@ -215,8 +215,8 @@ const newProductsList = [
   {
     id: 219,
     title: 'Interactive Learning Globe',
-    price: 49,
-    oldPrice: 59,
+    price: 4900,
+    oldPrice: 5900,
     rating: 4.6,
     image: 'https://images.unsplash.com/photo-1533906966484-a9c978a3f090?w=400',
     sale: false,
@@ -226,8 +226,8 @@ const newProductsList = [
   {
     id: 220,
     title: 'Kids Telescope with Tripod',
-    price: 79,
-    oldPrice: 99,
+    price: 7900,
+    oldPrice: 9900,
     rating: 4.8,
     image: 'https://images.unsplash.com/photo-1618354691792-d1d42acfd860?w=400',
     sale: true,
@@ -249,6 +249,9 @@ const seed20 = async () => {
       const exists = await Product.findOne({ id: prod.id });
       if (!exists) {
         await Product.create(prod);
+        addedCount++;
+      } else {
+        await Product.updateOne({ id: prod.id }, { $set: { price: prod.price, oldPrice: prod.oldPrice } });
         addedCount++;
       }
     }

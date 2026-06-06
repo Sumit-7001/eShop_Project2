@@ -28,11 +28,20 @@ import SellerProducts from './pages/SellerProducts';
 import BrandProducts from './pages/BrandProducts';
 import AdminDashboard from './pages/AdminDashboard';
 import Profile from './pages/Profile';
+import PolicyPage from './pages/PolicyPage';
+import AffiliatePage from './pages/AffiliatePage';
+import ReturnPolicyPage from './pages/ReturnPolicyPage';
+import ShippingPolicyPage from './pages/ShippingPolicyPage';
+import AboutUsPage from './pages/AboutUsPage';
+import TermsConditionsPage from './pages/TermsConditionsPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 
 
 // ── Protected Admin Route ──────────────────────────────────────────────────
 const AdminRoute = () => {
   const { currentUser, smartphonesState, watchesState, furnitureState, kidsState,
+          fashionState, electronicsState, digitalProductState, homeAppliancesState,
+          vegetableState, decorState, booksState,
           addProduct, deleteProduct, updateProduct } = useApp();
 
   if (!currentUser || currentUser.role !== 'admin') {
@@ -45,6 +54,13 @@ const AdminRoute = () => {
       watches={watchesState}
       furniture={furnitureState}
       kids={kidsState}
+      fashion={fashionState}
+      electronics={electronicsState}
+      digitalProduct={digitalProductState}
+      homeAppliances={homeAppliancesState}
+      vegetables={vegetableState}
+      decor={decorState}
+      books={booksState}
       onAddProduct={addProduct}
       onDeleteProduct={deleteProduct}
       onUpdateProduct={updateProduct}
@@ -76,6 +92,12 @@ const AppShell = () => {
           <Route path="/product/:id"               element={<ProductDetails />} />
           <Route path="/compare"                   element={<Compare />} />
           <Route path="/cart"                      element={<Cart />} />
+          <Route path="/affiliate"                 element={<AffiliatePage />} />
+          <Route path="/return-policy"             element={<ReturnPolicyPage />} />
+          <Route path="/shipping-policy"           element={<ShippingPolicyPage />} />
+          <Route path="/privacy-policy"            element={<PrivacyPolicyPage />} />
+          <Route path="/terms-conditions"          element={<TermsConditionsPage />} />
+          <Route path="/about"                     element={<AboutUsPage />} />
           <Route path="/checkout"                  element={
             <ProtectedRoute>
               <Checkout />

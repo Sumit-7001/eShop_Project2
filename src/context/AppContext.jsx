@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import { smartphones, watches, furniture, kids } from '../data/dummyData';
+import { smartphones, watches, furniture, kids, fashion, electronics, digitalProduct, homeAppliances, vegetables, decor, books } from '../data/dummyData';
 
 // ─── Context ──────────────────────────────────────────────────────────────────
 const AppContext = createContext(null);
@@ -515,6 +515,50 @@ export const AppProvider = ({ children }) => {
     saveToStorage('eshop_cart', []);
   }, []);
 
+  // ── Save For Later ─────────────────────────────────────────────────────────
+  const [savedForLaterItems, setSavedForLaterItems] = useState(() => loadFromStorage('eshop_saved_for_later', []));
+
+  useEffect(() => {
+    saveToStorage('eshop_saved_for_later', savedForLaterItems);
+  }, [savedForLaterItems]);
+
+  const moveToSavedForLater = useCallback((id) => {
+    setCartItems(prevCart => {
+      const itemToSave = prevCart.find(item => item.id === id);
+      if (itemToSave) {
+        setSavedForLaterItems(prevSaved => {
+          // If already in saved for later, don't duplicate, just update quantity or ignore
+          const existing = prevSaved.find(item => item.id === id);
+          if (existing) return prevSaved;
+          return [...prevSaved, itemToSave];
+        });
+        showToastRef.current?.(`"${itemToSave.title}" saved for later.`, 'info');
+      }
+      return prevCart.filter(item => item.id !== id);
+    });
+  }, []);
+
+  const moveToCartFromSaved = useCallback((id) => {
+    setSavedForLaterItems(prevSaved => {
+      const itemToMove = prevSaved.find(item => item.id === id);
+      if (itemToMove) {
+        setCartItems(prevCart => {
+          const existing = prevCart.find(item => item.id === id);
+          if (existing) {
+            return prevCart.map(item => item.id === id ? { ...item, quantity: item.quantity + itemToMove.quantity } : item);
+          }
+          return [...prevCart, itemToMove];
+        });
+        showToastRef.current?.(`"${itemToMove.title}" moved to cart.`, 'success');
+      }
+      return prevSaved.filter(item => item.id !== id);
+    });
+  }, []);
+
+  const removeFromSavedForLater = useCallback((id) => {
+    setSavedForLaterItems(prev => prev.filter(item => item.id !== id));
+  }, []);
+
   const cartCount = useMemo(
     () => cartItems.reduce((total, item) => total + item.quantity, 0),
     [cartItems]
@@ -572,6 +616,30 @@ export const AppProvider = ({ children }) => {
   const [watchesState, setWatchesState] = useState(watches);
   const [furnitureState, setFurnitureState] = useState(furniture);
   const [kidsState, setKidsState] = useState(kids);
+  const [fashionState, setFashionState] = useState(fashion);
+  const [electronicsState, setElectronicsState] = useState(electronics);
+  const [digitalProductState, setDigitalProductState] = useState(digitalProduct);
+  const [homeAppliancesState, setHomeAppliancesState] = useState(homeAppliances);
+  const [vegetableState, setVegetableState] = useState(vegetables);
+  const [decorState, setDecorState] = useState(decor);
+  const [booksState, setBooksState] = useState(books);
+
+  const getSetterForCategory = useCallback((cat) => {
+    const map = {
+      smartphones: setSmartphonesState,
+      watches: setWatchesState,
+      furniture: setFurnitureState,
+      kids: setKidsState,
+      fashion: setFashionState,
+      electronics: setElectronicsState,
+      'digital-product': setDigitalProductState,
+      'home-appliances': setHomeAppliancesState,
+      vegetable: setVegetableState,
+      decor: setDecorState,
+      books: setBooksState
+    };
+    return map[cat];
+  }, []);
 
   // Fetch only custom products from MongoDB on load and merge
   useEffect(() => {
@@ -584,6 +652,13 @@ export const AppProvider = ({ children }) => {
           const customWatches = data.products.filter(p => p.category === 'watches');
           const customFurniture = data.products.filter(p => p.category === 'furniture');
           const customKids = data.products.filter(p => p.category === 'kids');
+          const customFashion = data.products.filter(p => p.category === 'fashion');
+          const customElectronics = data.products.filter(p => p.category === 'electronics');
+          const customDigitalProduct = data.products.filter(p => p.category === 'digital-product');
+          const customHomeAppliances = data.products.filter(p => p.category === 'home-appliances');
+          const customVegetable = data.products.filter(p => p.category === 'vegetable');
+          const customDecor = data.products.filter(p => p.category === 'decor');
+          const customBooks = data.products.filter(p => p.category === 'books');
 
           // Prepend custom products to the initial hardcoded catalog, filtering duplicates
           setSmartphonesState(prev => {
@@ -600,6 +675,34 @@ export const AppProvider = ({ children }) => {
           });
           setKidsState(prev => {
             const customFiltered = customKids.filter(cp => !prev.some(p => p.id === cp.id));
+            return [...customFiltered, ...prev];
+          });
+          setFashionState(prev => {
+            const customFiltered = customFashion.filter(cp => !prev.some(p => p.id === cp.id));
+            return [...customFiltered, ...prev];
+          });
+          setElectronicsState(prev => {
+            const customFiltered = customElectronics.filter(cp => !prev.some(p => p.id === cp.id));
+            return [...customFiltered, ...prev];
+          });
+          setDigitalProductState(prev => {
+            const customFiltered = customDigitalProduct.filter(cp => !prev.some(p => p.id === cp.id));
+            return [...customFiltered, ...prev];
+          });
+          setHomeAppliancesState(prev => {
+            const customFiltered = customHomeAppliances.filter(cp => !prev.some(p => p.id === cp.id));
+            return [...customFiltered, ...prev];
+          });
+          setVegetableState(prev => {
+            const customFiltered = customVegetable.filter(cp => !prev.some(p => p.id === cp.id));
+            return [...customFiltered, ...prev];
+          });
+          setDecorState(prev => {
+            const customFiltered = customDecor.filter(cp => !prev.some(p => p.id === cp.id));
+            return [...customFiltered, ...prev];
+          });
+          setBooksState(prev => {
+            const customFiltered = customBooks.filter(cp => !prev.some(p => p.id === cp.id));
             return [...customFiltered, ...prev];
           });
         }
@@ -624,10 +727,8 @@ export const AppProvider = ({ children }) => {
       const data = await res.json();
       if (data.success && data.product) {
         const addedProduct = data.product;
-        if (addedProduct.category === 'smartphones') setSmartphonesState(prev => [addedProduct, ...prev]);
-        else if (addedProduct.category === 'watches') setWatchesState(prev => [addedProduct, ...prev]);
-        else if (addedProduct.category === 'furniture') setFurnitureState(prev => [addedProduct, ...prev]);
-        else if (addedProduct.category === 'kids') setKidsState(prev => [addedProduct, ...prev]);
+        const setter = getSetterForCategory(addedProduct.category);
+        if (setter) setter(prev => [addedProduct, ...prev]);
         showToastRef.current?.('Product added successfully!', 'success');
       } else {
         showToastRef.current?.(data.message || 'Failed to add product.', 'error');
@@ -636,9 +737,14 @@ export const AppProvider = ({ children }) => {
       console.error('Error adding product:', err);
       showToastRef.current?.('Error connecting to backend.', 'error');
     }
-  }, [BASE_API_URL]);
+  }, [BASE_API_URL, getSetterForCategory]);
 
   const deleteProduct = useCallback(async (id, category) => {
+    const setter = getSetterForCategory(category);
+    const removeLocal = () => {
+      if (setter) setter(prev => prev.filter(p => p.id !== id));
+    };
+
     try {
       const token = localStorage.getItem('eshop_token');
       const res = await fetch(`${BASE_API_URL}/products/${id}`, {
@@ -648,32 +754,22 @@ export const AppProvider = ({ children }) => {
         }
       });
       const data = await res.json();
-      if (data.success) {
-        if (category === 'smartphones') setSmartphonesState(prev => prev.filter(p => p.id !== id));
-        else if (category === 'watches') setWatchesState(prev => prev.filter(p => p.id !== id));
-        else if (category === 'furniture') setFurnitureState(prev => prev.filter(p => p.id !== id));
-        else if (category === 'kids') setKidsState(prev => prev.filter(p => p.id !== id));
-        showToastRef.current?.('Product deleted successfully!', 'success');
-      } else {
-        // Local fallback delete
-        if (category === 'smartphones') setSmartphonesState(prev => prev.filter(p => p.id !== id));
-        else if (category === 'watches') setWatchesState(prev => prev.filter(p => p.id !== id));
-        else if (category === 'furniture') setFurnitureState(prev => prev.filter(p => p.id !== id));
-        else if (category === 'kids') setKidsState(prev => prev.filter(p => p.id !== id));
-        showToastRef.current?.('Product deleted successfully!', 'success');
-      }
+      removeLocal();
+      showToastRef.current?.('Product deleted successfully!', 'success');
     } catch (err) {
       console.error('Error deleting product:', err);
-      if (category === 'smartphones') setSmartphonesState(prev => prev.filter(p => p.id !== id));
-      else if (category === 'watches') setWatchesState(prev => prev.filter(p => p.id !== id));
-      else if (category === 'furniture') setFurnitureState(prev => prev.filter(p => p.id !== id));
-      else if (category === 'kids') setKidsState(prev => prev.filter(p => p.id !== id));
+      removeLocal();
       showToastRef.current?.('Product deleted successfully!', 'success');
     }
-  }, [BASE_API_URL]);
+  }, [BASE_API_URL, getSetterForCategory]);
 
   const updateProduct = useCallback(async (updatedProduct) => {
     const { id, category } = updatedProduct;
+    const setter = getSetterForCategory(category);
+    const updateLocal = (prod) => {
+      if (setter) setter(prev => prev.map(p => p.id === id ? { ...p, ...prod } : p));
+    };
+
     try {
       const token = localStorage.getItem('eshop_token');
       const res = await fetch(`${BASE_API_URL}/products/${id}`, {
@@ -686,32 +782,17 @@ export const AppProvider = ({ children }) => {
       });
       const data = await res.json();
       if (data.success && data.product) {
-        const updated = data.product;
-        const updateInList = (list) => list.map(p => p.id === id ? { ...p, ...updated } : p);
-        if (category === 'smartphones') setSmartphonesState(updateInList);
-        else if (category === 'watches') setWatchesState(updateInList);
-        else if (category === 'furniture') setFurnitureState(updateInList);
-        else if (category === 'kids') setKidsState(updateInList);
-        showToastRef.current?.('Product updated successfully!', 'success');
+        updateLocal(data.product);
       } else {
-        // Fallback for local update
-        const updateInList = (list) => list.map(p => p.id === id ? { ...p, ...updatedProduct } : p);
-        if (category === 'smartphones') setSmartphonesState(updateInList);
-        else if (category === 'watches') setWatchesState(updateInList);
-        else if (category === 'furniture') setFurnitureState(updateInList);
-        else if (category === 'kids') setKidsState(updateInList);
-        showToastRef.current?.('Product updated successfully!', 'success');
+        updateLocal(updatedProduct);
       }
+      showToastRef.current?.('Product updated successfully!', 'success');
     } catch (err) {
       console.error('Error updating product:', err);
-      const updateInList = (list) => list.map(p => p.id === id ? { ...p, ...updatedProduct } : p);
-      if (category === 'smartphones') setSmartphonesState(updateInList);
-      else if (category === 'watches') setWatchesState(updateInList);
-      else if (category === 'furniture') setFurnitureState(updateInList);
-      else if (category === 'kids') setKidsState(updateInList);
+      updateLocal(updatedProduct);
       showToastRef.current?.('Product updated successfully!', 'success');
     }
-  }, [BASE_API_URL]);
+  }, [BASE_API_URL, getSetterForCategory]);
 
   // ── Memoized context value (prevents ALL consumers from re-rendering on unrelated state changes) ─
   const value = useMemo(() => ({
@@ -749,6 +830,10 @@ export const AppProvider = ({ children }) => {
     removeFromCart,
     updateQuantity,
     clearCart,
+    savedForLaterItems,
+    moveToSavedForLater,
+    moveToCartFromSaved,
+    removeFromSavedForLater,
     // favorites
     favoriteItems,
     toggleFavorite,
@@ -763,6 +848,13 @@ export const AppProvider = ({ children }) => {
     watchesState,
     furnitureState,
     kidsState,
+    fashionState,
+    electronicsState,
+    digitalProductState,
+    homeAppliancesState,
+    vegetableState,
+    decorState,
+    booksState,
     addProduct,
     deleteProduct,
     updateProduct,
@@ -775,9 +867,10 @@ export const AppProvider = ({ children }) => {
     currentUser, authLoading, authModal, handleLogin, handleRegister, handleGoogleLogin, handleForgotPassword, handleVerifyOTP, handleResendOTP, handleResetPassword, handleSignOut, openAuthModal, closeAuthModal,
     fetchUserProfile, saveAddress, deleteAddress, createOrder, fetchUserOrders, fetchOrderTracking, fetchAdminOrders, fetchAdminUsers, updateAdminOrderStatus,
     cartItems, cartCount, addToCart, removeFromCart, updateQuantity, clearCart,
+    savedForLaterItems, moveToSavedForLater, moveToCartFromSaved, removeFromSavedForLater,
     favoriteItems, toggleFavorite, isFavorite,
     compareItems, toggleCompare, removeFromCompare, isComparing,
-    smartphonesState, watchesState, furnitureState, kidsState, addProduct, deleteProduct, updateProduct,
+    smartphonesState, watchesState, furnitureState, kidsState, fashionState, electronicsState, digitalProductState, homeAppliancesState, vegetableState, decorState, booksState, addProduct, deleteProduct, updateProduct,
     toasts, showToast, dismissToast,
   ]);
 

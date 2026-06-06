@@ -1,9 +1,9 @@
 .seller-card {
-  background: white;
+  background: var(--card-bg);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-  border: 1px solid #f0f0f0;
+  border: 1px solid var(--admin-border-color);
   transition: var(--transition);
   text-align: center;
   display: flex;
@@ -20,7 +20,7 @@
   width: 100%;
   aspect-ratio: 16/9;
   overflow: hidden;
-  background: #f9f9f9;
+  background: var(--bg-light);
 }
 
 .seller-logo {
@@ -61,7 +61,7 @@
 }
 
 .view-products-btn {
-  background: white;
+  background: var(--card-bg);
   color: var(--primary-color);
   border: 1px solid var(--primary-color);
   padding: 8px 25px;

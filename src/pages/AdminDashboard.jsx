@@ -335,15 +335,21 @@ const StarRating = ({ rating }) => (
 const ProductFormModal = ({ isOpen, onClose, onSubmit, initialData = null, title, cSym = '$' }) => {
   const [form, setForm] = useState(initialData || {
     title: '', price: '', oldPrice: '', category: 'smartphones',
-    image: '', sale: false, description: '', stock: ''
+    image: '', sale: false, description: '', stock: '', color: ''
   });
+  const [imageSource, setImageSource] = useState('url'); // 'url' or 'upload'
 
   React.useEffect(() => {
     if (isOpen) {
       setForm(initialData || {
         title: '', price: '', oldPrice: '', category: 'smartphones',
-        image: '', sale: false, description: '', stock: ''
+        image: '', sale: false, description: '', stock: '', color: ''
       });
+      if (initialData?.image && initialData.image.startsWith('data:')) {
+        setImageSource('upload');
+      } else {
+        setImageSource('url');
+      }
     }
   }, [isOpen, initialData]);
 
@@ -389,7 +395,19 @@ const ProductFormModal = ({ isOpen, onClose, onSubmit, initialData = null, title
                 <option value="watches">Watches</option>
                 <option value="furniture">Furniture</option>
                 <option value="kids">Kids Section</option>
+                <option value="fashion">Fashion</option>
+                <option value="electronics">Electronics</option>
+                <option value="digital-product">Digital Product</option>
+                <option value="home-appliances">Home Appliances</option>
+                <option value="vegetable">Vegetables</option>
+                <option value="decor">Decor</option>
+                <option value="books">Books</option>
               </select>
+            </div>
+            <div className="mf-group">
+              <label>Product Color(s)</label>
+              <input type="text" value={form.color || ''} onChange={e => update('color', e.target.value)}
+                placeholder="e.g. Red, Black, #ff4d4d" />
             </div>
             <div className="mf-group mf-checkbox">
               <label className="checkbox-label">
@@ -399,11 +417,135 @@ const ProductFormModal = ({ isOpen, onClose, onSubmit, initialData = null, title
               </label>
             </div>
           </div>
-          <div className="mf-group">
-            <label>Image URL</label>
-            <input type="text" value={form.image} onChange={e => update('image', e.target.value)}
-              placeholder="https://... (leave empty for default)" />
+
+          <div className="mf-group" style={{ gap: '10px' }}>
+            <label>Product Image</label>
+            <div className="image-source-toggle" style={{ display: 'flex', gap: '8px' }}>
+              <button 
+                type="button" 
+                className={`btn-toggle ${imageSource === 'url' ? 'active' : ''}`}
+                onClick={() => setImageSource('url')}
+                style={{
+                  padding: '6px 12px',
+                  borderRadius: '6px',
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  border: '1px solid var(--adm-border, #cbd5e1)',
+                  background: imageSource === 'url' ? 'var(--adm-primary, #ff4d4d)' : 'transparent',
+                  color: imageSource === 'url' ? '#fff' : 'var(--adm-text, #0f172a)',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                Image URL
+              </button>
+              <button 
+                type="button" 
+                className={`btn-toggle ${imageSource === 'upload' ? 'active' : ''}`}
+                onClick={() => setImageSource('upload')}
+                style={{
+                  padding: '6px 12px',
+                  borderRadius: '6px',
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  border: '1px solid var(--adm-border, #cbd5e1)',
+                  background: imageSource === 'upload' ? 'var(--adm-primary, #ff4d4d)' : 'transparent',
+                  color: imageSource === 'upload' ? '#fff' : 'var(--adm-text, #0f172a)',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                Upload from Device
+              </button>
+            </div>
+
+            {imageSource === 'url' ? (
+              <input type="text" value={form.image} onChange={e => update('image', e.target.value)}
+                placeholder="https://... (leave empty for default)" />
+            ) : (
+              <div 
+                className="image-upload-zone"
+                style={{
+                  border: '2px dashed var(--adm-border, #cbd5e1)',
+                  borderRadius: '8px',
+                  padding: '20px',
+                  textAlign: 'center',
+                  cursor: 'pointer',
+                  background: '#f8fafc',
+                  position: 'relative',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                <input 
+                  type="file" 
+                  accept="image/*" 
+                  onChange={async (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        update('image', reader.result);
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    opacity: 0,
+                    cursor: 'pointer'
+                  }}
+                />
+                <Upload size={24} style={{ color: '#64748b', display: 'block', margin: '0 auto 8px auto' }} />
+                <p style={{ margin: 0, fontSize: '13px', color: '#64748b', fontWeight: '500' }}>
+                  Drag and drop or click to select image
+                </p>
+              </div>
+            )}
+
+            {form.image && (
+              <div className="image-preview-wrapper" style={{ marginTop: '5px', display: 'flex', alignItems: 'center', gap: '12px', background: '#f1f5f9', padding: '8px 12px', borderRadius: '8px' }}>
+                <img 
+                  src={form.image} 
+                  alt="Product Preview" 
+                  style={{
+                    width: '48px',
+                    height: '48px',
+                    borderRadius: '6px',
+                    objectFit: 'cover',
+                    border: '1px solid #e2e8f0',
+                    background: '#fff'
+                  }} 
+                />
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <p style={{ margin: 0, fontSize: '11px', color: '#64748b', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
+                    {form.image.startsWith('data:') ? 'Image uploaded from device' : form.image}
+                  </p>
+                </div>
+                <button 
+                  type="button" 
+                  onClick={() => update('image', '')} 
+                  style={{
+                    background: '#ef4444',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '6px',
+                    padding: '4px 10px',
+                    fontSize: '12px',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    transition: 'background 0.2s ease'
+                  }}
+                >
+                  Remove
+                </button>
+              </div>
+            )}
           </div>
+
           <div className="mf-group">
             <label>Description</label>
             <textarea value={form.description} onChange={e => update('description', e.target.value)}
@@ -427,6 +569,13 @@ const AdminDashboard = ({
   watches = [],
   furniture = [],
   kids = [],
+  fashion = [],
+  electronics = [],
+  digitalProduct = [],
+  homeAppliances = [],
+  vegetables = [],
+  decor = [],
+  books = [],
   onAddProduct,
   onDeleteProduct,
   onUpdateProduct
@@ -702,7 +851,14 @@ const AdminDashboard = ({
     ...watches.map(p => ({ ...p, category: 'watches' })),
     ...furniture.map(p => ({ ...p, category: 'furniture' })),
     ...kids.map(p => ({ ...p, category: 'kids' })),
-  ], [smartphones, watches, furniture, kids]);
+    ...fashion.map(p => ({ ...p, category: 'fashion' })),
+    ...electronics.map(p => ({ ...p, category: 'electronics' })),
+    ...digitalProduct.map(p => ({ ...p, category: 'digital-product' })),
+    ...homeAppliances.map(p => ({ ...p, category: 'home-appliances' })),
+    ...vegetables.map(p => ({ ...p, category: 'vegetable' })),
+    ...decor.map(p => ({ ...p, category: 'decor' })),
+    ...books.map(p => ({ ...p, category: 'books' })),
+  ], [smartphones, watches, furniture, kids, fashion, electronics, digitalProduct, homeAppliances, vegetables, decor, books]);
 
   const filteredProducts = useMemo(() => {
     let list = allProducts;
@@ -965,6 +1121,7 @@ const AdminDashboard = ({
       sale: form.sale,
       description: form.description || 'Premium product with excellent quality.',
       stock: parseInt(form.stock) || 50,
+      color: form.color || '',
     };
     onAddProduct(product);
     setAddModal(false);
@@ -981,6 +1138,7 @@ const AdminDashboard = ({
       description: form.description,
       stock: parseInt(form.stock) || 0,
       category: form.category,
+      color: form.color || '',
     });
     setEditModal(false);
     setEditProduct(null);
@@ -1308,6 +1466,13 @@ const AdminDashboard = ({
             <option value="watches">Watches</option>
             <option value="furniture">Furniture</option>
             <option value="kids">Kids</option>
+            <option value="fashion">Fashion</option>
+            <option value="electronics">Electronics</option>
+            <option value="digital-product">Digital Product</option>
+            <option value="home-appliances">Home Appliances</option>
+            <option value="vegetable">Vegetables</option>
+            <option value="decor">Decor</option>
+            <option value="books">Books</option>
           </select>
           <button className="btn-primary" onClick={() => setAddModal(true)}>
             <Plus size={15} /> Add Product
@@ -3459,6 +3624,7 @@ const AdminDashboard = ({
             sale: editProduct.sale || false,
             description: editProduct.description || '',
             stock: editProduct.stock || 50,
+            color: editProduct.color || '',
           } : null}
           title="Edit Product"
           cSym={cSym}

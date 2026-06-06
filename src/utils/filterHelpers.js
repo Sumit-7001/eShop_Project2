@@ -1,13 +1,24 @@
 import { brandProducts } from '../data/dummyData';
 
 export const attributesData = [
-  { name: 'Battery Power', options: ['Under 3000 mAh', '3000 - 4000 mAh', 'Above 4000 mAh'] },
-  { name: 'Color', options: ['Black', 'White', 'Silver', 'Blue', 'Red'] },
-  { name: 'Connectivity technologies', options: ['Bluetooth', 'Wi-Fi', 'USB', 'NFC'] },
-  { name: 'Display Technology', options: ['OLED', 'AMOLED', 'LCD', 'IPS'] },
-  { name: 'Expandable Storage', options: ['Up to 128GB', 'Up to 256GB', 'Up to 512GB', '1TB+'] },
-  { name: 'Item Weight', options: ['Under 150g', '150g - 200g', 'Above 200g'] },
-  { name: 'Material Type', options: ['Plastic', 'Metal', 'Glass', 'Leather'] }
+
+  { name: 'Room', options: ['Living Room', 'Bedroom', 'Dining Room', 'Office'], validCategories: ['furniture'] },
+  { name: 'Furniture Material', options: ['Wood', 'Metal', 'Glass', 'Fabric'], validCategories: ['furniture'] },
+  { name: 'Produce Type', options: ['Organic', 'Non-Organic', 'Locally Grown'], validCategories: ['vegetable'] },
+  { name: 'Weight/Packaging', options: ['250g', '500g', '1kg', 'Bunch'], validCategories: ['vegetable'] },
+
+
+  { name: 'Apparel Color', options: ['Black', 'White', 'Red', 'Blue', 'Pink'], validCategories: ['fashion'] },
+  { name: 'Size', options: ['S', 'M', 'L', 'XL', 'XXL'], validCategories: ['fashion'] },
+  { name: 'Fabric', options: ['Cotton', 'Leather', 'Silk', 'Denim'], validCategories: ['fashion'] },
+
+  { name: 'Battery Power', options: ['Under 3000 mAh', '3000 - 4000 mAh', 'Above 4000 mAh'], validCategories: ['smartphones', 'electronics'] },
+  { name: 'Color', options: ['Black', 'Silver', 'Golden', 'Blue'], validCategories: ['smartphones', 'electronics', 'kids', 'decor'] },
+  { name: 'Connectivity technologies', options: ['Bluetooth', 'Wi-Fi', 'USB', 'NFC'], validCategories: ['smartphones', 'electronics'] },
+  { name: 'Display Technology', options: ['OLED', 'AMOLED', 'LCD', 'IPS'], validCategories: ['smartphones', 'electronics'] },
+  { name: 'Expandable Storage', options: ['Up to 128GB', 'Up to 256GB', 'Up to 512GB', '1TB+'], validCategories: ['smartphones', 'electronics'] },
+  { name: 'Item Weight', options: ['Under 150g', '150g - 200g', 'Above 200g'], validCategories: ['smartphones', 'electronics', 'kids', 'decor', 'books'] },
+  { name: 'Material Type', options: ['Plastic', 'Metal', 'Glass', 'Leather'], validCategories: ['decor'] }
 ];
 
 // Helper to consistently assign an attribute option to a product based on its ID
@@ -79,17 +90,24 @@ export const applyFilters = (products, selectedFilters) => {
       const selectedOptions = selectedFilters.attributes[attrName];
       if (selectedOptions && selectedOptions.length > 0) {
         filtered = filtered.filter(p => {
-          // If the product title contains the option, it's a direct match
-          const textMatch = selectedOptions.some(opt => 
-            p.title.toLowerCase().includes(opt.toLowerCase()) || 
-            (p.description && p.description.toLowerCase().includes(opt.toLowerCase()))
-          );
-          if (textMatch) return true;
+          // If product has explicit attributes defined
+          if (p.attributes && p.attributes[attrName]) {
+            const productAttr = p.attributes[attrName];
+            if (Array.isArray(productAttr)) {
+              return selectedOptions.some(opt => productAttr.includes(opt));
+            } else {
+              return selectedOptions.includes(productAttr);
+            }
+          }
 
-          // Otherwise, simulate attribute assignment to ensure filters work
-          const numericId = typeof p.id === 'number' ? p.id : p.id.charCodeAt(0);
-          const simulatedOption = getProductAttributeOption(numericId, attrName);
-          return selectedOptions.includes(simulatedOption);
+          // If the product title contains the option, it's a direct match
+          // Use regex with word boundaries to prevent 'red' matching 'powered'
+          const textMatch = selectedOptions.some(opt => {
+            const regex = new RegExp(`\\b${opt}\\b`, 'i');
+            return regex.test(p.title) || (p.description && regex.test(p.description));
+          });
+          
+          return textMatch;
         });
       }
     });

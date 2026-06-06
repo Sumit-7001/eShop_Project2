@@ -26,8 +26,8 @@
 }
 
 .filter-dropdown, .show-dropdown {
-  background: #f9fafb;
-  border: 1px solid #eee;
+  background: var(--input-bg);
+  border: 1px solid var(--admin-border-color);
   padding: 12px 25px;
   border-radius: 10px;
   font-size: 14px;
@@ -40,19 +40,20 @@
 }
 
 .search-seller input {
-  background: #f9fafb;
-  border: 1px solid #eee;
+  background: var(--input-bg);
+  border: 1px solid var(--admin-border-color);
   padding: 12px 25px;
   border-radius: 10px;
   font-size: 14px;
   min-width: 300px;
   outline: none;
+  color: var(--text-dark);
   transition: var(--transition);
 }
 
 .search-seller input:focus {
   border-color: var(--primary-color);
-  background: white;
+  background: var(--input-bg);
 }
 
 .view-mode {
@@ -61,8 +62,8 @@
 }
 
 .view-mode button {
-  background: #f9fafb;
-  border: 1px solid #eee;
+  background: var(--input-bg);
+  border: 1px solid var(--admin-border-color);
   width: 45px;
   height: 45px;
   border-radius: 10px;

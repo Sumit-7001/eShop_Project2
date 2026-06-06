@@ -5,27 +5,22 @@ import '../../styles/CategoryProducts.css';
 import { brands, categories } from '../../data/dummyData';
 import { attributesData } from '../../utils/filterHelpers';
 
-const FilterSidebar = ({ isOpen, onClose, selectedFilters = { attributes: {}, brands: [], categories: [] }, onFilterChange }) => {
+const FilterSidebar = ({ isOpen, onClose, selectedFilters = { attributes: {}, brands: [], categories: [] }, onFilterChange, currentCategorySlug }) => {
   const [expandedSections, setExpandedSections] = useState({
-    attributes: true,
-    brands: true,
     categories: true,
+    brands: true,
+    price: true,
+    attributes: true
   });
 
   const [expandedAttributes, setExpandedAttributes] = useState({});
 
   const toggleSection = (section) => {
-    setExpandedSections(prev => ({
-      ...prev,
-      [section]: !prev[section]
-    }));
+    setExpandedSections(prev => ({ ...prev, [section]: !prev[section] }));
   };
 
   const toggleAttribute = (attrName) => {
-    setExpandedAttributes(prev => ({
-      ...prev,
-      [attrName]: !prev[attrName]
-    }));
+    setExpandedAttributes(prev => ({ ...prev, [attrName]: !prev[attrName] }));
   };
 
   const handleAttributeChange = (attrName, option) => {
@@ -43,6 +38,10 @@ const FilterSidebar = ({ isOpen, onClose, selectedFilters = { attributes: {}, br
       }
     });
   };
+
+  const visibleAttributes = currentCategorySlug 
+    ? attributesData.filter(attr => !attr.validCategories || attr.validCategories.includes(currentCategorySlug))
+    : attributesData;
 
   const handleBrandChange = (brandSlug) => {
     if (!onFilterChange) return;
@@ -88,9 +87,9 @@ const FilterSidebar = ({ isOpen, onClose, selectedFilters = { attributes: {}, br
           <h3>Attributes</h3>
           <span className={`arrow ${expandedSections.attributes ? 'up' : 'down'}`}>▾</span>
         </div>
-        {expandedSections.attributes && (
+        {expandedSections.attributes && visibleAttributes.length > 0 && (
           <ul className="filter-list">
-            {attributesData.map(attr => (
+            {visibleAttributes.map(attr => (
               <li key={attr.name} className="filter-item-group">
                 <div 
                   className="filter-item expandable" 

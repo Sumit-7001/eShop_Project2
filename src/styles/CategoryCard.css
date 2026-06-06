@@ -38,7 +38,7 @@
 .category-name {
   font-size: 15px;
   font-weight: 600;
-  color: #1a1a2e;
+  color: var(--text-dark);
   transition: var(--transition);
   text-align: center;
 }
@@ -60,7 +60,7 @@
 .category-card:first-child .category-img {
   padding: 20px;
   object-fit: contain;
-  background: #f0f7ff;
+  background: var(--bg-light);
 }
 
 @media (max-width: 768px) {

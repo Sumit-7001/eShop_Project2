@@ -1,6 +1,6 @@
 .checkout-page {
   padding: 15px 0 60px;
-  background-color: #f8f9fa;
+  background-color: var(--bg-light);
   min-height: 90vh;
 }
 
@@ -12,17 +12,17 @@
   display: flex;
   list-style: none;
   gap: 10px;
-  color: #666;
+  color: var(--text-gray);
   font-size: 14px;
 }
 
 .checkout-breadcrumb a {
-  color: #666;
+  color: var(--text-gray);
   text-decoration: none;
 }
 
 .checkout-breadcrumb .active {
-  color: #999;
+  color: var(--text-light);
 }
 
 .checkout-container {
@@ -44,7 +44,7 @@
 }
 
 .checkout-card {
-  background: #fff;
+  background: var(--card-bg);
   border-radius: 12px;
   padding: 20px;
   box-shadow: var(--shadow-soft);
@@ -56,10 +56,10 @@
   gap: 10px;
   font-size: 17px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-dark);
   margin-bottom: 15px;
   padding-bottom: 8px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--admin-border-color);
 }
 
 .form-grid {
@@ -93,16 +93,16 @@
 .form-group label {
   font-size: 14px;
   font-weight: 500;
-  color: #555;
+  color: var(--text-gray);
 }
 
 .form-control {
   padding: 12px 16px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--input-border);
   border-radius: 8px;
   font-size: 14px;
-  color: #333;
-  background-color: #fff;
+  color: var(--text-dark);
+  background-color: var(--input-bg);
   transition: border-color 0.3s, box-shadow 0.3s;
 }
 
@@ -130,7 +130,7 @@
 }
 
 .payment-method-card {
-  border: 2px dashed #eee;
+  border: 2px dashed var(--admin-border-color);
   border-radius: 8px;
   padding: 10px 15px;
   display: flex;
@@ -143,13 +143,13 @@
 
 .payment-method-card:hover {
   border-color: #ff7e5f;
-  background-color: #fffefd;
+  background-color: rgba(255, 126, 95, 0.05);
 }
 
 .payment-method-card.active {
   border-style: solid;
   border-color: #ff7e5f;
-  background-color: rgba(255, 126, 95, 0.03);
+  background-color: rgba(255, 126, 95, 0.05);
 }
 
 .payment-method-card input[type="radio"] {
@@ -163,19 +163,19 @@
   align-items: center;
   gap: 10px;
   font-weight: 500;
-  color: #333;
+  color: var(--text-dark);
 }
 
 .payment-method-desc {
   font-size: 12px;
-  color: #888;
+  color: var(--text-gray);
   margin-top: 2px;
 }
 
 .card-details-fields {
   margin-top: 15px;
   padding-top: 15px;
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid var(--admin-border-color);
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -205,7 +205,7 @@
 }
 
 .summary-items-list::-webkit-scrollbar-thumb {
-  background: #ddd;
+  background: var(--admin-border-color);
   border-radius: 4px;
 }
 
@@ -214,7 +214,7 @@
   align-items: center;
   gap: 15px;
   padding: 12px 0;
-  border-bottom: 1px solid #f9f9f9;
+  border-bottom: 1px solid var(--admin-border-color);
 }
 
 .summary-item:last-child {
@@ -226,7 +226,7 @@
   height: 50px;
   object-fit: cover;
   border-radius: 6px;
-  border: 1px solid #eee;
+  border: 1px solid var(--admin-border-color);
 }
 
 .summary-item-info {
@@ -236,7 +236,7 @@
 .summary-item-title {
   font-size: 13px;
   font-weight: 500;
-  color: #333;
+  color: var(--text-dark);
   margin-bottom: 2px;
   white-space: nowrap;
   overflow: hidden;
@@ -246,13 +246,13 @@
 
 .summary-item-qty {
   font-size: 11px;
-  color: #888;
+  color: var(--text-gray);
 }
 
 .summary-item-price {
   font-size: 13px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-dark);
 }
 
 .promo-code-container {
@@ -260,21 +260,23 @@
   gap: 10px;
   margin: 20px 0;
   padding: 15px 0;
-  border-top: 1px solid #f0f0f0;
-  border-bottom: 1px solid #f0f0f0;
+  border-top: 1px solid var(--admin-border-color);
+  border-bottom: 1px solid var(--admin-border-color);
 }
 
 .promo-input {
   flex: 1;
   padding: 10px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--input-border);
   border-radius: 6px;
   font-size: 13px;
+  background: var(--input-bg);
+  color: var(--text-dark);
 }
 
 .promo-apply-btn {
-  background-color: #333;
-  color: #fff;
+  background-color: var(--text-dark);
+  color: var(--bg-white);
   padding: 10px 15px;
   border-radius: 6px;
   font-size: 13px;
@@ -284,7 +286,7 @@
 }
 
 .promo-apply-btn:hover {
-  background-color: #555;
+  opacity: 0.85;
 }
 
 .promo-message {
@@ -305,17 +307,17 @@
   display: flex;
   justify-content: space-between;
   font-size: 14px;
-  color: #666;
+  color: var(--text-gray);
   margin-bottom: 12px;
 }
 
 .summary-row.grand-total {
   margin-top: 15px;
   padding-top: 15px;
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid var(--admin-border-color);
   font-size: 18px;
   font-weight: 700;
-  color: #333;
+  color: var(--text-dark);
 }
 
 .summary-row.discount-row {
@@ -381,7 +383,7 @@
 }
 
 .success-modal {
-  background: white;
+  background: var(--card-bg);
   border-radius: 16px;
   padding: 40px;
   max-width: 500px;
@@ -410,18 +412,18 @@
 
 .success-modal h2 {
   font-size: 24px;
-  color: #333;
+  color: var(--text-dark);
   margin-bottom: 10px;
 }
 
 .success-modal p {
-  color: #666;
+  color: var(--text-gray);
   font-size: 14px;
   margin-bottom: 25px;
 }
 
 .order-details-card {
-  background-color: #f8f9fa;
+  background-color: var(--bg-light);
   border-radius: 8px;
   padding: 15px;
   margin-bottom: 25px;
@@ -431,7 +433,7 @@
 
 .order-details-card div {
   margin-bottom: 8px;
-  color: #555;
+  color: var(--text-gray);
   display: flex;
   justify-content: space-between;
 }
@@ -441,14 +443,14 @@
 }
 
 .order-details-card strong {
-  color: #333;
+  color: var(--text-dark);
 }
 
 .continue-btn {
   display: inline-block;
   width: 100%;
-  background-color: #333;
-  color: white;
+  background-color: var(--text-dark);
+  color: var(--bg-white);
   padding: 12px;
   border-radius: 8px;
   font-weight: 600;
@@ -458,7 +460,7 @@
 }
 
 .continue-btn:hover {
-  background-color: #555;
+  opacity: 0.85;
 }
 
 /* Stepper Progress Bar Styles */
@@ -479,7 +481,7 @@
   flex-direction: column;
   align-items: center;
   z-index: 2;
-  background-color: #f8f9fa; /* Matches page background to mask the connector line */
+  background-color: var(--bg-light); /* Matches page background to mask the connector line */
   padding: 0 25px;
   cursor: pointer;
 }
@@ -488,9 +490,9 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 2px solid #ddd;
-  background-color: #fff;
-  color: #888;
+  border: 2px solid var(--admin-border-color);
+  background-color: var(--card-bg);
+  color: var(--text-gray);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -516,12 +518,12 @@
 .step-label {
   font-size: 13px;
   font-weight: 500;
-  color: #888;
+  color: var(--text-gray);
   transition: color 0.3s;
 }
 
 .step-indicator.active .step-label {
-  color: #333;
+  color: var(--text-dark);
   font-weight: 600;
 }
 
@@ -535,7 +537,7 @@
   left: 10%;
   right: 10%;
   height: 2px;
-  background-color: #eee;
+  background-color: var(--admin-border-color);
   z-index: 1;
 }
 
@@ -569,7 +571,7 @@
 .checkout-wizard-card {
   width: 100%;
   max-width: 750px;
-  background: #fff;
+  background: var(--card-bg);
   border-radius: 12px;
   padding: 25px;
   box-shadow: var(--shadow-soft);
@@ -591,10 +593,10 @@
 }
 
 .review-summary-block {
-  background-color: #f8f9fa;
+  background-color: var(--bg-light);
   border-radius: 8px;
   padding: 15px;
-  border: 1px solid #f0f0f0;
+  border: 1px solid var(--admin-border-color);
   position: relative;
 }
 
@@ -604,15 +606,15 @@
   gap: 8px;
   font-size: 15px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-dark);
   margin-bottom: 8px;
   padding-bottom: 6px;
-  border-bottom: 1px solid #eef0f2;
+  border-bottom: 1px solid var(--admin-border-color);
 }
 
 .review-summary-block p {
   font-size: 13px;
-  color: #666;
+  color: var(--text-gray);
   margin-bottom: 4px;
   line-height: 1.5;
 }
@@ -620,11 +622,11 @@
 .card-masked-info {
   font-family: monospace;
   font-size: 13px !important;
-  color: #333 !important;
-  background: #fff;
+  color: var(--text-dark) !important;
+  background: var(--bg-white);
   padding: 4px 8px;
   border-radius: 4px;
-  border: 1px dashed #ddd;
+  border: 1px dashed var(--admin-border-color);
   display: inline-block;
   margin-top: 5px;
 }
@@ -652,13 +654,13 @@
   gap: 8px;
   font-size: 14px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-dark);
   margin-top: 20px;
   margin-bottom: 10px;
 }
 
 .review-items-list {
-  border: 1px solid #eee;
+  border: 1px solid var(--admin-border-color);
   border-radius: 8px;
   overflow: hidden;
   margin-bottom: 15px;
@@ -669,8 +671,8 @@
   align-items: center;
   gap: 15px;
   padding: 10px 15px;
-  border-bottom: 1px solid #eee;
-  background-color: #fff;
+  border-bottom: 1px solid var(--admin-border-color);
+  background-color: var(--card-bg);
 }
 
 .review-item:last-child {
@@ -682,7 +684,7 @@
   height: 60px;
   object-fit: cover;
   border-radius: 6px;
-  border: 1px solid #eee;
+  border: 1px solid var(--admin-border-color);
 }
 
 .review-item-info {
@@ -692,20 +694,20 @@
 .review-item-name {
   font-size: 14px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-dark);
   margin-bottom: 3px;
 }
 
 .review-item-subtitle {
   font-size: 12px;
-  color: #888;
+  color: var(--text-gray);
   margin-bottom: 5px;
 }
 
 .review-item-qty-tag {
   font-size: 11px;
-  background: #f1f3f5;
-  color: #495057;
+  background: var(--bg-light);
+  color: var(--text-gray);
   padding: 2px 6px;
   border-radius: 4px;
   font-weight: 500;
@@ -714,22 +716,22 @@
 .review-item-price {
   font-size: 14px;
   font-weight: 700;
-  color: #333;
+  color: var(--text-dark);
 }
 
 .review-promo-section {
-  background-color: #fffbef;
-  border: 1px dashed #ffeeba;
+  background-color: rgba(255, 200, 0, 0.06);
+  border: 1px dashed rgba(255, 200, 0, 0.3);
   border-radius: 8px;
   padding: 15px;
   margin-bottom: 15px;
 }
 
 .review-bill-card {
-  background-color: #f8f9fa;
+  background-color: var(--bg-light);
   border-radius: 8px;
   padding: 15px;
-  border: 1px solid #eee;
+  border: 1px solid var(--admin-border-color);
   margin-bottom: 15px;
 }
 
@@ -737,7 +739,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 14px;
-  color: #666;
+  color: var(--text-gray);
   margin-bottom: 8px;
 }
 
@@ -753,10 +755,10 @@
 .review-bill-row.grand-total {
   margin-top: 10px;
   padding-top: 10px;
-  border-top: 1px solid #eef0f2;
+  border-top: 1px solid var(--admin-border-color);
   font-size: 17px;
   font-weight: 700;
-  color: #333;
+  color: var(--text-dark);
 }
 
 .place-order-final-btn {
@@ -775,7 +777,7 @@
   gap: 12px;
   margin-top: 20px;
   padding-top: 15px;
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid var(--admin-border-color);
 }
 
 .next-step-btn {
@@ -799,9 +801,9 @@
 }
 
 .prev-step-btn {
-  background: white;
-  border: 1px solid #ddd;
-  color: #666;
+  background: var(--card-bg);
+  border: 1px solid var(--admin-border-color);
+  color: var(--text-gray);
   padding: 12px 25px;
   border-radius: 8px;
   font-weight: 600;
@@ -815,16 +817,16 @@
 }
 
 .prev-step-btn:hover {
-  border-color: #999;
-  color: #333;
-  background-color: #f9f9f9;
+  border-color: var(--text-gray);
+  color: var(--text-dark);
+  background-color: var(--bg-light);
 }
 
 /* Saved Address Selector for Checkout */
 .saved-addresses-selector {
   margin-bottom: 20px;
-  background-color: #fcfcfd;
-  border: 1px solid #edf0f2;
+  background-color: var(--bg-light);
+  border: 1px solid var(--admin-border-color);
   border-radius: 16px;
   padding: 18px;
 }
@@ -832,7 +834,7 @@
 .selector-title {
   font-size: 14px;
   font-weight: 700;
-  color: #333;
+  color: var(--text-dark);
   margin-top: 0;
   margin-bottom: 12px;
 }
@@ -850,8 +852,8 @@
 }
 
 .saved-address-card {
-  background: white;
-  border: 2px dashed #e4e4e7;
+  background: var(--card-bg);
+  border: 2px dashed var(--admin-border-color);
   border-radius: 12px;
   padding: 14px 16px;
   cursor: pointer;
@@ -886,13 +888,13 @@
 .address-name {
   font-size: 13.5px;
   font-weight: 700;
-  color: #18181b;
+  color: var(--text-dark);
   margin: 0 0 4px 0;
 }
 
 .address-details {
   font-size: 12px;
-  color: #71717a;
+  color: var(--text-gray);
   margin: 0 0 2px 0;
   line-height: 1.4;
   white-space: nowrap;

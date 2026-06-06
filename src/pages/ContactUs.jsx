@@ -42,7 +42,7 @@ const ContactUs = () => {
             </div>
             <div className="info-content">
               <h4>Find Us</h4>
-              <p>Time Square Empire, WRTeam , Mirzapar Highway , Bhuj , Kutch , Gujarat - 370001</p>
+              <p>MarketHub Headquarters, 123 Commerce Avenue, Tech District, San Francisco, CA 94105, USA</p>
             </div>
           </div>
 
@@ -52,7 +52,7 @@ const ContactUs = () => {
             </div>
             <div className="info-content">
               <h4>Contact Us</h4>
-              <p>1234567890</p>
+              <p>+1 (800) 123-4567</p>
             </div>
           </div>
 
@@ -62,7 +62,7 @@ const ContactUs = () => {
             </div>
             <div className="info-content">
               <h4>Email Us</h4>
-              <p>eshop@gmail.com</p>
+              <p>support@markethub.com</p>
             </div>
           </div>
         </div>

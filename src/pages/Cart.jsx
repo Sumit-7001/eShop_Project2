@@ -5,11 +5,11 @@ import { useApp } from '../context/AppContext';
 import '../styles/Cart.css';
 
 const Cart = () => {
-  const { cartItems, removeFromCart, updateQuantity, clearCart } = useApp();
+  const { cartItems, removeFromCart, updateQuantity, clearCart, savedForLaterItems, moveToSavedForLater, moveToCartFromSaved, removeFromSavedForLater } = useApp();
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   const total = subtotal; // Simplified, you can add tax logic here if needed
 
-  if (cartItems.length === 0) {
+  if (cartItems.length === 0 && savedForLaterItems.length === 0) {
     return (
       <div className="cart-page">
         <div className="container">
@@ -36,11 +36,12 @@ const Cart = () => {
 
         <div className="cart-container">
           <div className="cart-main">
-            <div className="cart-header-actions">
-              <button className="clear-cart-btn" onClick={clearCart}>Clear Cart</button>
-            </div>
-
-            <table className="cart-table">
+            {cartItems.length > 0 ? (
+              <>
+                <div className="cart-header-actions">
+                  <button className="clear-cart-btn" onClick={clearCart}>Clear Cart</button>
+                </div>
+                <table className="cart-table">
               <thead>
                 <tr>
                   <th>Product</th>
@@ -92,16 +93,84 @@ const Cart = () => {
                           size={18} 
                           onClick={() => removeFromCart(item.id)}
                         />
-                        <ShoppingBag className="action-icon save-icon" size={18} />
+                        <ShoppingBag 
+                          className="action-icon save-icon" 
+                          size={18} 
+                          title="Save for Later"
+                          onClick={() => moveToSavedForLater(item.id)}
+                        />
                       </div>
                     </td>
                   </tr>
                 ))}
-              </tbody>
-            </table>
+                </tbody>
+              </table>
+              </>
+            ) : (
+              <div className="empty-cart-section">
+                <h2>Your cart is empty</h2>
+                <p>Looks like you haven't added anything to your cart yet.</p>
+                <Link to="/" className="continue-shopping">Continue Shopping</Link>
+              </div>
+            )}
+
+            {savedForLaterItems.length > 0 && (
+              <div className="saved-for-later-section" style={{ marginTop: '50px' }}>
+                <h3 style={{ marginBottom: '20px', fontSize: '1.5rem', fontWeight: '700', color: 'var(--text-dark)' }}>
+                  Saved for Later ({savedForLaterItems.length})
+                </h3>
+                <table className="cart-table">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Price</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {savedForLaterItems.map((item) => (
+                      <tr key={item.id}>
+                        <td data-label="Product">
+                          <Link to={`/product/${item.id >= 1000 ? item.id - 1000 : item.id}`} className="cart-product-link">
+                            <div className="cart-product-cell">
+                              <img src={item.image} alt={item.title} className="cart-product-img" />
+                              <div className="cart-product-info">
+                                <h4>{item.title}</h4>
+                                <p>{item.subtitle || 'Premium Quality'}</p>
+                              </div>
+                            </div>
+                          </Link>
+                        </td>
+                        <td data-label="Price"><div className="cart-price">₹{item.price.toLocaleString()}</div></td>
+                        <td data-label="Actions">
+                          <div className="cart-actions" style={{ justifyContent: 'flex-start', gap: '15px' }}>
+                            <button 
+                              className="move-to-cart-btn" 
+                              style={{
+                                background: 'transparent', border: '1px solid var(--primary-color)', color: 'var(--primary-color)',
+                                padding: '6px 15px', borderRadius: '20px', cursor: 'pointer', fontSize: '13px', fontWeight: '600'
+                              }}
+                              onClick={() => moveToCartFromSaved(item.id)}
+                            >
+                              Move to Cart
+                            </button>
+                            <Trash2 
+                              className="action-icon delete-icon" 
+                              size={18} 
+                              onClick={() => removeFromSavedForLater(item.id)}
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
 
-          <div className="cart-sidebar">
+          {cartItems.length > 0 && (
+            <div className="cart-sidebar">
             <div className="cart-total-card">
               <h3>Cart Total</h3>
               <div className="total-row">
@@ -115,6 +184,7 @@ const Cart = () => {
               <Link to="/checkout" className="checkout-btn">Go To Checkout</Link>
             </div>
           </div>
+          )}
         </div>
       </div>
     </div>

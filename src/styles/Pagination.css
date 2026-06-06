@@ -13,9 +13,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #eee;
-  background: white;
-  color: #666;
+  border: 1px solid var(--admin-border-color);
+  background: var(--card-bg);
+  color: var(--text-gray);
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -28,7 +28,7 @@
 }
 
 .pagination-btn.active {
-  background: white;
+  background: var(--card-bg);
   border-color: #ff5e5e;
   color: #ff5e5e;
 }

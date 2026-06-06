@@ -4,7 +4,7 @@
 }
 
 .breadcrumb-area {
-  background: #f1f3f6;
+  background: var(--bg-light);
   padding: 20px 0;
   margin-bottom: 60px;
 }
@@ -21,14 +21,14 @@
 }
 
 .contact-info-card {
-  background: white;
+  background: var(--card-bg);
   border-radius: 12px;
   padding: 50px;
   box-shadow: 0 10px 40px rgba(0,0,0,0.05);
   display: flex;
   justify-content: space-around;
   margin-bottom: 80px;
-  border: 1px solid #f0f0f0;
+  border: 1px solid var(--admin-border-color);
 }
 
 .info-item {
@@ -83,7 +83,7 @@
 }
 
 .contact-form {
-  background: white;
+  background: var(--card-bg);
   padding: 20px;
 }
 
@@ -102,17 +102,18 @@
 .form-group input, .form-group textarea {
   width: 100%;
   padding: 15px 20px;
-  border: 1px solid #eee;
+  border: 1px solid var(--input-border);
   border-radius: 10px;
   font-size: 15px;
-  background: #f9fafb;
+  background: var(--input-bg);
+  color: var(--text-dark);
   transition: var(--transition);
   outline: none;
 }
 
 .form-group input:focus, .form-group textarea:focus {
   border-color: var(--primary-color);
-  background: white;
+  background: var(--input-bg);
   box-shadow: 0 5px 15px rgba(255, 77, 77, 0.1);
 }
 

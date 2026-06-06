@@ -37,7 +37,11 @@ const ProductSchema = new mongoose.Schema({
   category: {
     type: String,
     required: [true, 'Please add a category'],
-    enum: ['smartphones', 'watches', 'furniture', 'kids']
+    enum: ['smartphones', 'watches', 'furniture', 'kids', 'fashion', 'electronics', 'digital-product', 'home-appliances', 'vegetable', 'decor', 'books']
+  },
+  color: {
+    type: String,
+    trim: true
   },
   createdAt: {
     type: Date,

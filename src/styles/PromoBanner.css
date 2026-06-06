@@ -78,7 +78,7 @@
 .promo-image-container {
   flex: 1;
   position: relative;
-  background: #fdf2f2;
+  background: var(--bg-light);
   overflow: hidden;
 }
 

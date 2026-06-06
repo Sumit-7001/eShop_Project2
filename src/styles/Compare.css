@@ -1,24 +1,24 @@
 .compare-page {
   min-height: 70vh;
-  background-color: #f8f9fa;
+  background-color: var(--bg-light);
   padding-bottom: 60px;
 }
 
 .breadcrumb-section {
-  background-color: #f3f4f6;
+  background-color: var(--bg-white);
   padding: 20px 0;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid var(--admin-border-color);
 }
 
 .breadcrumb {
   display: flex;
   align-items: center;
   font-size: 14px;
-  color: #6b7280;
+  color: var(--text-gray);
 }
 
 .breadcrumb a {
-  color: #6b7280;
+  color: var(--text-gray);
   text-decoration: none;
   transition: color 0.2s;
 }
@@ -33,7 +33,7 @@
 }
 
 .breadcrumb .current {
-  color: #9ca3af;
+  color: var(--text-light);
 }
 
 .compare-content {
@@ -113,7 +113,7 @@
   width: 100%;
   overflow-x: auto;
   border-radius: var(--border-radius-sm);
-  border: 1px solid #eee;
+  border: 1px solid var(--admin-border-color);
 }
 
 .compare-table {
@@ -125,8 +125,8 @@
 .compare-col-header {
   width: 200px;
   flex-shrink: 0;
-  background: #fdfdfd;
-  border-right: 1px solid #eee;
+  background: var(--bg-white);
+  border-right: 1px solid var(--admin-border-color);
   display: flex;
   flex-direction: column;
 }
@@ -134,7 +134,7 @@
 .compare-col {
   flex: 1;
   min-width: 200px;
-  border-right: 1px solid #eee;
+  border-right: 1px solid var(--admin-border-color);
   display: flex;
   flex-direction: column;
   transition: var(--transition);
@@ -155,7 +155,7 @@
   font-weight: 700;
   font-size: 14px;
   color: var(--text-dark);
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--admin-border-color);
   height: 60px;
   display: flex;
   align-items: center;
@@ -163,7 +163,7 @@
 
 .compare-row-value {
   padding: 15px 20px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--admin-border-color);
   height: 60px;
   display: flex;
   align-items: center;
@@ -197,7 +197,7 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  background: #f3f4f6;
+  background: var(--bg-light);
   border: none;
   color: var(--text-gray);
   width: 26px;
@@ -224,7 +224,7 @@
   justify-content: center;
   margin-bottom: 15px;
   overflow: hidden;
-  background: white;
+  background: var(--bg-white);
   border-radius: var(--border-radius-sm);
   padding: 5px;
 }
