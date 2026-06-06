@@ -24,6 +24,8 @@
   --sidebar-width: 256px;
   --sidebar-collapsed: 72px;
   --topbar-height: 64px;
+  --card-bg-hover: #fafbff;
+  --border-color:  #e8ecf0;
 }
 
 /* ── Reset & Base ────────────────────────────────────────────── */
@@ -2309,6 +2311,8 @@
   --adm-text-2:    #94a3b8;
   --adm-shadow:    0 4px 20px rgba(0,0,0,0.35);
   --adm-shadow-md: 0 8px 32px rgba(0,0,0,0.55);
+  --card-bg-hover: #1e1e2f;
+  --border-color:  #1e1e2f;
 }
 
 /* Status Badges */
@@ -2392,4 +2396,8 @@
 }
 [data-theme="dark"] .notif-dot {
   border-color: var(--adm-surface) !important;
+}
+
+[data-theme="dark"] .review-text {
+  background: var(--adm-bg) !important;
 }

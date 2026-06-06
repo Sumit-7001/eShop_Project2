@@ -2627,7 +2627,7 @@ const AdminDashboard = ({
                         </div>
                       </div>
 
-                      <div style={{ padding: '15px', borderRadius: '8px', background: 'var(--card-bg-hover)', border: '1px solid var(--border-color)', margin: '10px 0' }}>
+                      <div style={{ padding: '15px', borderRadius: '8px', background: 'var(--adm-bg)', border: '1px solid var(--adm-border)', margin: '10px 0' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                           <span>Base Salary:</span>
                           <strong>{cSym}{base.toLocaleString()}</strong>
@@ -2749,7 +2749,7 @@ const AdminDashboard = ({
               if (col === 'Lost') colHeaderColor = '#ef4444';
 
               return (
-                <div key={col} style={{ flex: '1', minWidth: '240px', background: 'var(--card-bg-hover)', borderRadius: '8px', padding: '12px', borderTop: `4px solid ${colHeaderColor}` }}>
+                <div key={col} style={{ flex: '1', minWidth: '240px', background: 'var(--adm-bg)', borderRadius: '8px', padding: '12px', borderTop: `4px solid ${colHeaderColor}` }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
                     <span style={{ fontWeight: 'bold' }}>{col} ({colLeads.length})</span>
                     <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{cSym}{colValue.toLocaleString()}</span>
@@ -2757,10 +2757,10 @@ const AdminDashboard = ({
                   
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', minHeight: '300px' }}>
                     {colLeads.map(lead => (
-                      <div key={lead.id} style={{ background: '#ffffff', borderRadius: '6px', padding: '10px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                      <div key={lead.id} style={{ background: 'var(--adm-surface)', borderRadius: '6px', padding: '10px', boxShadow: 'var(--adm-shadow)', border: '1px solid var(--adm-border)', display: 'flex', flexDirection: 'column', gap: '6px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                           <strong style={{ fontSize: '13px' }}>{lead.company}</strong>
-                          <span style={{ fontSize: '11px', background: 'var(--border-color)', padding: '2px 6px', borderRadius: '4px' }}>{lead.id}</span>
+                          <span style={{ fontSize: '11px', background: 'var(--adm-bg)', color: 'var(--adm-text-2)', padding: '2px 6px', borderRadius: '4px' }}>{lead.id}</span>
                         </div>
                         <span className="text-muted" style={{ fontSize: '12px' }}>Executive: {lead.name}</span>
                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px' }}>
@@ -2768,7 +2768,7 @@ const AdminDashboard = ({
                           <strong>{cSym}{lead.value.toLocaleString()}</strong>
                         </div>
                         
-                        <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid #f1f5f9', paddingTop: '6px', marginTop: '4px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid var(--adm-border)', paddingTop: '6px', marginTop: '4px' }}>
                           <button
                             disabled={col === 'New'}
                             onClick={() => moveLead(lead.id, -1)}
@@ -2903,30 +2903,30 @@ const AdminDashboard = ({
                 if (col === 'Completed') columnColor = '#10b981';
 
                 return (
-                  <div key={col} style={{ flex: '1', minWidth: '220px', background: 'var(--card-bg-hover)', borderRadius: '8px', padding: '10px', borderTop: `4px solid ${columnColor}` }}>
+                  <div key={col} style={{ flex: '1', minWidth: '220px', background: 'var(--adm-bg)', borderRadius: '8px', padding: '10px', borderTop: `4px solid ${columnColor}` }}>
                     <div style={{ fontWeight: 'bold', fontSize: '13px', marginBottom: '8px', display: 'flex', justifyContent: 'space-between' }}>
                       <span>{col}</span>
-                      <span style={{ background: '#e2e8f0', fontSize: '11px', padding: '2px 6px', borderRadius: '10px' }}>{colTasks.length}</span>
+                      <span style={{ background: 'var(--adm-border)', color: 'var(--adm-text)', fontSize: '11px', padding: '2px 6px', borderRadius: '10px' }}>{colTasks.length}</span>
                     </div>
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', minHeight: '260px' }}>
                       {colTasks.map(tsk => (
-                        <div key={tsk.id} style={{ background: '#ffffff', border: '1px solid var(--border-color)', borderRadius: '6px', padding: '8px', display: 'flex', flexDirection: 'column', gap: '4px', boxShadow: '0 1px 2px rgba(0,0,0,0.03)' }}>
+                        <div key={tsk.id} style={{ background: 'var(--adm-surface)', border: '1px solid var(--adm-border)', borderRadius: '6px', padding: '8px', display: 'flex', flexDirection: 'column', gap: '4px', boxShadow: 'var(--adm-shadow)' }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <span style={{
                               fontSize: '10px',
                               fontWeight: 'bold',
                               padding: '2px 6px',
                               borderRadius: '4px',
-                              background: tsk.priority === 'High' ? '#fee2e2' : tsk.priority === 'Medium' ? '#fef3c7' : '#dbeafe',
-                              color: tsk.priority === 'High' ? '#ef4444' : tsk.priority === 'Medium' ? '#f59e0b' : '#3b82f6'
+                              background: tsk.priority === 'High' ? (isDark ? 'rgba(239, 68, 68, 0.18)' : '#fee2e2') : tsk.priority === 'Medium' ? (isDark ? 'rgba(245, 158, 11, 0.18)' : '#fef3c7') : (isDark ? 'rgba(59, 130, 246, 0.18)' : '#dbeafe'),
+                              color: tsk.priority === 'High' ? (isDark ? '#fda4af' : '#ef4444') : tsk.priority === 'Medium' ? (isDark ? '#fbbf24' : '#d97706') : (isDark ? '#60a5fa' : '#3b82f6')
                             }}>{tsk.priority}</span>
                             <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>{tsk.id}</span>
                           </div>
                           <strong style={{ fontSize: '13px' }}>{tsk.title}</strong>
                           <p className="text-muted" style={{ fontSize: '11px', margin: '2px 0' }}>{tsk.desc}</p>
                           
-                          <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid #f1f5f9', paddingTop: '4px', marginTop: '4px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid var(--adm-border)', paddingTop: '4px', marginTop: '4px' }}>
                             <button
                               disabled={col === 'To Do'}
                               onClick={() => moveTask(tsk.id, -1)}
