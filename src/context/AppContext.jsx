@@ -867,6 +867,7 @@ export const AppProvider = ({ children }) => {
     currentUser, authLoading, authModal, handleLogin, handleRegister, handleGoogleLogin, handleForgotPassword, handleVerifyOTP, handleResendOTP, handleResetPassword, handleSignOut, openAuthModal, closeAuthModal,
     fetchUserProfile, saveAddress, deleteAddress, createOrder, fetchUserOrders, fetchOrderTracking, fetchAdminOrders, fetchAdminUsers, updateAdminOrderStatus,
     cartItems, cartCount, addToCart, removeFromCart, updateQuantity, clearCart,
+    savedForLaterItems, moveToSavedForLater, moveToCartFromSaved, removeFromSavedForLater,
     favoriteItems, toggleFavorite, isFavorite,
     compareItems, toggleCompare, removeFromCompare, isComparing,
     smartphonesState, watchesState, furnitureState, kidsState, fashionState, electronicsState, digitalProductState, homeAppliancesState, vegetableState, decorState, booksState, addProduct, deleteProduct, updateProduct,
