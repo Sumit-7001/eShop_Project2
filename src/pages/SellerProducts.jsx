@@ -5,7 +5,7 @@ import FilterSidebar from '../components/products/FilterSidebar';
 import ProductTopBar from '../components/products/ProductTopBar';
 import ProductCard from '../components/common/ProductCard';
 import Pagination from '../components/common/Pagination';
-import { sellers, getProductsBySeller } from '../data/dummyData';
+import { sellers } from '../data/dummyData';
 import { useApp } from '../context/AppContext';
 import { applyFilters } from '../utils/filterHelpers';
 import '../styles/CategoryProducts.css';
