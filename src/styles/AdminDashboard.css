@@ -2299,3 +2299,97 @@
 .erp-tab-btn.active:hover {
   background: var(--primary-color) !important;
 }
+
+/* ─── Admin Dashboard Dark Theme Overrides ─── */
+[data-theme="dark"] {
+  --adm-bg:        #0a0a14;
+  --adm-surface:   #12121e;
+  --adm-border:    #1e1e2f;
+  --adm-text:      #e2e8f0;
+  --adm-text-2:    #94a3b8;
+  --adm-shadow:    0 4px 20px rgba(0,0,0,0.35);
+  --adm-shadow-md: 0 8px 32px rgba(0,0,0,0.55);
+}
+
+/* Status Badges */
+[data-theme="dark"] .badge-pending    { background: rgba(217, 119, 6, 0.15) !important;  color: #fbbf24 !important; border-color: rgba(217, 119, 6, 0.25) !important; }
+[data-theme="dark"] .badge-processing { background: rgba(37, 99, 235, 0.15) !important;  color: #60a5fa !important; border-color: rgba(37, 99, 235, 0.25) !important; }
+[data-theme="dark"] .badge-shipped    { background: rgba(124, 58, 237, 0.15) !important; color: #a78bfa !important; border-color: rgba(124, 58, 237, 0.25) !important; }
+[data-theme="dark"] .badge-delivered  { background: rgba(22, 163, 74, 0.15) !important;  color: #4ade80 !important; border-color: rgba(22, 163, 74, 0.25) !important; }
+[data-theme="dark"] .badge-cancelled  { background: rgba(225, 29, 72, 0.15) !important;  color: #fda4af !important; border-color: rgba(225, 29, 72, 0.25) !important; }
+[data-theme="dark"] .badge-sale       { background: rgba(225, 29, 72, 0.15) !important;  color: #fda4af !important; border-color: rgba(225, 29, 72, 0.25) !important; }
+[data-theme="dark"] .badge-regular    { background: rgba(148, 163, 184, 0.15) !important; color: #94a3b8 !important; border-color: rgba(148, 163, 184, 0.25) !important; }
+
+[data-theme="dark"] .role-admin    { background: rgba(217, 119, 6, 0.15) !important;  color: #fbbf24 !important; }
+[data-theme="dark"] .role-customer { background: rgba(37, 99, 235, 0.15) !important;  color: #60a5fa !important; }
+
+[data-theme="dark"] .status-active    { background: rgba(22, 163, 74, 0.15) !important; color: #4ade80 !important; }
+[data-theme="dark"] .status-suspended { background: rgba(225, 29, 72, 0.15) !important; color: #fda4af !important; }
+[data-theme="dark"] .status-inactive  { background: rgba(148, 163, 184, 0.15) !important; color: #94a3b8 !important; }
+
+/* Action Buttons */
+[data-theme="dark"] .action-edit   { color: #60a5fa !important; background: rgba(96, 165, 250, 0.12) !important; }
+[data-theme="dark"] .action-view   { color: #818cf8 !important; background: rgba(129, 140, 248, 0.12) !important; }
+[data-theme="dark"] .action-delete { color: #f87171 !important; background: rgba(248, 113, 113, 0.12) !important; }
+
+[data-theme="dark"] .action-edit:hover   { background: #2563eb !important; color: white !important; }
+[data-theme="dark"] .action-view:hover   { background: #6366f1 !important; color: white !important; }
+[data-theme="dark"] .action-delete:hover { background: #ef4444 !important; color: white !important; }
+
+/* Table Headers & Row Hovers */
+[data-theme="dark"] .admin-tbl th {
+  background: #1a1a2e !important;
+}
+[data-theme="dark"] .admin-tbl tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02) !important;
+}
+
+/* Category Chips */
+[data-theme="dark"] .cat-chip {
+  background: #1a1a2e !important;
+}
+
+/* Inputs, Selects, Textareas & Focus States */
+[data-theme="dark"] .mf-group input,
+[data-theme="dark"] .mf-group select,
+[data-theme="dark"] .mf-group textarea {
+  background: #0f0f1a !important;
+}
+
+[data-theme="dark"] .mf-group input:focus,
+[data-theme="dark"] .mf-group select:focus,
+[data-theme="dark"] .mf-group textarea:focus {
+  background: #161622 !important;
+}
+
+/* Inventory Alerts */
+[data-theme="dark"] .inv-alert-card.out-of-stock {
+  border-color: rgba(239, 68, 68, 0.25) !important;
+  background: rgba(239, 68, 68, 0.08) !important;
+}
+[data-theme="dark"] .inv-alert-card.low-stock {
+  border-color: rgba(245, 158, 11, 0.25) !important;
+  background: rgba(245, 158, 11, 0.08) !important;
+}
+
+[data-theme="dark"] .inv-stock-badge.out {
+  background: rgba(239, 68, 68, 0.18) !important;
+  color: #fda4af !important;
+}
+[data-theme="dark"] .inv-stock-badge.low {
+  background: rgba(245, 158, 11, 0.18) !important;
+  color: #fbbf24 !important;
+}
+
+/* Modals & Popups */
+[data-theme="dark"] .modal-close:hover {
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: #f87171 !important;
+}
+[data-theme="dark"] .confirm-icon {
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: #f87171 !important;
+}
+[data-theme="dark"] .notif-dot {
+  border-color: var(--adm-surface) !important;
+}

@@ -127,7 +127,7 @@
 /* Stats */
 .about-stats {
   padding: 60px 0;
-  background: #111827;
+  background: var(--footer-bg);
   color: white;
 }
 

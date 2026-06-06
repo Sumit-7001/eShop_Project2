@@ -595,7 +595,7 @@ const AdminDashboard = ({
   const [orders, setOrders] = useState(MOCK_ORDERS);
   const [users, setUsers] = useState(MOCK_USERS);
 
-  const { fetchAdminOrders, fetchAdminUsers, updateAdminOrderStatus } = useApp();
+  const { fetchAdminOrders, fetchAdminUsers, updateAdminOrderStatus, isDark, toggleDarkMode } = useApp();
 
   useEffect(() => {
     const loadRealData = async () => {
@@ -3444,6 +3444,9 @@ const AdminDashboard = ({
               <Search size={14} />
               <input type="text" placeholder="Quick search..." />
             </div>
+            <button className="topbar-icon-btn" onClick={toggleDarkMode} title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}>
+              {isDark ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
             <button className="topbar-icon-btn" title="Notifications">
               <Bell size={18} />
               {notifications > 0 && <span className="notif-dot">{notifications}</span>}
