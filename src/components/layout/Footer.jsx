@@ -29,10 +29,10 @@ const Footer = () => {
         <div className="footer-links">
           <h3>Call Us</h3>
           <ul>
-            <li><Phone size={16} /> 1234567890</li>
+            <li><Phone size={16} /> +1 (800) 123-4567</li>
             <li><h3>Mail Us</h3></li>
-            <li><Mail size={16} /> markethub@gmail.com</li>
-            <li><MapPin size={16} /> 123 Street, City, Country</li>
+            <li><Mail size={16} /> support@markethub.com</li>
+            <li><MapPin size={16} /> 123 Commerce Avenue, SF, CA</li>
           </ul>
         </div>
 
