@@ -1,13 +1,24 @@
 import { brandProducts } from '../data/dummyData';
 
 export const attributesData = [
+
+  { name: 'Room', options: ['Living Room', 'Bedroom', 'Dining Room', 'Office'], validCategories: ['furniture'] },
+  { name: 'Furniture Material', options: ['Wood', 'Metal', 'Glass', 'Fabric'], validCategories: ['furniture'] },
+  { name: 'Produce Type', options: ['Organic', 'Non-Organic', 'Locally Grown'], validCategories: ['vegetable'] },
+  { name: 'Weight/Packaging', options: ['250g', '500g', '1kg', 'Bunch'], validCategories: ['vegetable'] },
+
+
+  { name: 'Apparel Color', options: ['Black', 'White', 'Red', 'Blue', 'Pink'], validCategories: ['fashion'] },
+  { name: 'Size', options: ['S', 'M', 'L', 'XL', 'XXL'], validCategories: ['fashion'] },
+  { name: 'Fabric', options: ['Cotton', 'Leather', 'Silk', 'Denim'], validCategories: ['fashion'] },
+
   { name: 'Battery Power', options: ['Under 3000 mAh', '3000 - 4000 mAh', 'Above 4000 mAh'], validCategories: ['smartphones', 'electronics'] },
-  { name: 'Color', options: ['Black', 'Silver', 'Golden', 'Blue'], validCategories: ['smartphones', 'electronics', 'furniture', 'kids', 'fashion', 'decor'] },
+  { name: 'Color', options: ['Black', 'Silver', 'Golden', 'Blue'], validCategories: ['smartphones', 'electronics', 'kids', 'decor'] },
   { name: 'Connectivity technologies', options: ['Bluetooth', 'Wi-Fi', 'USB', 'NFC'], validCategories: ['smartphones', 'electronics'] },
   { name: 'Display Technology', options: ['OLED', 'AMOLED', 'LCD', 'IPS'], validCategories: ['smartphones', 'electronics'] },
   { name: 'Expandable Storage', options: ['Up to 128GB', 'Up to 256GB', 'Up to 512GB', '1TB+'], validCategories: ['smartphones', 'electronics'] },
-  { name: 'Item Weight', options: ['Under 150g', '150g - 200g', 'Above 200g'], validCategories: ['smartphones', 'electronics', 'furniture', 'kids', 'fashion', 'decor', 'vegetable', 'books'] },
-  { name: 'Material Type', options: ['Plastic', 'Metal', 'Glass', 'Leather'], validCategories: ['furniture', 'fashion', 'decor'] }
+  { name: 'Item Weight', options: ['Under 150g', '150g - 200g', 'Above 200g'], validCategories: ['smartphones', 'electronics', 'kids', 'decor', 'books'] },
+  { name: 'Material Type', options: ['Plastic', 'Metal', 'Glass', 'Leather'], validCategories: ['decor'] }
 ];
 
 // Helper to consistently assign an attribute option to a product based on its ID
