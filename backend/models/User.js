@@ -59,6 +59,15 @@ const UserSchema = new mongoose.Schema({
     zip: { type: String, required: true },
     country: { type: String, default: 'India' }
   }],
+  phone: {
+    type: String,
+    default: ''
+  },
+  gender: {
+    type: String,
+    enum: ['Male', 'Female', 'Other', ''],
+    default: ''
+  },
   createdAt: {
     type: Date,
     default: Date.now

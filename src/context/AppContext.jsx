@@ -334,6 +334,51 @@ export const AppProvider = ({ children }) => {
     }
   }, [BASE_API_URL]);
 
+  const updateProfile = useCallback(async ({ name, phone, gender }) => {
+    const token = localStorage.getItem('eshop_token');
+    if (!token) return false;
+    try {
+      const res = await fetch(`${BASE_API_URL}/auth/update-profile`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ name, phone, gender })
+      });
+      const data = await res.json();
+      if (!data.success) {
+        showToastRef.current?.(data.message || 'Failed to update profile.', 'error');
+        return false;
+      }
+      setCurrentUser(prev => prev ? { ...prev, ...data.user } : data.user);
+      showToastRef.current?.('Profile updated successfully!', 'success');
+      return true;
+    } catch (err) {
+      showToastRef.current?.('Server connection error.', 'error');
+      return false;
+    }
+  }, [BASE_API_URL]);
+
+  const changePassword = useCallback(async ({ currentPassword, newPassword }) => {
+    const token = localStorage.getItem('eshop_token');
+    if (!token) return false;
+    try {
+      const res = await fetch(`${BASE_API_URL}/auth/change-password`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ currentPassword, newPassword })
+      });
+      const data = await res.json();
+      if (!data.success) {
+        showToastRef.current?.(data.message || 'Failed to change password.', 'error');
+        return false;
+      }
+      showToastRef.current?.('Password changed successfully!', 'success');
+      return true;
+    } catch (err) {
+      showToastRef.current?.('Server connection error.', 'error');
+      return false;
+    }
+  }, [BASE_API_URL]);
+
   const createOrder = useCallback(async (orderData) => {
     const token = localStorage.getItem('eshop_token');
     if (!token) {
@@ -817,6 +862,8 @@ export const AppProvider = ({ children }) => {
     fetchUserProfile,
     saveAddress,
     deleteAddress,
+    updateProfile,
+    changePassword,
     createOrder,
     fetchUserOrders,
     fetchOrderTracking,
@@ -865,7 +912,7 @@ export const AppProvider = ({ children }) => {
   }), [
     isDark, toggleDarkMode,
     currentUser, authLoading, authModal, handleLogin, handleRegister, handleGoogleLogin, handleForgotPassword, handleVerifyOTP, handleResendOTP, handleResetPassword, handleSignOut, openAuthModal, closeAuthModal,
-    fetchUserProfile, saveAddress, deleteAddress, createOrder, fetchUserOrders, fetchOrderTracking, fetchAdminOrders, fetchAdminUsers, updateAdminOrderStatus,
+    fetchUserProfile, saveAddress, deleteAddress, updateProfile, changePassword, createOrder, fetchUserOrders, fetchOrderTracking, fetchAdminOrders, fetchAdminUsers, updateAdminOrderStatus,
     cartItems, cartCount, addToCart, removeFromCart, updateQuantity, clearCart,
     savedForLaterItems, moveToSavedForLater, moveToCartFromSaved, removeFromSavedForLater,
     favoriteItems, toggleFavorite, isFavorite,
