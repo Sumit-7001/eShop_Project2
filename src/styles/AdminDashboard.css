@@ -2401,3 +2401,9 @@
 [data-theme="dark"] .review-text {
   background: var(--adm-bg) !important;
 }
+
+[data-theme="dark"] .payment-chip {
+  background: var(--adm-bg) !important;
+  color: var(--adm-text-2) !important;
+  border: 1px solid var(--adm-border) !important;
+}
