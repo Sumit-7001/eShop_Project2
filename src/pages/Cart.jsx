@@ -7,7 +7,10 @@ import '../styles/Cart.css';
 const Cart = () => {
   const { cartItems, removeFromCart, updateQuantity, clearCart, savedForLaterItems, moveToSavedForLater, moveToCartFromSaved, removeFromSavedForLater } = useApp();
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-  const total = subtotal; // Simplified, you can add tax logic here if needed
+  const shipping = subtotal > 0 ? 99 : 0;
+  const tax = subtotal > 0 ? Math.round(subtotal * 0.018) : 0;
+  const discount = subtotal > 1000 ? 500 : 0;
+  const total = subtotal > 0 ? subtotal + shipping + tax - discount : 0;
 
   if (cartItems.length === 0 && savedForLaterItems.length === 0) {
     return (
@@ -174,9 +177,25 @@ const Cart = () => {
             <div className="cart-sidebar">
             <div className="cart-total-card">
               <h3>Cart Total</h3>
-              <div className="total-row">
+              <div className="total-row" style={{ fontWeight: '700', color: 'var(--text-dark)', borderBottom: '1px solid var(--admin-border-color)', paddingBottom: '15px' }}>
+                <span>Details</span>
+                <span>Amount</span>
+              </div>
+              <div className="total-row" style={{ marginTop: '15px' }}>
                 <span>Subtotal</span>
                 <span>₹{subtotal.toLocaleString()}</span>
+              </div>
+              <div className="total-row">
+                <span>Shipping</span>
+                <span>₹{shipping.toLocaleString()}</span>
+              </div>
+              <div className="total-row">
+                <span>Tax</span>
+                <span>₹{tax.toLocaleString()}</span>
+              </div>
+              <div className="total-row">
+                <span>Discount</span>
+                <span>-₹{discount.toLocaleString()}</span>
               </div>
               <div className="total-row grand-total">
                 <span>Total</span>
