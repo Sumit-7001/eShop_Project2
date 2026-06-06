@@ -12,7 +12,7 @@ const BrandProducts = () => {
   const brand = brands.find(b => b.slug === slug);
   const products = brandProducts[slug] || [];
   const [sortBy, setSortBy] = useState('relevance');
-  const [itemsPerPage, setItemsPerPage] = useState(12);
+  const [itemsPerPage, setItemsPerPage] = useState('All');
 
   const sortedProducts = useMemo(() => {
     const sorted = [...products];
@@ -28,7 +28,7 @@ const BrandProducts = () => {
     }
   }, [products, sortBy]);
 
-  const displayedProducts = sortedProducts.slice(0, itemsPerPage);
+  const displayedProducts = itemsPerPage === 'All' ? sortedProducts : sortedProducts.slice(0, itemsPerPage);
 
   if (!brand) {
     return (
@@ -87,8 +87,9 @@ const BrandProducts = () => {
               <span className="product-count">{products.length} items found</span>
               <div className="brand-sort-by">
                 <span>Show:</span>
-                <select value={itemsPerPage} onChange={(e) => setItemsPerPage(Number(e.target.value))}>
-                  {Array.from({ length: 22 }, (_, i) => i + 1).map(n => (
+                <select value={itemsPerPage} onChange={(e) => setItemsPerPage(e.target.value === 'All' ? 'All' : Number(e.target.value))}>
+                  <option value="All">All</option>
+                  {Array.from({ length: 20 }, (_, i) => i + 3).map(n => (
                     <option key={n} value={n}>{n}</option>
                   ))}
                 </select>

@@ -30,7 +30,7 @@ const CategoryProducts = () => {
 
   const { slug } = useParams();
   const [sortBy, setSortBy] = useState('relevance');
-  const [itemsPerPage, setItemsPerPage] = useState(12);
+  const [itemsPerPage, setItemsPerPage] = useState('All');
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [viewMode, setViewMode] = useState('grid');
   const [selectedFilters, setSelectedFilters] = useState({ attributes: {}, brands: [], categories: [] });
@@ -65,7 +65,7 @@ const CategoryProducts = () => {
     }
   }, [currentCategory.data, sortBy, selectedFilters]);
 
-  const displayedProducts = sortedProducts.slice(0, itemsPerPage);
+  const displayedProducts = itemsPerPage === 'All' ? sortedProducts : sortedProducts.slice(0, itemsPerPage);
 
   return (
     <div className="category-products-page">

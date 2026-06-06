@@ -23,8 +23,9 @@ const ProductTopBar = ({ totalProducts, sortBy, onSortChange, itemsPerPage, onIt
         </div>
         <div className="show-items">
           <span>Show:</span>
-          <select value={itemsPerPage || 12} onChange={(e) => onItemsPerPageChange && onItemsPerPageChange(Number(e.target.value))}>
-            {Array.from({ length: 22 }, (_, i) => i + 1).map(n => (
+          <select value={itemsPerPage} onChange={(e) => onItemsPerPageChange && onItemsPerPageChange(e.target.value === 'All' ? 'All' : Number(e.target.value))}>
+            <option value="All">All</option>
+            {Array.from({ length: 20 }, (_, i) => i + 3).map(n => (
               <option key={n} value={n}>{n}</option>
             ))}
           </select>
