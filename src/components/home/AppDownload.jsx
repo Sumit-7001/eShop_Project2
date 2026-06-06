@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../styles/AppDownload.css';
-import appImage from '../../assets/images/app.png';
+import appImage from '../../assets/images/app.jpg';
 
 const AppDownload = () => {
   return (
