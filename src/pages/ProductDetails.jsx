@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import ProductCard from '../components/common/ProductCard';
 import { useApp } from '../context/AppContext';
+import { brandProducts, sellers } from '../data/dummyData';
 import '../styles/ProductDetails.css';
 
 // Import local assets for Frequently Bought Together
@@ -64,6 +65,9 @@ const ProductDetails = () => {
   }, [product]);
 
   useEffect(() => {
+    const allBrandProducts = Object.values(brandProducts).flat().filter(Boolean).map(p => ({ ...p, category: p.category || 'brand' }));
+    const allSellerProducts = sellers.flatMap(s => s.products || []).filter(Boolean).map(p => ({ ...p, category: p.category || 'seller' }));
+    
     const mergedProducts = [
       ...smartphonesState.map(p => ({ ...p, category: 'smartphones' })),
       ...watchesState.map(p => ({ ...p, category: 'watches' })),
@@ -75,9 +79,11 @@ const ProductDetails = () => {
       ...homeAppliancesState.map(p => ({ ...p, category: 'home-appliances' })),
       ...vegetableState.map(p => ({ ...p, category: 'vegetable' })),
       ...decorState.map(p => ({ ...p, category: 'decor' })),
-      ...booksState.map(p => ({ ...p, category: 'books' }))
-    ];
-    const foundProduct = mergedProducts.find(p => p.id === parseInt(id));
+      ...booksState.map(p => ({ ...p, category: 'books' })),
+      ...allBrandProducts,
+      ...allSellerProducts
+    ].filter(Boolean);
+    const foundProduct = mergedProducts.find(p => p.id && p.id.toString() === id?.toString());
     setProduct(foundProduct);
     window.scrollTo(0, 0);
   }, [id, smartphonesState, watchesState, furnitureState, kidsState, fashionState, electronicsState, digitalProductState, homeAppliancesState, vegetableState, decorState, booksState]);
