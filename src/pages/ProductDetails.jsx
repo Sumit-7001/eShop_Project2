@@ -28,6 +28,13 @@ const ProductDetails = () => {
     watchesState,
     furnitureState,
     kidsState,
+    fashionState,
+    electronicsState,
+    digitalProductState,
+    homeAppliancesState,
+    vegetableState,
+    decorState,
+    booksState,
     favoriteItems,
     compareItems
   } = useApp();
@@ -46,12 +53,19 @@ const ProductDetails = () => {
       ...smartphonesState,
       ...watchesState,
       ...furnitureState,
-      ...kidsState
+      ...kidsState,
+      ...fashionState,
+      ...electronicsState,
+      ...digitalProductState,
+      ...homeAppliancesState,
+      ...vegetableState,
+      ...decorState,
+      ...booksState
     ];
     const foundProduct = mergedProducts.find(p => p.id === parseInt(id));
     setProduct(foundProduct);
     window.scrollTo(0, 0);
-  }, [id]);
+  }, [id, smartphonesState, watchesState, furnitureState, kidsState, fashionState, electronicsState, digitalProductState, homeAppliancesState, vegetableState, decorState, booksState]);
 
   if (!product) {
     return (
@@ -71,11 +85,22 @@ const ProductDetails = () => {
 
   // Mock related products based on the current product category/type
   const getRelatedProducts = () => {
-    if (smartphonesState.find(p => p.id === product.id)) return smartphonesState.filter(p => p.id !== product.id).slice(0, 4);
-    if (watchesState.find(p => p.id === product.id)) return watchesState.filter(p => p.id !== product.id).slice(0, 4);
-    if (furnitureState.find(p => p.id === product.id)) return furnitureState.filter(p => p.id !== product.id).slice(0, 4);
-    if (kidsState.find(p => p.id === product.id)) return kidsState.filter(p => p.id !== product.id).slice(0, 4);
-    return [...smartphonesState, ...watchesState, ...furnitureState, ...kidsState].filter(p => p.id !== product.id).slice(0, 4);
+    const category = product.category;
+    const map = {
+      smartphones: smartphonesState,
+      watches: watchesState,
+      furniture: furnitureState,
+      kids: kidsState,
+      fashion: fashionState,
+      electronics: electronicsState,
+      'digital-product': digitalProductState,
+      'home-appliances': homeAppliancesState,
+      vegetable: vegetableState,
+      decor: decorState,
+      books: booksState
+    };
+    const list = map[category] || [];
+    return list.filter(p => p.id !== product.id).slice(0, 4);
   };
 
   const isCurrentFavorite = isFavorite(product.id);
@@ -83,16 +108,17 @@ const ProductDetails = () => {
 
   // Frequently Bought Together Accessory configuration
   const getFbtAccessory = () => {
-    if (smartphonesState.find(p => p.id === product.id)) {
+    const cat = product.category;
+    if (cat === 'smartphones' || cat === 'electronics') {
       return { id: product.id + 1000, title: "Bluetooth Portable Speaker", price: 49, image: speakerImg };
     }
-    if (watchesState.find(p => p.id === product.id)) {
+    if (cat === 'watches') {
       return { id: product.id + 1000, title: "UV Protected Sunglasses", price: 29, image: sunglassesImg };
     }
-    if (furnitureState.find(p => p.id === product.id)) {
+    if (cat === 'furniture' || cat === 'decor') {
       return { id: product.id + 1000, title: "Smart Air Purifier", price: 199, image: airPurifierImg };
     }
-    if (kidsState.find(p => p.id === product.id)) {
+    if (cat === 'kids') {
       return { id: product.id + 1000, title: "Soft Teddy Bear Toy", price: 19, image: teddyBearImg };
     }
     return { id: product.id + 1000, title: "Leather Smart Belt", price: 15, image: leatherBeltImg };
@@ -171,7 +197,7 @@ const ProductDetails = () => {
           {/* Right: Info */}
           <div className="product-info-details">
             <h1 className="product-title-large">{title}</h1>
-            {smartphonesState.some(p => p.id === product.id) && <p className="product-subtitle">Premium Smartphone Experience</p>}
+            {product.category === 'smartphones' && <p className="product-subtitle">Premium Smartphone Experience</p>}
             
             <div className="price-rating-row">
               <div className="large-price">₹{price.toLocaleString()}</div>
@@ -213,7 +239,24 @@ const ProductDetails = () => {
               </ul>
             </div>
 
-            {smartphonesState.some(p => p.id === product.id) && (
+            {product.color ? (
+              <div className="option-group">
+                <span className="option-label">Color</span>
+                <div className="color-options">
+                  {product.color.split(',').map((c, idx) => {
+                    const trimmedColor = c.trim();
+                    return (
+                      <div 
+                        key={idx} 
+                        className={`color-circle ${idx === 0 ? 'active' : ''}`} 
+                        style={{ backgroundColor: trimmedColor.toLowerCase() }}
+                        title={trimmedColor}
+                      ></div>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : product.category === 'smartphones' ? (
               <div className="option-group">
                 <span className="option-label">Color</span>
                 <div className="color-options">
@@ -221,9 +264,9 @@ const ProductDetails = () => {
                   <div className="color-circle" style={{ backgroundColor: '#000' }}></div>
                 </div>
               </div>
-            )}
+            ) : null}
 
-            {smartphonesState.some(p => p.id === product.id) && (
+            {product.category === 'smartphones' && (
               <div className="option-group">
                 <span className="option-label">Expandable Storage</span>
                 <div className="storage-options">
@@ -299,7 +342,7 @@ const ProductDetails = () => {
             <div className="quick-highlights-section">
               <h4 className="section-small-title"><Sparkles size={16} /> Key Highlights</h4>
               <ul className="highlights-list">
-                {smartphonesState.some(p => p.id === product.id) && (
+                {product.category === 'smartphones' && (
                   <>
                     <li>12 GB RAM | 256 GB ROM | Expandable up to 1 TB</li>
                     <li>17.27 cm (6.8 inch) Quad HD+ Dynamic AMOLED 2X Display</li>
@@ -308,7 +351,7 @@ const ProductDetails = () => {
                     <li>Snapdragon 8 Gen 3 Deca-Core Processor</li>
                   </>
                 )}
-                {watchesState.some(p => p.id === product.id) && (
+                {product.category === 'watches' && (
                   <>
                     <li>1.43-inch Always-on AMOLED Display</li>
                     <li>Heart Rate, SpO2, and Sleep Quality Tracking</li>
@@ -317,7 +360,7 @@ const ProductDetails = () => {
                     <li>Built-in GPS and Bluetooth Calling support</li>
                   </>
                 )}
-                {furnitureState.some(p => p.id === product.id) && (
+                {product.category === 'furniture' && (
                   <>
                     <li>Made from premium quality teak wood and durable steel frame</li>
                     <li>Ergonomic and highly comfortable seating design</li>
@@ -326,7 +369,7 @@ const ProductDetails = () => {
                     <li>Minimal assembly required with included kit</li>
                   </>
                 )}
-                {kidsState.some(p => p.id === product.id) && (
+                {product.category === 'kids' && (
                   <>
                     <li>Made from 100% safe, non-toxic, BPA-free materials</li>
                     <li>Soft fabric finish with double reinforced stitching</li>
@@ -335,10 +378,7 @@ const ProductDetails = () => {
                     <li>Suitable for kids of all ages (3 years and up)</li>
                   </>
                 )}
-                {!smartphonesState.some(p => p.id === product.id) && 
-                 !watchesState.some(p => p.id === product.id) && 
-                 !furnitureState.some(p => p.id === product.id) && 
-                 !kidsState.some(p => p.id === product.id) && (
+                {!['smartphones', 'watches', 'furniture', 'kids'].includes(product.category) && (
                   <>
                     <li>High quality materials and craftsmanship</li>
                     <li>Premium look and feel with modern design elements</li>
@@ -376,8 +416,12 @@ const ProductDetails = () => {
             </div>
 
             <div className="product-meta" style={{ fontSize: '13px', color: '#666', display: 'flex', flexDirection: 'column', gap: '5px' }}>
-              {smartphonesState.some(p => p.id === product.id) && <div>Color : <span style={{ color: '#1a1a1a' }}>Red, Black</span></div>}
-              {smartphonesState.some(p => p.id === product.id) && <div>Expandable Storage : <span style={{ color: '#1a1a1a' }}>128 GB, 256 GB</span></div>}
+              {product.color ? (
+                <div>Color : <span style={{ color: '#1a1a1a' }}>{product.color}</span></div>
+              ) : (
+                product.category === 'smartphones' && <div>Color : <span style={{ color: '#1a1a1a' }}>Red, Black</span></div>
+              )}
+              {product.category === 'smartphones' && <div>Expandable Storage : <span style={{ color: '#1a1a1a' }}>128 GB, 256 GB</span></div>}
               <div>Brand : <span style={{ color: '#ff4d4d' }}>● Apple</span></div>
             </div>
 
@@ -484,10 +528,10 @@ const ProductDetails = () => {
             </button>
           </div>
           <div className="tab-content">
-            {activeTab === 'description' && (
+             {activeTab === 'description' && (
               <div className="description-grid">
                 <div className="spec-table">
-                  {smartphonesState.some(p => p.id === product.id) ? (
+                  {product.category === 'smartphones' ? (
                     <>
                       <div className="spec-row">
                         <div className="spec-label">256 GB ROM</div>

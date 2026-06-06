@@ -6,10 +6,6 @@ import ProductTopBar from '../components/products/ProductTopBar';
 import ProductCard from '../components/common/ProductCard';
 import { useApp } from '../context/AppContext';
 import { applyFilters } from '../utils/filterHelpers';
-import {
-  fashion, electronics, digitalProduct, homeAppliances,
-  vegetables, decor, books
-} from '../data/dummyData';
 import '../styles/CategoryProducts.css';
 
 const CategoryProducts = () => {
@@ -18,6 +14,13 @@ const CategoryProducts = () => {
     watchesState,
     furnitureState,
     kidsState,
+    fashionState,
+    electronicsState,
+    digitalProductState,
+    homeAppliancesState,
+    vegetableState,
+    decorState,
+    booksState,
     addToCart,
     isFavorite,
     isComparing,
@@ -37,14 +40,14 @@ const CategoryProducts = () => {
     watches:           { title: 'Top Rated Watches',           data: watchesState },
     furniture:         { title: 'Furniture Products',          data: furnitureState },
     kids:              { title: "Kid's Section",               data: kidsState },
-    fashion:           { title: 'Fashion Trends',              data: fashion },
-    electronics:       { title: 'Electronic Gadgets',          data: electronics },
-    'digital-product': { title: 'Digital Products',            data: digitalProduct },
-    'home-appliances': { title: 'Home Appliances',             data: homeAppliances },
-    vegetable:         { title: 'Fresh Vegetables',            data: vegetables },
-    decor:             { title: 'Home Decor',                  data: decor },
-    books:             { title: 'Books & Literature',          data: books },
-  }), [smartphonesState, watchesState, furnitureState, kidsState]);
+    fashion:           { title: 'Fashion Trends',              data: fashionState },
+    electronics:       { title: 'Electronic Gadgets',          data: electronicsState },
+    'digital-product': { title: 'Digital Products',            data: digitalProductState },
+    'home-appliances': { title: 'Home Appliances',             data: homeAppliancesState },
+    vegetable:         { title: 'Fresh Vegetables',            data: vegetableState },
+    decor:             { title: 'Home Decor',                  data: decorState },
+    books:             { title: 'Books & Literature',          data: booksState },
+  }), [smartphonesState, watchesState, furnitureState, kidsState, fashionState, electronicsState, digitalProductState, homeAppliancesState, vegetableState, decorState, booksState]);
 
   const currentCategory = categoryMap[slug] || { title: 'Products', data: [] };
 

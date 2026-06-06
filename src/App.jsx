@@ -33,6 +33,8 @@ import Profile from './pages/Profile';
 // ── Protected Admin Route ──────────────────────────────────────────────────
 const AdminRoute = () => {
   const { currentUser, smartphonesState, watchesState, furnitureState, kidsState,
+          fashionState, electronicsState, digitalProductState, homeAppliancesState,
+          vegetableState, decorState, booksState,
           addProduct, deleteProduct, updateProduct } = useApp();
 
   if (!currentUser || currentUser.role !== 'admin') {
@@ -45,6 +47,13 @@ const AdminRoute = () => {
       watches={watchesState}
       furniture={furnitureState}
       kids={kidsState}
+      fashion={fashionState}
+      electronics={electronicsState}
+      digitalProduct={digitalProductState}
+      homeAppliances={homeAppliancesState}
+      vegetables={vegetableState}
+      decor={decorState}
+      books={booksState}
       onAddProduct={addProduct}
       onDeleteProduct={deleteProduct}
       onUpdateProduct={updateProduct}

@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
  * @access  Private/Admin
  */
 router.post('/', protect, admin, async (req, res) => {
-  const { title, price, oldPrice, category, image, sale, description } = req.body;
+  const { title, price, oldPrice, category, image, sale, description, color } = req.body;
 
   if (!title || !price || !category) {
     return res.status(400).json({
@@ -49,7 +49,8 @@ router.post('/', protect, admin, async (req, res) => {
       category,
       image,
       sale: sale || false,
-      description
+      description,
+      color
     });
 
     res.status(201).json({
