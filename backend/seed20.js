@@ -172,7 +172,7 @@ const newProductsList = [
     price: 14900,
     oldPrice: 17900,
     rating: 4.4,
-    image: 'https://images.unsplash.com/photo-1505693395321-883724634266?w=400',
+    image: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=400',
     sale: true,
     description: 'A set of two padded bar stools with matte-black metal bases and fully adjustable hydraulic swivels.',
     category: 'furniture'
@@ -251,7 +251,21 @@ const seed20 = async () => {
         await Product.create(prod);
         addedCount++;
       } else {
-        await Product.updateOne({ id: prod.id }, { $set: { price: prod.price, oldPrice: prod.oldPrice } });
+        await Product.updateOne(
+          { id: prod.id },
+          {
+            $set: {
+              title: prod.title,
+              price: prod.price,
+              oldPrice: prod.oldPrice,
+              image: prod.image,
+              description: prod.description,
+              sale: prod.sale,
+              rating: prod.rating,
+              category: prod.category
+            }
+          }
+        );
         addedCount++;
       }
     }
