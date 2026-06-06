@@ -4,10 +4,10 @@
 }
 
 .category-breadcrumb-area {
-  background-color: #f8f9fd;
+  background-color: var(--bg-white);
   padding: 10px 0;
   margin-bottom: 20px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--admin-border-color);
 }
 
 .breadcrumb {
@@ -39,7 +39,7 @@
 .filter-sidebar {
   width: 280px;
   flex-shrink: 0;
-  background: white;
+  background: var(--card-bg);
   padding: 20px;
   border-radius: var(--border-radius-md);
   box-shadow: var(--shadow-soft);
@@ -52,7 +52,7 @@
   align-items: center;
   padding-bottom: 20px;
   margin-bottom: 20px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--admin-border-color);
 }
 
 .close-filter-btn {
@@ -77,7 +77,7 @@
 
 .filter-section {
   margin-bottom: 25px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--admin-border-color);
   padding-bottom: 20px;
 }
 
@@ -142,7 +142,7 @@
 .brand-logo-small {
   width: 100%;
   aspect-ratio: 1;
-  border: 1px solid #eee;
+  border: 1px solid var(--admin-border-color);
   border-radius: 4px;
   padding: 5px;
   display: flex;
@@ -194,7 +194,7 @@
 
 .btn-clear {
   background: transparent;
-  border: 1px solid #ddd;
+  border: 1px solid var(--admin-border-color);
   color: var(--text-gray);
 }
 
@@ -212,7 +212,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: white;
+  background: var(--card-bg);
   padding: 10px 20px;
   border-radius: var(--border-radius-md);
   box-shadow: var(--shadow-soft);
@@ -252,10 +252,11 @@
 
 .sort-by select, .show-items select {
   padding: 8px 12px;
-  border: 1px solid #eee;
+  border: 1px solid var(--admin-border-color);
   border-radius: var(--border-radius-sm);
   outline: none;
-  background: white;
+  background: var(--input-bg);
+  color: var(--text-dark);
   font-size: 14px;
 }
 
@@ -270,7 +271,7 @@
 .view-modes {
   display: flex;
   gap: 5px;
-  border-left: 1px solid #eee;
+  border-left: 1px solid var(--admin-border-color);
   padding-left: 20px;
 }
 
@@ -281,7 +282,7 @@
   align-items: center;
   justify-content: center;
   background: transparent;
-  border: 1px solid #eee;
+  border: 1px solid var(--admin-border-color);
   border-radius: 4px;
   color: var(--text-light);
   transition: var(--transition);

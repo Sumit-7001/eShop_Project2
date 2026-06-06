@@ -184,9 +184,13 @@
   transition: all 0.2s;
 }
 
-.color-circle.active {
-  border-color: #1a1a1a;
-  transform: scale(1.1);
+/* Fix dark mode for color circle active */
+[data-theme="dark"] .color-circle.active {
+  border-color: var(--text-dark);
+}
+
+[data-theme="dark"] .icon-btn-outline:hover {
+  background: var(--bg-light);
 }
 
 .storage-options {
@@ -857,7 +861,7 @@
   height: 60px;
   border-radius: 8px;
   border: 1px solid var(--admin-border-color);
-  background: #fff;
+  background: var(--bg-white);
   padding: 5px;
   display: flex;
   align-items: center;

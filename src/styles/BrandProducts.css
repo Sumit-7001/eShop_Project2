@@ -5,9 +5,9 @@
 
 /* Breadcrumb */
 .brand-breadcrumb-area {
-  background-color: #f8f9fd;
+  background-color: var(--bg-white);
   padding: 10px 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--admin-border-color);
 }
 
 .brand-breadcrumb-area .breadcrumb {
@@ -140,7 +140,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: white;
+  background: var(--card-bg);
   padding: 15px 20px;
   border-radius: var(--border-radius-md);
   box-shadow: var(--shadow-soft);
@@ -156,7 +156,7 @@
 .product-count {
   font-size: 14px;
   color: var(--text-gray);
-  background: #f0f0f0;
+  background: var(--bg-light);
   padding: 5px 14px;
   border-radius: 20px;
 }
@@ -177,11 +177,11 @@
 
 .brand-sort-by select {
   padding: 8px 14px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--admin-border-color);
   border-radius: 6px;
   font-size: 14px;
   color: var(--text-dark);
-  background: #f8f9fd;
+  background: var(--input-bg);
   cursor: pointer;
   outline: none;
   transition: var(--transition);
@@ -206,7 +206,7 @@
 .brand-no-products {
   text-align: center;
   padding: 80px 20px;
-  background: white;
+  background: var(--card-bg);
   border-radius: var(--border-radius-md);
   box-shadow: var(--shadow-soft);
   color: var(--text-gray);

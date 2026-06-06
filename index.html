@@ -53,6 +53,17 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- Dark mode flash prevention: apply theme before React loads -->
+    <script>
+      (function() {
+        try {
+          var theme = localStorage.getItem('eshop_theme');
+          if (theme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+          }
+        } catch(e) {}
+      })();
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

@@ -14,7 +14,7 @@
   font-size: 32px;
   font-weight: 700;
   margin-bottom: 50px;
-  color: #1a1a1a;
+  color: var(--text-dark);
 }
 
 .items-grid {
