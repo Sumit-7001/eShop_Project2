@@ -151,3 +151,38 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ── Dark Mode Overrides ──────────────────────────────────────────────────── */
+[data-theme="dark"] .breadcrumb-area {
+  background: var(--card-bg);
+}
+
+[data-theme="dark"] .contact-info-card {
+  background: var(--card-bg);
+  border-color: var(--input-border);
+  box-shadow: var(--shadow-soft);
+}
+
+[data-theme="dark"] .contact-form {
+  background: transparent;
+}
+
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group textarea {
+  background: var(--input-bg);
+  border-color: var(--input-border);
+  color: var(--text-dark);
+}
+
+[data-theme="dark"] .form-group input:focus,
+[data-theme="dark"] .form-group textarea:focus {
+  background: var(--bg-white);
+  border-color: var(--primary-color);
+  box-shadow: 0 5px 15px rgba(255, 77, 77, 0.15);
+}
+
+[data-theme="dark"] .form-group input::placeholder,
+[data-theme="dark"] .form-group textarea::placeholder {
+  color: var(--text-light);
+}
+

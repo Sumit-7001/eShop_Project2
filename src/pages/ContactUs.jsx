@@ -12,6 +12,29 @@ const ContactUs = () => {
       </div>
 
       <div className="container">
+        
+        <div className="contact-form-section">
+          <h2 className="section-title">Contact Us</h2>
+          <p className="section-subtitle">Reach out to us from our contact form and we will get back to you shortly.</p>
+
+          <form className="contact-form">
+            <div className="form-row">
+              <div className="form-group">
+                <input type="text" placeholder="Username" required />
+              </div>
+              <div className="form-group">
+                <input type="email" placeholder="Email" required />
+              </div>
+            </div>
+            <div className="form-group">
+              <input type="text" placeholder="Subject" required />
+            </div>
+            <div className="form-group">
+              <textarea placeholder="Your message" rows="5" required></textarea>
+            </div>
+            <button type="submit" className="submit-btn">Send Message</button>
+          </form>
+        </div>
         <div className="contact-info-card">
           <div className="info-item">
             <div className="info-icon">
@@ -44,28 +67,6 @@ const ContactUs = () => {
           </div>
         </div>
 
-        <div className="contact-form-section">
-          <h2 className="section-title">Contact Us</h2>
-          <p className="section-subtitle">Reach out to us from our contact form and we will get back to you shortly.</p>
-
-          <form className="contact-form">
-            <div className="form-row">
-              <div className="form-group">
-                <input type="text" placeholder="Username" required />
-              </div>
-              <div className="form-group">
-                <input type="email" placeholder="Email" required />
-              </div>
-            </div>
-            <div className="form-group">
-              <input type="text" placeholder="Subject" required />
-            </div>
-            <div className="form-group">
-              <textarea placeholder="Your message" rows="5" required></textarea>
-            </div>
-            <button type="submit" className="submit-btn">Send Message</button>
-          </form>
-        </div>
       </div>
     </div>
   );
