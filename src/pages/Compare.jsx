@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import emptyCompareImg from '../assets/images/empty_cart.png';
+import { GitCompare } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import '../styles/Compare.css';
 
@@ -21,7 +21,7 @@ const Compare = () => {
       <div className="compare-content container">
         {compareItems.length === 0 ? (
           <div className="empty-state">
-            <img src={emptyCompareImg} alt="No items to compare" className="empty-compare-img" />
+            <GitCompare size={100} color="var(--primary-color)" strokeWidth={1} style={{ opacity: 0.8, marginBottom: '24px', display: 'block' }} />
             <h3 className="empty-text">No products to compare</h3>
             <p className="empty-subtext">You have not added any products to compare yet. Add products to compare to see them here.</p>
             <Link to="/" className="back-to-shop-btn">Continue Shopping</Link>

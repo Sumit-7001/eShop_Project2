@@ -7,10 +7,10 @@ const AppDownload = () => {
     <section className="app-download-section">
       <div className="container app-container">
         <div className="app-left">
-          <img src={appImage} alt="eShop Mobile App" className="app-mobile-img" />
+          <img src={appImage} alt="MarketHub Mobile App" className="app-mobile-img" />
         </div>
         <div className="app-right">
-          <h2 className="app-title">eShop Mobile App</h2>
+          <h2 className="app-title">MarketHub Mobile App</h2>
           <p className="app-subtitle">Affordable Ecommerce Platform</p>
           <p className="app-description">
             Shop with us at affordable prices and get exciting cashback & offers. Download our app for a better shopping experience.

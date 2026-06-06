@@ -1,10 +1,11 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import FilterSidebar from '../components/products/FilterSidebar';
 import ProductTopBar from '../components/products/ProductTopBar';
 import ProductCard from '../components/common/ProductCard';
-import { sellers } from '../data/dummyData';
+import Pagination from '../components/common/Pagination';
+import { sellers, getProductsBySeller } from '../data/dummyData';
 import { useApp } from '../context/AppContext';
 import { applyFilters } from '../utils/filterHelpers';
 import '../styles/CategoryProducts.css';
@@ -13,10 +14,15 @@ const SellerProducts = () => {
   const { addToCart, isFavorite, isComparing, toggleFavorite, toggleCompare } = useApp();
   const { id } = useParams();
   const [sortBy, setSortBy] = useState('relevance');
-  const [itemsPerPage, setItemsPerPage] = useState('All');
+  const [itemsPerPage, setItemsPerPage] = useState(9);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [viewMode, setViewMode] = useState('grid');
   const [selectedFilters, setSelectedFilters] = useState({ attributes: {}, brands: [], categories: [] });
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [itemsPerPage, sortBy, selectedFilters, id]);
   
   const seller = sellers.find(s => s.id === parseInt(id));
 
@@ -38,7 +44,13 @@ const SellerProducts = () => {
     }
   }, [seller, sortBy, selectedFilters]);
 
-  const displayedProducts = itemsPerPage === 'All' ? sortedProducts : sortedProducts.slice(0, itemsPerPage);
+  let totalPages = 1;
+  let displayedProducts = sortedProducts;
+  if (itemsPerPage !== 'All') {
+    totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    displayedProducts = sortedProducts.slice(startIndex, startIndex + itemsPerPage);
+  }
 
   if (!seller) {
     return (
@@ -88,25 +100,34 @@ const SellerProducts = () => {
             />
             
             <div className={`products-grid-listing ${viewMode === 'list' ? 'list-view' : ''}`}>
-              {displayedProducts.length > 0 ? (
-                displayedProducts.map(product => (
-                  <ProductCard 
-                    key={product.id} 
-                    product={product} 
-                    onAddToCart={addToCart} 
-                    viewMode={viewMode}
-                    isFavorite={isFavorite(product.id)}
-                    isComparing={isComparing(product.id)}
-                    onToggleFavorite={toggleFavorite}
-                    onToggleCompare={toggleCompare}
-                  />
-                ))
-              ) : (
-                <div className="no-products" style={{ textAlign: 'center', padding: '50px', width: '100%', gridColumn: '1 / -1' }}>
+              {displayedProducts.map(product => (
+                <ProductCard 
+                  key={product.id} 
+                  product={product} 
+                  onAddToCart={addToCart} 
+                  viewMode={viewMode}
+                  isFavorite={isFavorite(product.id)}
+                  isComparing={isComparing(product.id)}
+                  onToggleFavorite={toggleFavorite}
+                  onToggleCompare={toggleCompare}
+                />
+              ))}
+              {displayedProducts.length === 0 && (
+                <div style={{ padding: '20px', gridColumn: '1 / -1', textAlign: 'center' }}>
                   <p>No products found matching your filters.</p>
                 </div>
               )}
             </div>
+
+            {itemsPerPage !== 'All' && totalPages > 1 && (
+              <div style={{ marginTop: '40px', display: 'flex', justifyContent: 'center' }}>
+                <Pagination 
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={setCurrentPage}
+                />
+              </div>
+            )}
           </main>
         </div>
       </div>

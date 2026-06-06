@@ -1,9 +1,10 @@
-import React, { useState, useMemo, memo } from 'react';
+import React, { useState, useMemo, memo, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import FilterSidebar from '../components/products/FilterSidebar';
 import ProductTopBar from '../components/products/ProductTopBar';
 import ProductCard from '../components/common/ProductCard';
+import Pagination from '../components/common/Pagination';
 import { useApp } from '../context/AppContext';
 import { applyFilters } from '../utils/filterHelpers';
 import '../styles/CategoryProducts.css';
@@ -30,10 +31,15 @@ const CategoryProducts = () => {
 
   const { slug } = useParams();
   const [sortBy, setSortBy] = useState('relevance');
-  const [itemsPerPage, setItemsPerPage] = useState('All');
+  const [itemsPerPage, setItemsPerPage] = useState(9);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [viewMode, setViewMode] = useState('grid');
   const [selectedFilters, setSelectedFilters] = useState({ attributes: {}, brands: [], categories: [] });
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [itemsPerPage, sortBy, selectedFilters, slug]);
 
   const categoryMap = useMemo(() => ({
     smartphones:       { title: 'Smartphones & Basic Mobiles', data: smartphonesState },
@@ -65,7 +71,13 @@ const CategoryProducts = () => {
     }
   }, [currentCategory.data, sortBy, selectedFilters]);
 
-  const displayedProducts = itemsPerPage === 'All' ? sortedProducts : sortedProducts.slice(0, itemsPerPage);
+  let totalPages = 1;
+  let displayedProducts = sortedProducts;
+  if (itemsPerPage !== 'All') {
+    totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    displayedProducts = sortedProducts.slice(startIndex, startIndex + itemsPerPage);
+  }
 
   return (
     <div className="category-products-page">
@@ -124,6 +136,15 @@ const CategoryProducts = () => {
                 </div>
               )}
             </div>
+            {itemsPerPage !== 'All' && totalPages > 1 && (
+              <div style={{ marginTop: '40px', display: 'flex', justifyContent: 'center' }}>
+                <Pagination 
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={setCurrentPage}
+                />
+              </div>
+            )}
           </main>
         </div>
       </div>

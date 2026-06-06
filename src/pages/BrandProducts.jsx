@@ -1,7 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ChevronRight, Package } from 'lucide-react';
 import ProductCard from '../components/common/ProductCard';
+import Pagination from '../components/common/Pagination';
 import { brands, brandProducts } from '../data/dummyData';
 import { useApp } from '../context/AppContext';
 import '../styles/BrandProducts.css';
@@ -12,7 +13,12 @@ const BrandProducts = () => {
   const brand = brands.find(b => b.slug === slug);
   const products = brandProducts[slug] || [];
   const [sortBy, setSortBy] = useState('relevance');
-  const [itemsPerPage, setItemsPerPage] = useState('All');
+  const [itemsPerPage, setItemsPerPage] = useState(9);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [itemsPerPage, sortBy, slug]);
 
   const sortedProducts = useMemo(() => {
     const sorted = [...products];
@@ -28,7 +34,13 @@ const BrandProducts = () => {
     }
   }, [products, sortBy]);
 
-  const displayedProducts = itemsPerPage === 'All' ? sortedProducts : sortedProducts.slice(0, itemsPerPage);
+  let totalPages = 1;
+  let displayedProducts = sortedProducts;
+  if (itemsPerPage !== 'All') {
+    totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    displayedProducts = sortedProducts.slice(startIndex, startIndex + itemsPerPage);
+  }
 
   if (!brand) {
     return (
@@ -124,6 +136,15 @@ const BrandProducts = () => {
               <Package size={48} />
               <h3>No products available yet</h3>
               <p>Check back soon for new arrivals from {brand.name}!</p>
+            </div>
+          )}
+          {itemsPerPage !== 'All' && totalPages > 1 && (
+            <div style={{ marginTop: '40px', display: 'flex', justifyContent: 'center' }}>
+              <Pagination 
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
             </div>
           )}
         </div>
