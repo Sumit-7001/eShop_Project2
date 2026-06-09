@@ -6,7 +6,7 @@
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1.5fr 1fr 1fr;
+  grid-template-columns: 2fr 1.5fr 1fr 1fr 2fr;
   gap: 40px;
   margin-bottom: 60px;
 }
@@ -103,6 +103,12 @@
   font-size: 14px;
   color: #aaa;
   background: rgba(0,0,0,0.3);
+}
+
+@media (max-width: 1200px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
 @media (max-width: 992px) {

@@ -42,7 +42,7 @@ const ContactUs = () => {
             </div>
             <div className="info-content">
               <h4>Find Us</h4>
-              <p>MarketHub Headquarters, 123 Commerce Avenue, Tech District, San Francisco, CA 94105, USA</p>
+              <p>MarketHub Headquarters, Salt Lake Sector V, Kolkata, West Bengal 700091, India</p>
             </div>
           </div>
 
@@ -52,7 +52,7 @@ const ContactUs = () => {
             </div>
             <div className="info-content">
               <h4>Contact Us</h4>
-              <p>+1 (800) 123-4567</p>
+              <p>+91 98765 43210</p>
             </div>
           </div>
 

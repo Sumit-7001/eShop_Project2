@@ -12,6 +12,10 @@
   background: #fff9f0; /* Light orange tint for kids section */
 }
 
+[data-theme="dark"] .kids-bg {
+  background: var(--bg-light);
+}
+
 @media (max-width: 1200px) {
   .products-grid {
     grid-template-columns: repeat(3, 1fr);
